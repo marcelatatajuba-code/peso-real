@@ -106,6 +106,17 @@
   .steps ol{margin:0;padding-left:18px;} .steps li{font-size:13.5px;line-height:1.7;color:var(--hi);}
   .steps a{color:var(--gold);}
   .save-row{display:flex;gap:10px;margin-top:6px;}
+  .crow{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
+  .crow input.cn{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--hi);font-size:14px;padding:11px;}
+  .crow input.cp{width:64px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--gold);font-weight:700;font-size:14px;padding:11px;text-align:center;}
+  .crow .del{width:38px;height:40px;flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:10px;color:var(--mut);font-size:18px;}
+  .cards{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;}
+  .cards .ch{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);margin:0 0 8px;}
+  .cardrow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:14px;}
+  .cardrow .nm{color:var(--hi);display:flex;align-items:center;gap:7px;}
+  .cardrow .vl{font-weight:700;font-variant-numeric:tabular-nums;color:var(--clp);}
+  .cardrow.best .nm{color:var(--green);font-weight:700;} .cardrow.best .vl{color:var(--green);}
+  .cardrow .best-tag{font-size:10px;font-weight:800;color:#0d1015;background:var(--green);border-radius:999px;padding:2px 7px;}
 </style>
 </head>
 <body>
@@ -154,12 +165,20 @@
       <li>Toque em <b>Create API key</b> (sem cartão)</li>
       <li>Copie a chave (começa com <b>AIza…</b>) e cole abaixo</li>
     </ol></div>
-    <div class="field"><label>Chave Gemini</label><input id="keyInput" type="password" placeholder="AIza..." autocomplete="off"></div>
+    <div class="field"><label>Chave Gemini</label><input id="keyInput" type="password" placeholder="AIza... ou AQ..." autocomplete="off"></div>
+
+    <div class="field">
+      <label>Formas de pagamento &amp; custo sobre o câmbio (%)</label>
+      <div id="cardList"></div>
+      <button class="btn ghost" id="addCard" style="width:100%;margin-top:8px;font-size:14px;padding:11px">+ Adicionar cartão</button>
+      <p class="sub" style="margin-top:8px;font-size:12px">O % é quanto cada cartão custa acima do câmbio comercial (IOF + spread − cashback). Ajuste conforme confirmar com cada banco. O app mostra o valor em cada um e destaca o mais barato.</p>
+    </div>
+
     <div class="save-row">
       <button class="btn wide" id="saveKey">Salvar</button>
       <button class="btn ghost" id="closeSettings">Fechar</button>
     </div>
-    <p class="sub" style="margin-top:18px">Modelo: <b>gemini-2.5-flash</b> · grátis até ~500 leituras/dia. Dado usado só quando você tira a foto.</p>
+    <p class="sub" style="margin-top:18px">Modelo: <b>gemini-flash-lite-latest</b> · grátis com limite diário. Não é aconselhamento financeiro — confira o valor final na fatura.</p>
   </div>
 
 <script>
@@ -171,17 +190,55 @@ const video=$('video'),work=$('work'),idle=$('idle'),dock=$('dock'),sheet=$('she
 const MODEL='gemini-flash-lite-latest';
 let stream=null;
 
+/* ---- format helpers (defined early) ---- */
+const fmtBRL=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtCLP=n=>n.toLocaleString('pt-BR',{maximumFractionDigits:0});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- payment cards (device only) ---- */
+const DEFAULT_CARDS=[
+  {name:'Nubank Ultravioleta', pct:2.25},
+  {name:'Nubank Conta Global', pct:2.0},
+  {name:'Wise', pct:4.0},
+  {name:'Itaú Personnalité', pct:9.0}
+];
+function getCards(){
+  try{ const c=JSON.parse(localStorage.getItem('cards')||'null'); return Array.isArray(c)&&c.length?c:DEFAULT_CARDS; }
+  catch(e){ return DEFAULT_CARDS; }
+}
+function cardRowHTML(c){
+  return `<div class="crow">
+    <input class="cn" type="text" value="${esc(c.name)}" placeholder="Nome do cartão">
+    <input class="cp" type="number" inputmode="decimal" value="${c.pct}" step="0.05">
+    <button class="del" type="button" aria-label="remover">×</button></div>`;
+}
+function renderCardEditor(){
+  const list=$('cardList'); list.innerHTML=getCards().map(cardRowHTML).join('');
+  list.querySelectorAll('.del').forEach(b=> b.onclick=()=> b.closest('.crow').remove());
+}
+$('addCard').onclick=()=>{ $('cardList').insertAdjacentHTML('beforeend', cardRowHTML({name:'',pct:4}));
+  const b=$('cardList').lastElementChild.querySelector('.del'); b.onclick=()=> b.closest('.crow').remove(); };
+function saveCards(){
+  const rows=[...$('cardList').querySelectorAll('.crow')].map(r=>({
+    name:r.querySelector('.cn').value.trim(),
+    pct:parseFloat(r.querySelector('.cp').value)
+  })).filter(c=>c.name && !isNaN(c.pct));
+  if(rows.length) localStorage.setItem('cards', JSON.stringify(rows));
+}
+
 /* ---- key storage (device only) ---- */
 function getKey(){ return localStorage.getItem('gemini_key')||''; }
 function needKey(){ return !getKey(); }
-$('gearBtn').onclick=()=>{ keyInput.value=getKey(); settings.classList.add('on'); };
+$('gearBtn').onclick=()=>{ keyInput.value=getKey(); renderCardEditor(); settings.classList.add('on'); };
 $('closeSettings').onclick=()=> settings.classList.remove('on');
 $('saveKey').onclick=()=>{
   const k=keyInput.value.trim();
   if(k) localStorage.setItem('gemini_key',k); else localStorage.removeItem('gemini_key');
+  saveCards();
   settings.classList.remove('on');
 };
 if(needKey()) settings.classList.add('on');
+renderCardEditor();
 
 /* ---- live rate ---- */
 const savedRate=localStorage.getItem('rate_manual'); if(savedRate) rateInput.value=savedRate;
@@ -259,17 +316,24 @@ async function analyze(b64){
 }
 
 /* ---- render ---- */
-const fmtBRL=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtCLP=n=>n.toLocaleString('pt-BR',{maximumFractionDigits:0});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
+function cardsHTML(clp, rate){
+  const cards=getCards().map(c=>({name:c.name, pct:c.pct, brl:(clp/rate)*(1+c.pct/100)}));
+  if(!cards.length) return '';
+  const min=Math.min(...cards.map(c=>c.brl));
+  const rows=cards.map(c=>{
+    const best=c.brl===min;
+    return `<div class="cardrow${best?' best':''}"><span class="nm">${esc(c.name)}${best?'<span class="best-tag">melhor</span>':''} <span style="color:var(--mut);font-size:11px">+${String(c.pct).replace('.',',')}%</span></span><span class="vl">R$ ${fmtBRL(c.brl)}</span></div>`;
+  }).join('');
+  return `<div class="cards"><p class="ch">No seu cartão</p>${rows}</div>`;
+}
 function render(d){
   const rate=parseFloat(rateInput.value)||181; let html='';
   if(d.prices&&d.prices.length){
     d.prices.forEach(p=>{ const brl=p.clp/rate;
       html+=`<div class="price">${p.label?`<p class="plabel">${esc(p.label)}</p>`:''}
         <div class="big"><span class="s">R$</span><span class="val">${fmtBRL(brl)}</span></div>
-        <div class="from"><span class="clp">$${fmtCLP(p.clp)} CLP</span><span class="tag">✓ lido como peso, não dólar</span></div></div>`;
+        <div class="from"><span class="clp">$${fmtCLP(p.clp)} CLP</span><span class="tag">✓ lido como peso, não dólar</span></div>
+        ${cardsHTML(p.clp, rate)}</div>`;
     });
   } else html+=`<p class="msg">Nenhum preço no enquadramento. Aproxime do valor e tente de novo.</p>`;
   if(d.translation&&d.translation.trim())
