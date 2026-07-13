@@ -278,8 +278,12 @@ function render(d){
   sheetBody.innerHTML=html; sheet.classList.add('up');
 }
 function renderError(m){
-  const keyIssue=/40[13]|API key|API_KEY|permission/i.test(m);
-  sheetBody.innerHTML=`<p class="msg err">${keyIssue?'Chave inválida ou sem permissão. Toque na engrenagem e confira a chave Gemini.':'Não consegui ler agora. Verifique a internet e tente de novo. Sem net: tire 3 zeros do preço e multiplique por ~5,5.'}</p>`;
+  let dica='';
+  if(/API key not valid|API_KEY_INVALID|40[13]|PERMISSION_DENIED/i.test(m)) dica='→ Toque na ⚙️ e confira/recole a chave Gemini.';
+  else if(/SERVICE_DISABLED|has not been used|is disabled/i.test(m)) dica='→ Ative a "Generative Language API" no projeto (link no erro) e espere 1 min.';
+  else if(/Failed to fetch|NetworkError|load failed/i.test(m)) dica='→ Parece internet/rede. Confira a conexão.';
+  else if(/quota|RESOURCE_EXHAUSTED|429/i.test(m)) dica='→ Limite de uso batido. Espere um pouco.';
+  sheetBody.innerHTML=`<p class="msg err">Erro:</p><p class="msg err" style="font-family:ui-monospace,monospace;font-size:12px;word-break:break-word">${esc(m).slice(0,600)}</p>${dica?`<p class="msg">${dica}</p>`:''}`;
   sheet.classList.add('up');
 }
 
