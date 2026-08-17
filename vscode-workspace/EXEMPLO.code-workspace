@@ -1,0 +1,51 @@
+{
+  "//": [
+    "EXEMPLO — para você ver como um workspace é por dentro.",
+    "O seu, com os caminhos reais da sua máquina, sai do 'python3 varredura.py'",
+    "com o nome Marcela.code-workspace.",
+    "",
+    "Um workspace é só isto: uma lista de pastas + preferências.",
+    "'name' é o rótulo que aparece no Explorador. 'path' é a pasta no disco.",
+    "O VS Code mostra na ordem deste arquivo — por isso os números na frente."
+  ],
+
+  "folders": [
+    { "name": "01 ZUP·NPJ · painel-npj",        "path": "/Users/marcela/Documents/Zup/painel-npj" },
+    { "name": "01 ZUP·NPJ · bases-npj",         "path": "/Users/marcela/Documents/Zup/bases-npj" },
+    { "name": "01 ZUP·NPJ · wgo",               "path": "/Users/marcela/Documents/Zup/wgo" },
+    { "name": "02 ITAU · material-parceiro",    "path": "/Users/marcela/Documents/Itau/material-parceiro" },
+    { "name": "03 JURIDICO · contencioso-kovr", "path": "/Users/marcela/Documents/Juridico/kovr" },
+    { "name": "04 DADOS · powerbi-zup",         "path": "/Users/marcela/Documents/Dados/powerbi" },
+    { "name": "05 APPS · peso-real",            "path": "/Users/marcela/Documents/Apps/peso-real" },
+    { "name": "07 PESSOAL · viagem-chile",      "path": "/Users/marcela/Documents/Pessoal/chile" },
+    { "name": "09 CONFIG · claude",             "path": "/Users/marcela/.claude" }
+  ],
+
+  "settings": {
+    "workbench.editor.enablePreview": false,
+    "explorer.sortOrder": "type",
+    "explorer.compactFolders": false,
+    "files.trimTrailingWhitespace": true,
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.venv": true,
+      "**/dist": true
+    },
+    "files.exclude": {
+      "**/.DS_Store": true,
+      "**/__pycache__": true
+    }
+  },
+
+  "extensions": {
+    "recommendations": [
+      "anthropic.claude-code",
+      "yzhang.markdown-all-in-one",
+      "mechatroner.rainbow-csv",
+      "ms-python.python",
+      "ritwickdey.LiveServer"
+    ]
+  }
+}

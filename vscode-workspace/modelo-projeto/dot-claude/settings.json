@@ -1,0 +1,30 @@
+{
+  "$comment": [
+    "Modelo de settings do projeto.",
+    "Copie a pasta 'dot-claude' para a raiz do seu projeto e RENOMEIE para '.claude'.",
+    "O ponto na frente é o que faz o Claude Code reconhecer a pasta.",
+    "Remova este bloco $comment depois — ele é só didático.",
+    "",
+    "permissions.allow  = o que o Claude pode fazer SEM perguntar",
+    "permissions.deny   = o que ele NUNCA pode fazer, nem pedindo",
+    "Comece restritivo. Vá liberando o que te cansar de aprovar."
+  ],
+
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Grep(**)",
+      "Glob(**)",
+      "Bash(python3 *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)"
+    ]
+  }
+}
