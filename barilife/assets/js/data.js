@@ -19,7 +19,7 @@ window.DB = {
     matricula: 'BL-2024-018342',
     emissao: '2024-04-02',
     validade: '2027-04-02',
-    foto: null,
+    foto: 'assets/img/perfil.jpg',
     pesoInicial: 118,
     pesoAtual: 74,
     altura: 1.65

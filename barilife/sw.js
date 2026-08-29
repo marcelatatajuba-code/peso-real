@@ -13,6 +13,7 @@ var ARQUIVOS = [
   './assets/js/qr.js',
   './assets/js/data.js',
   './assets/js/app.js',
+  './assets/img/perfil.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'
