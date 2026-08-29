@@ -14,6 +14,7 @@
   'use strict';
 
   var CHAVE = 'dne-replica-v1';
+  var ARQUIVO_UNICO = false; // trocado para true pelo construir-arquivo-unico.js
   var DADOS = window.DADOS;
 
   /* ============================ 1. ESTADO ============================ */
@@ -220,7 +221,7 @@
     if (!e) {
       $('#inicio-inst').textContent = 'Você ainda não tem documento';
       $('#inicio-status').textContent = 'Toque para solicitar o seu DNE';
-      $('#inicio-dados').innerHTML = '<p class="vazio"><strong>Nenhum documento emitido</strong>Solicite o documento para ver os dados aqui.</p>';
+      $('#inicio-dados').innerHTML = '<p class="vazio"><strong>Nenhum documento emitido</strong>Toque em “Criar o meu documento” para preencher seus dados.</p>';
     } else {
       var expirado = vencido(e);
       $('#inicio-inst').textContent = e.instituicao;
@@ -493,7 +494,7 @@
 
   function abrirSolicitacao() {
     var e = estado.estudante;
-    $('#titulo-solicitar').textContent = e ? 'Renovar DNE' : 'Solicitar DNE';
+    $('#titulo-solicitar').textContent = e ? 'Editar documento' : 'Criar meu documento';
 
     // pré-preenche selects na primeira abertura
     if (!$('#sol-nivel').children.length) {
@@ -551,10 +552,10 @@
       ok &= marcarErro('cf-curso', !$('#sol-curso').value);
       ok &= marcarErro('cf-matricula', soDigitos($('#sol-matricula').value).length < 4);
     } else if (passo === 2) {
-      var semFoto = !rascunho.foto, semDoc = !rascunho.doc;
+      // só a foto é obrigatória: o comprovante é opcional nesta réplica
+      var semFoto = !rascunho.foto;
       $('#erro-foto').style.display = semFoto ? 'block' : 'none';
-      $('#erro-doc').style.display = semDoc ? 'block' : 'none';
-      ok = !semFoto && !semDoc;
+      ok = !semFoto;
     }
     if (!ok) aviso('Confira os campos destacados.');
     return !!ok;
@@ -696,6 +697,15 @@
       ir('inicio');
     });
     $('#btn-demo').addEventListener('click', entrarComoDemo);
+    $('#btn-mostrar-login').addEventListener('click', function () {
+      $('#bloco-boas-vindas').hidden = true;
+      $('#form-login').hidden = false;
+      $('#login-cpf').focus();
+    });
+    $('#btn-voltar-boas-vindas').addEventListener('click', function () {
+      $('#form-login').hidden = true;
+      $('#bloco-boas-vindas').hidden = false;
+    });
 
     /* --- carteirinha --- */
     $('#btn-virar').addEventListener('click', function () {
@@ -793,9 +803,25 @@
         aviso('Foto atualizada.');
       });
     });
+    $('#btn-compartilhar').addEventListener('click', function () {
+      var endereco = location.href.split('#')[0];
+      if (navigator.share) {
+        navigator.share({ title: 'DNE Digital — réplica acadêmica', url: endereco })
+          .catch(function () { /* a pessoa cancelou */ });
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(endereco)
+          .then(function () { aviso('Endereço copiado.'); })
+          .catch(function () { aviso(endereco); });
+      } else {
+        aviso(endereco);
+      }
+    });
+
     $('#btn-sair').addEventListener('click', function () {
       estado.logado = false;
       salvar();
+      $('#form-login').hidden = true;
+      $('#bloco-boas-vindas').hidden = false;
       ir('login');
     });
     $('#btn-limpar').addEventListener('click', function () {
@@ -807,6 +833,7 @@
   }
 
   function registrarServiceWorker() {
+    if (ARQUIVO_UNICO) return;                  // versão de arquivo único não tem sw.js
     if (!('serviceWorker' in navigator)) return;
     if (location.protocol === 'file:') return; // não funciona aberto direto do disco
     window.addEventListener('load', function () {

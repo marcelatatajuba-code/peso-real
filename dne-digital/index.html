@@ -55,7 +55,21 @@
       <p>Documento Nacional do Estudante<br>Réplica acadêmica · trabalho de curso</p>
     </div>
 
-    <form id="form-login" novalidate>
+    <!-- primeira abertura: a pessoa monta o próprio documento -->
+    <div id="bloco-boas-vindas">
+      <p class="boas-vindas-txt">
+        Monte o seu documento de estudante: coloque a sua foto, o seu nome e os dados da
+        sua instituição. Tudo fica guardado só no seu aparelho.
+      </p>
+      <div class="pilha mt-24">
+        <button class="btn" type="button" data-ir="solicitar">Criar o meu documento</button>
+        <button class="btn secundario" type="button" id="btn-demo">Ver um exemplo pronto</button>
+        <button class="btn fantasma" type="button" id="btn-mostrar-login">Entrar com CPF e senha</button>
+      </div>
+    </div>
+
+    <!-- entrada por CPF e senha, mantida para demonstrar o fluxo do app oficial -->
+    <form id="form-login" novalidate hidden>
       <div class="campo-form" id="cf-login-cpf">
         <label for="login-cpf">CPF</label>
         <input id="login-cpf" name="cpf" type="tel" inputmode="numeric" autocomplete="username"
@@ -68,12 +82,8 @@
         <p class="erro">A senha precisa ter ao menos 4 caracteres.</p>
       </div>
       <button class="btn" type="submit">Entrar</button>
+      <button class="btn fantasma mt-16" type="button" id="btn-voltar-boas-vindas">Voltar</button>
     </form>
-
-    <div class="pilha mt-16">
-      <button class="btn secundario" type="button" id="btn-demo">Entrar com dados de demonstração</button>
-      <button class="btn fantasma" type="button" data-ir="solicitar">Ainda não tenho o documento</button>
-    </div>
 
     <p class="login-rodape">
       Réplica sem vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.<br>
@@ -365,7 +375,7 @@
       <div class="passo" data-passo="2" hidden>
         <p class="passo-rot">Passo 3 de 5</p>
         <h2 class="mb-8">Foto e comprovante</h2>
-        <p class="texto-2" style="margin:0 0 18px">A foto fica salva apenas neste aparelho, no armazenamento do navegador.</p>
+        <p class="texto-2" style="margin:0 0 18px">A foto fica salva apenas neste aparelho, no armazenamento do navegador. Nada é enviado para lugar nenhum.</p>
 
         <label class="upload" id="upload-foto">
           <input type="file" accept="image/*" id="sol-foto" aria-label="Enviar foto do estudante">
@@ -381,7 +391,7 @@
           <input type="file" accept="image/*,application/pdf" id="sol-doc" aria-label="Enviar comprovante de matrícula">
           <span id="upload-doc-txt">
             <svg class="icone"><use href="#i-arquivo"/></svg><br>
-            <strong>Comprovante de matrícula</strong><br>Imagem ou PDF do documento
+            <strong>Comprovante de matrícula</strong><br>Imagem ou PDF · opcional nesta réplica
           </span>
         </label>
         <p class="erro" id="erro-doc" style="display:none;color:var(--vermelho);font-size:12.5px;font-weight:600;margin-top:6px">Envie o comprovante para continuar.</p>
@@ -521,8 +531,9 @@
 
     <div class="secao-titulo"><h2>Documento</h2></div>
     <div class="pilha">
-      <button class="btn secundario" type="button" data-ir="solicitar">Renovar documento</button>
+      <button class="btn secundario" type="button" data-ir="solicitar">Editar dados do documento</button>
       <button class="btn secundario" type="button" data-ir="internacional">Carteira internacional ISIC</button>
+      <button class="btn secundario" type="button" id="btn-compartilhar">Compartilhar este aplicativo</button>
       <button class="btn perigo" type="button" id="btn-limpar">Apagar dados deste aparelho</button>
       <button class="btn perigo" type="button" id="btn-sair"><svg width="18" height="18"><use href="#i-sair"/></svg> Sair</button>
     </div>

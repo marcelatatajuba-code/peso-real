@@ -11,6 +11,54 @@ funciona sem internet e não precisa de loja de aplicativos.
 
 ---
 
+## Como enviar para alguém
+
+Há dois caminhos, e o melhor depende de quem vai receber.
+
+### Caminho 1 — mandar o link (recomendado para iPhone)
+
+Publique a pasta no **GitHub Pages** (**Settings → Pages**, escolha a branch e a pasta raiz)
+e mande o endereço:
+
+```
+https://<seu-usuario>.github.io/<repositorio>/dne-digital/
+```
+
+Quem recebe abre no navegador e já pode montar o próprio documento. No iPhone, abrindo pelo
+**Safari**, ainda dá para tocar em compartilhar → **Adicionar à Tela de Início** e o app fica
+com ícone próprio, em tela cheia e funcionando offline.
+
+### Caminho 2 — mandar o arquivo
+
+O arquivo **`dne-digital-replica.html`** tem o app inteiro dentro dele: HTML, CSS,
+JavaScript, ícones e imagens, sem nenhuma referência externa. Dá para mandar por WhatsApp,
+e-mail ou pendrive; quem recebe abre com dois cliques, sem instalar nada e sem internet.
+
+Funciona bem em computador e em Android. No iPhone, abrir um `.html` recebido depende do
+app usado para abrir, então para iPhone prefira o link do caminho 1.
+
+Para gerar o arquivo de novo depois de mexer no código:
+
+```bash
+cd dne-digital
+node construir-arquivo-unico.js
+```
+
+## O que a pessoa que recebe consegue fazer
+
+Ao abrir pela primeira vez, ela escolhe entre:
+
+- **Criar o meu documento** — preenche nome, CPF, nascimento, e-mail, instituição, curso e
+  matrícula, envia uma foto (da galeria ou tirada na hora) e o documento é emitido com os
+  dados dela;
+- **Ver um exemplo pronto** — carrega a estudante fictícia de demonstração, útil para
+  apresentar o trabalho sem preencher nada;
+- **Entrar com CPF e senha** — a tela de login, mantida para demonstrar o fluxo do app oficial.
+
+Depois de criado, ela pode trocar a foto e editar os dados pelo Perfil. Tudo fica no
+`localStorage` do aparelho dela: cada pessoa que abrir tem o seu próprio documento, e nada
+é enviado para servidor nenhum.
+
 ## Como abrir
 
 ### No computador (para desenvolver e apresentar)
@@ -69,8 +117,10 @@ dne-digital/
 │   └── app.js              estado, roteador, telas, validações e fluxos
 ├── assets/                 ícones do app e foto de exemplo
 ├── testes/verificar-qr.js  prova que o gerador de QR Code está correto
+├── construir-arquivo-unico.js   junta tudo em um .html só, para enviar
+└── dne-digital-replica.html     o app inteiro em um arquivo (gerado)
 ├── manifest.webmanifest    metadados da instalação (nome, ícones, cores)
-└── sw.js                   service worker: guarda o app em cache para uso offline
+├── sw.js                   service worker: guarda o app em cache para uso offline
 ```
 
 Sem framework, sem `npm install`, sem build. Três arquivos JavaScript e uma folha de
