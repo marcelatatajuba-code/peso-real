@@ -27,6 +27,7 @@
     + 'UNE, UBES, ANPG ou com o aplicativo oficial. O documento montado aqui não '
     + 'comprova matrícula, não dá direito a meia-entrada e não tem validade legal.';
   var PREFIXO_QR = 'REPLICA-ACADEMICA-SEM-VALIDADE';
+  var USO = 'interno-academico — nao publicar em endereco publico (ver NAO-PUBLICAR.md)';
   var DADOS = window.DADOS;
 
   /* ============================ 1. ESTADO ============================ */
@@ -135,6 +136,18 @@
     return h.toString(16).toUpperCase().padStart(8, '0');
   }
 
+  // Validade abreviada, como aparece no cartão: Mar/2027.
+  var MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  function mesAno(iso) {
+    var p = String(iso || '').split('-');
+    return p.length === 3 ? MESES[Number(p[1]) - 1] + '/' + p[0] : '—';
+  }
+
+  // Número de nove dígitos impresso abaixo do QR Code.
+  function numeroCurto(e) {
+    return String(parseInt(hashCurto(e.numero + e.cpf), 16) % 1000000000).padStart(9, '0');
+  }
+
   // Código curto usado na conferência pelo validador da meia-entrada.
   function codigoDeUso(e) {
     var h = hashCurto(e.numero + e.cpf);
@@ -162,6 +175,7 @@
     login: { id: 'tela-login', tabbar: false },
     inicio: { id: 'tela-inicio', tabbar: true, aba: 'inicio' },
     carteirinha: { id: 'tela-carteirinha', tabbar: true, aba: 'carteirinha' },
+    certificado: { id: 'tela-certificado', tabbar: false },
     apresentar: { id: 'tela-apresentar', tabbar: false },
     beneficios: { id: 'tela-beneficios', tabbar: true, aba: 'beneficios' },
     beneficio: { id: 'tela-beneficio', tabbar: false },
@@ -187,7 +201,7 @@
     if (estado.logado && rota === 'login') rota = 'inicio';
 
     // documento ainda não emitido: telas que dependem dele voltam para o início
-    if (estado.logado && !estado.estudante && ['carteirinha', 'apresentar', 'internacional'].indexOf(rota) >= 0) {
+    if (estado.logado && !estado.estudante && ['carteirinha', 'apresentar', 'internacional', 'certificado'].indexOf(rota) >= 0) {
       rota = 'inicio';
     }
 
@@ -212,6 +226,7 @@
       case 'inicio': renderInicio(); break;
       case 'carteirinha': renderCarteirinha(); break;
       case 'apresentar': iniciarToken(); break;
+      case 'certificado': renderCertificado(); break;
       case 'beneficios': renderBeneficios(); break;
       case 'beneficio': renderDetalheBeneficio(param); break;
       case 'solicitar': abrirSolicitacao(); break;
@@ -235,7 +250,6 @@
 
   function renderInicio() {
     var e = estado.estudante;
-    $('#saudacao-topo').textContent = 'Início';
     $('#inicio-nome').textContent = e ? primeiroNome(e.nome) : 'estudante';
     $('#inicio-foto').src = fotoDe(e);
 
@@ -278,30 +292,23 @@
 
     $('#cart-foto').src = fotoDe(e);
     $('#cart-nome').textContent = e.nome;
-    $('#cart-cpf').textContent = e.cpf;
-    $('#cart-nasc').textContent = dataBr(e.nascimento);
     $('#cart-inst').textContent = e.instituicao;
     $('#cart-curso').textContent = e.curso;
     $('#cart-nivel').textContent = e.nivel;
-    $('#cart-validade').textContent = dataBr(e.validade);
-    $('#cart-entidade').textContent = e.entidade;
-    $('#cart-matricula').textContent = e.matricula;
-    $('#cart-codigo').textContent = codigoDeUso(e);
+    $('#cart-cpf').textContent = e.cpf;
+    $('#cart-nasc').textContent = dataBr(e.nascimento);
+    $('#cart-validade').textContent = mesAno(e.validade);
+    $('#cart-codigo').textContent = numeroCurto(e);
 
     var selo = $('#selo-validade');
     selo.classList.toggle('vencido', expirado);
     selo.lastElementChild.textContent = expirado ? 'Vencido' : 'Válido';
 
-    $('#verso-numero').textContent = e.numero;
-    $('#verso-matricula').textContent = e.matricula;
-    $('#verso-emissao').textContent = dataBr(e.emissao);
-    $('#verso-email').textContent = e.email;
-    $('#verso-assinatura').textContent = e.nome.split(/\s+/).slice(0, 2).join(' ');
-    $('#verso-hash').textContent = hashCurto(e.cpf + e.numero + e.validade);
-    $('#verso-entidade').textContent = e.entidade;
-    desenharQr($('#verso-qr'), 'REPLICA-ACADEMICA|VERSO|' + e.numero + '|' + hashCurto(e.numero), 0);
+    $('#banner-texto').textContent = expirado
+      ? 'Seu documento venceu. Renove para continuar usando.'
+      : 'Seu DNE está liberado, aproveite.';
 
-    desenharQr($('#cart-qr'), cargaQr(e, tokenAtual()), 0);
+    desenharQr($('#cart-qr'), cargaQrCurta(e, tokenAtual()), 0);
     atualizarBotaoWallet();
 
     $('#carteirinha-dados').innerHTML = linhasDados([
@@ -311,6 +318,56 @@
       ['Emissão', dataBr(e.emissao)], ['Validade', dataBr(e.validade)],
       ['Nº do documento', e.numero], ['Código de uso', codigoDeUso(e)],
       ['Certificação', 'Assinatura digital ITI']
+    ]);
+  }
+
+  /* ------------------------------ certificado ------------------------------ */
+
+  /*
+   * Bloco no formato PEM montado a partir dos dados do documento, apenas para
+   * reproduzir a aparência da tela de certificado do aplicativo original.
+   * Não é um certificado de verdade: não há par de chaves, nem assinatura,
+   * nem autoridade certificadora envolvida — são caracteres derivados do
+   * próprio conteúdo por uma congruência linear.
+   */
+  function blocoPem(e) {
+    var alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    var semente = parseInt(hashCurto(e.numero + e.cpf + e.validade), 16) || 1;
+    var linhas = [], i, j, linha;
+    for (i = 0; i < 18; i++) {
+      linha = '';
+      for (j = 0; j < 64; j++) {
+        semente = (semente * 1103515245 + 12345) & 0x7fffffff;
+        linha += alfabeto[(semente >>> 16) & 63];
+      }
+      linhas.push(linha);
+    }
+    return linhas;
+  }
+
+  function textoPem(e) {
+    return '-----BEGIN CERTIFICATE-----\n' + blocoPem(e).join('\n') + '\n-----END CERTIFICATE-----';
+  }
+
+  function renderCertificado() {
+    var e = estado.estudante;
+    if (!e) { ir('inicio'); return; }
+
+    $('#cert-texto').innerHTML = e.entidade + ' atesta que <b>' + e.nome
+      + '</b> é estudante e está regularmente matriculado(a) em ' + e.curso
+      + ' da instituição ' + e.instituicao;
+
+    $('#pem-corpo').innerHTML =
+      '<span class="cerca">-----BEGIN CERTIFICATE-----</span>'
+      + blocoPem(e).join('<br>')
+      + '<span class="cerca">-----END CERTIFICATE-----</span>';
+
+    $('#cert-dados').innerHTML = linhasDados([
+      ['Titular', e.nome],
+      ['Emissor', e.entidade],
+      ['Nº do documento', e.numero],
+      ['Código de uso', codigoDeUso(e)],
+      ['Válido até', dataBr(e.validade)]
     ]);
   }
 
@@ -411,7 +468,9 @@
   /* ------------------- documento na Carteira do iPhone ------------------ */
 
   function atualizarBotaoWallet() {
-    $('#btn-wallet-txt').textContent = estado.naCarteira ? 'Já está na Carteira' : 'Adicionar à Carteira';
+    $('#btn-wallet-txt').textContent = estado.naCarteira
+      ? 'Já está na Carteira da Apple'
+      : 'Adicionar à Carteira da Apple';
     $('#btn-wallet').disabled = !!estado.naCarteira;
   }
 
@@ -423,7 +482,7 @@
     $('#passe-inst').textContent = e.instituicao;
     $('#passe-codigo').textContent = codigoDeUso(e);
     $('#passe-validade').textContent = dataBr(e.validade);
-    desenharQr($('#passe-qr'), cargaQr(e, tokenAtual()), 0);
+    desenharQr($('#passe-qr'), cargaQrCurta(e, tokenAtual()), 0);
 
     $('#folha-fundo').classList.add('aberta');
     $('#folha-wallet').classList.add('aberta');
@@ -456,6 +515,11 @@
   }
 
   // Conteúdo do QR: propositalmente marcado como réplica sem validade.
+  // versão reduzida, para o QR pequeno impresso no cartão
+  function cargaQrCurta(e, tk) {
+    return [PREFIXO_QR, numeroCurto(e), tk].join('|');
+  }
+
   function cargaQr(e, tk) {
     return [
       PREFIXO_QR,
@@ -729,10 +793,19 @@
     });
 
     /* --- carteirinha --- */
-    $('#btn-virar').addEventListener('click', function () {
-      $('#carteira').classList.toggle('virada');
+    $('#btn-apresentar-topo').addEventListener('click', function () { ir('apresentar'); });
+    $('#btn-copiar-pem').addEventListener('click', function () {
+      var e = estado.estudante;
+      if (!e) return;
+      var texto = textoPem(e);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto)
+          .then(function () { aviso('Certificado copiado.'); })
+          .catch(function () { aviso('Não foi possível copiar.'); });
+      } else {
+        aviso('Cópia não disponível neste navegador.');
+      }
     });
-    $('#carteira').addEventListener('click', function () { this.classList.toggle('virada'); });
 
     /* --- Carteira do iPhone --- */
     $('#btn-wallet').addEventListener('click', abrirFolhaWallet);
@@ -865,7 +938,7 @@
   }
 
   function iniciar() {
-    if (window.console && console.info) console.info(AVISO_REPLICA);
+    if (window.console && console.info) console.info(AVISO_REPLICA + ' USO: ' + USO + '.');
     document.documentElement.setAttribute('data-replica', 'academica');
     carregar();
     aplicarTema();
@@ -873,6 +946,12 @@
     if (!location.hash) location.hash = estado.logado ? '#/inicio' : '#/login';
     aplicarRota();
     registrarServiceWorker();
+
+    var splash = document.getElementById('splash');
+    if (splash) {
+      setTimeout(function () { splash.classList.add('saindo'); }, 650);
+      setTimeout(function () { splash.remove(); }, 1150);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', iniciar);
