@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Barilife — Carteirinha Digital</title>
+<meta name="description" content="Réplica acadêmica do aplicativo Barilife: carteirinha digital do paciente bariátrico, Rede Amiga, locais, mídias, agenda e acompanhamento.">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3D74C1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D141F" media="(prefers-color-scheme: dark)">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Barilife">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<!-- ===================== Ícones reutilizáveis ========================== -->
+<svg style="display:none" aria-hidden="true">
+  <!-- marca do Barilife: contornos vetorizados a partir do ícone oficial -->
+  <symbol id="i-marca" viewBox="0 0 100 85.41">
+    <path d="M43.72 15.64C42.60 15.62 38.99 15.56 37.25 15.64C35.52 15.72 35.03 15.79 33.31 16.13C31.60 16.47 28.56 17.19 26.97 17.67C25.38 18.15 24.79 18.64 23.77 19.03C22.74 19.42 21.63 19.67 20.81 20.01C19.99 20.35 19.35 20.75 18.84 21.06C18.34 21.37 18.37 21.54 17.80 21.86C17.22 22.18 16.75 22.03 15.39 22.97C14.04 23.90 11.21 26.05 9.67 27.46C8.13 28.88 7.16 30.16 6.16 31.47C5.15 32.77 4.44 33.73 3.63 35.28C2.82 36.83 1.80 39.41 1.29 40.76C0.79 42.12 0.83 42.30 0.62 43.41C0.40 44.52 0.10 45.49 0.00 47.41C-0.10 49.33 -0.10 53.02 0.00 54.93C0.10 56.83 0.36 57.58 0.62 58.87C0.87 60.15 1.09 61.19 1.54 62.62C1.99 64.06 2.50 65.76 3.33 67.49C4.15 69.21 5.60 71.64 6.47 72.97C7.33 74.29 7.56 74.44 8.50 75.43C9.43 76.43 10.59 77.72 12.07 78.94C13.55 80.16 15.65 81.76 17.36 82.76C19.08 83.75 21.22 84.52 22.35 84.91C23.48 85.30 19.64 85.06 24.14 85.10C28.63 85.14 45.03 85.18 49.32 85.16C53.61 85.14 49.82 85.08 49.88 84.98C49.94 84.87 50.69 85.08 49.69 84.54C48.70 84.01 45.58 82.63 43.90 81.77C42.23 80.92 40.99 80.22 39.66 79.43C38.32 78.64 36.68 77.57 35.90 77.03C35.12 76.50 35.34 76.48 34.98 76.23C34.61 75.99 34.53 76.18 33.68 75.55C32.83 74.93 31.29 73.79 29.86 72.48C28.44 71.16 26.15 68.76 25.12 67.67C24.10 66.58 24.26 66.71 23.71 65.95C23.15 65.19 22.41 64.15 21.80 63.12C21.18 62.08 20.56 61.03 20.01 59.73C19.47 58.43 18.88 56.60 18.53 55.30C18.19 53.99 18.02 53.55 17.92 51.91C17.82 50.27 17.78 47.31 17.92 45.44C18.06 43.58 18.38 42.32 18.78 40.70C19.18 39.08 19.57 37.44 20.32 35.71C21.07 33.99 22.47 31.67 23.28 30.36C24.09 29.04 24.11 28.98 25.18 27.83C26.26 26.68 28.75 24.36 29.74 23.46C30.74 22.56 29.93 23.17 31.16 22.41C32.39 21.65 35.03 19.94 37.13 18.90C39.23 17.87 42.64 16.72 43.78 16.19C44.92 15.67 43.98 15.86 43.97 15.76C43.96 15.67 44.84 15.66 43.72 15.64Z"/>
+    <path d="M33.99 1.35C33.46 1.51 32.71 1.49 33.93 1.66C35.15 1.84 39.36 2.17 41.32 2.40C43.28 2.64 44.46 2.84 45.69 3.08C46.92 3.31 47.80 3.54 48.71 3.82C49.61 4.09 50.04 4.26 51.11 4.74C52.18 5.22 54.02 6.08 55.11 6.71C56.20 7.35 56.77 7.80 57.64 8.56C58.50 9.32 59.62 10.44 60.28 11.27C60.95 12.10 61.24 12.76 61.64 13.55C62.04 14.34 62.38 14.90 62.68 16.01C62.99 17.12 63.38 18.98 63.49 20.20C63.59 21.42 63.43 22.43 63.30 23.34C63.17 24.24 63.03 24.73 62.68 25.62C62.34 26.50 61.78 27.64 61.21 28.63C60.63 29.63 59.80 30.79 59.24 31.59C58.67 32.39 58.81 32.40 57.82 33.44C56.83 34.47 54.07 37.04 53.33 37.81C52.58 38.58 52.91 38.15 53.33 38.05C53.74 37.96 54.67 37.74 55.79 37.25C56.91 36.77 58.98 35.77 60.04 35.16C61.09 34.55 61.64 33.94 62.13 33.62C62.62 33.30 62.58 33.57 62.99 33.25C63.40 32.93 64.17 32.05 64.59 31.71C65.01 31.37 65.10 31.31 65.52 31.22C65.94 31.13 66.51 30.98 67.12 31.16C67.72 31.33 68.35 31.76 69.15 32.27C69.95 32.77 71.17 33.62 71.92 34.17C72.67 34.73 72.81 34.82 73.65 35.59C74.48 36.36 76.13 37.98 76.91 38.79C77.69 39.60 77.75 39.70 78.33 40.46C78.90 41.22 79.93 42.61 80.36 43.35C80.79 44.09 80.55 44.09 80.91 44.89C81.27 45.69 82.15 47.29 82.51 48.15C82.87 49.01 82.85 48.91 83.07 50.06C83.28 51.21 83.68 53.53 83.81 55.05C83.93 56.57 83.89 58.03 83.81 59.17C83.72 60.32 83.54 61.03 83.31 61.95C83.09 62.86 82.80 63.80 82.45 64.66C82.10 65.51 81.56 66.47 81.22 67.06C80.88 67.64 80.57 67.90 80.42 68.17C80.26 68.43 80.54 68.26 80.30 68.66C80.05 69.06 79.66 69.69 78.94 70.57C78.22 71.44 77.16 72.72 75.99 73.89C74.82 75.06 73.58 76.30 71.92 77.59C70.26 78.87 67.80 80.47 66.01 81.59C64.22 82.71 62.24 83.74 61.21 84.30C60.17 84.85 60.04 84.76 59.79 84.91C59.54 85.07 59.39 85.14 59.73 85.22C60.07 85.30 56.91 85.40 61.82 85.41C66.74 85.42 84.06 85.96 89.22 85.28C94.39 84.61 92.14 82.13 92.80 81.34C93.45 80.55 92.95 80.85 93.17 80.54C93.38 80.23 93.83 79.87 94.09 79.50C94.35 79.12 94.48 78.60 94.70 78.26C94.93 77.92 95.13 77.96 95.44 77.46C95.76 76.97 96.10 76.42 96.61 75.31C97.13 74.20 98.03 72.24 98.52 70.81C99.01 69.39 99.32 68.40 99.57 66.75C99.82 65.10 99.97 62.75 100.00 60.90C100.03 59.05 99.93 57.05 99.75 55.67C99.58 54.28 99.49 53.93 98.95 52.59C98.42 51.24 97.58 49.24 96.55 47.60C95.53 45.96 94.10 44.21 92.80 42.73C91.49 41.26 89.63 39.54 88.73 38.73C87.83 37.92 87.81 38.20 87.38 37.87C86.95 37.54 87.32 37.53 86.15 36.76C84.98 35.99 81.39 33.91 80.36 33.25C79.32 32.59 81.00 33.37 79.93 32.82C78.85 32.27 75.63 30.70 73.89 29.93C72.16 29.16 70.25 28.68 69.52 28.20C68.79 27.72 69.17 27.89 69.52 27.03C69.87 26.17 71.13 24.15 71.61 23.03C72.10 21.91 72.22 21.09 72.41 20.32C72.61 19.55 72.72 19.22 72.78 18.41C72.84 17.60 72.95 16.58 72.78 15.46C72.62 14.33 72.36 12.84 71.80 11.64C71.23 10.44 70.13 9.14 69.40 8.25C68.67 7.36 68.07 6.87 67.43 6.28C66.78 5.70 66.57 5.41 65.52 4.74C64.46 4.07 62.41 2.86 61.08 2.28C59.76 1.69 58.89 1.56 57.57 1.23C56.26 0.90 54.72 0.51 53.20 0.31C51.68 0.10 50.34 0.02 48.46 0.00C46.58 -0.02 43.82 0.06 41.93 0.18C40.05 0.31 38.45 0.54 37.13 0.74C35.81 0.93 34.52 1.20 33.99 1.35Z"/>
+  </symbol>
+  <symbol id="i-midias" viewBox="0 0 24 24"><path d="M4 8h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Zm1-3h14a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Zm2-3h10a1 1 0 0 1 0 2H7a1 1 0 0 1 0-2Z"/></symbol>
+  <symbol id="i-locais" viewBox="0 0 24 24"><path d="M12 2a7.5 7.5 0 0 0-7.5 7.5C4.5 15.4 12 22.5 12 22.5s7.5-7.1 7.5-13A7.5 7.5 0 0 0 12 2Zm0 10.2a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Z"/></symbol>
+  <symbol id="i-pessoa" viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.6-8 5.8V22h16v-2.2c0-3.2-3.6-5.8-8-5.8Z"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24"><path d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v2H3V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1ZM3 10h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Zm4 3v2h2v-2H7Zm4 0v2h2v-2h-2Zm4 0v2h2v-2h-2Zm-8 4v2h2v-2H7Zm4 0v2h2v-2h-2Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2Zm0 5h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2Zm0 5h12a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2Z"/></symbol>
+  <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.6-3.3 2.4a1 1 0 1 1-1.2-1.6L11 11.5V6.8a1 1 0 1 1 2 0v5.8Z"/></symbol>
+  <symbol id="i-grafico" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10h-10V2Zm2-0v8h8a10 10 0 0 0-8-8Z"/></symbol>
+  <symbol id="i-equipe" viewBox="0 0 24 24"><path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8 13c-3.3 0-6 1.9-6 4.3V20h12v-2.7c0-2.4-2.7-4.3-6-4.3Zm8 0c-.8 0-1.6.1-2.3.3 1.4 1.1 2.3 2.5 2.3 4v2.7h6v-2.4c0-2.2-2.7-3.6-6-3.6Z"/></symbol>
+  <symbol id="i-sino2" viewBox="0 0 24 24"><path d="M12 2a6 6 0 0 0-6 6c0 5-2 6.5-2 6.5h16S18 13 18 8a6 6 0 0 0-6-6Zm-1.7 17a2 2 0 0 0 3.4 0h-3.4Z"/></symbol>
+  <symbol id="i-chave" viewBox="0 0 24 24"><path d="M14 3a7 7 0 0 0-6.3 10L2 18.7V22h3.3l1-1v-2h2v-2h2l1.3-1.3A7 7 0 1 0 14 3Zm2.5 5.5a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6Z"/></symbol>
+  <symbol id="i-ajuda" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm.1 15.6a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm1.9-6.2c-.8.6-1 .9-1 1.6v.3h-2v-.4c0-1.4.6-2.2 1.6-2.9.7-.5 1-.9 1-1.5 0-.7-.5-1.2-1.4-1.2-.8 0-1.4.4-1.7 1.2l-1.8-.8C9.2 6.4 10.4 5.6 12.2 5.6c2 0 3.4 1.1 3.4 2.9 0 1.2-.6 2-1.6 2.9Z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2h7l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L13 3.5Z"/></symbol>
+  <symbol id="i-balao" viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></symbol>
+  <symbol id="i-balanca" viewBox="0 0 24 24"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 2.6a4 4 0 0 0-3.9 3.2h7.8A4 4 0 0 0 12 5.6Zm0 1.3.9 2h-2.5l1.6-2Z"/></symbol>
+  <symbol id="i-jornal" viewBox="0 0 24 24"><path d="M4 4h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1Zm2 3v4h6V7H6Zm0 6v1.5h9V13H6Zm0 3.5V18h9v-1.5H6Zm8-9.5v4h3V7h-3Z"/></symbol>
+  <symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.4l6.5-.9L12 2.6Z"/></symbol>
+  <symbol id="i-prancheta" viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V3a1 1 0 0 1 1-1Zm1 2v1h4V4h-4Z"/></symbol>
+  <symbol id="i-corpo" viewBox="0 0 24 24"><path d="M12 1.8a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM4 7.4h16a1 1 0 0 1 0 2h-5.3l1.6 5.1a1.1 1.1 0 0 1-2.1.7l-1-3.2h-.4V21a1.1 1.1 0 0 1-2.2 0v-9h-.4l-1 3.2a1.1 1.1 0 0 1-2.1-.7l1.6-5.1H4a1 1 0 1 1 0-2Z"/></symbol>
+  <symbol id="i-estomago" viewBox="0 0 24 24"><path d="M8.5 2.5a1.4 1.4 0 0 1 1.4 1.4v3.4c0 .9.7 1.6 1.6 1.6 2.9 0 5.3 2.3 5.3 5.3 0 4.2-3.4 7.6-7.6 7.6-2.7 0-4.6-1.3-5.7-3a1.4 1.4 0 0 1 2.3-1.5c.7 1 1.7 1.7 3.4 1.7 2.6 0 4.8-2.1 4.8-4.8 0-1.4-1.1-2.5-2.5-2.5A4.4 4.4 0 0 1 7.1 7.3V3.9c0-.8.6-1.4 1.4-1.4Z"/></symbol>
+  <symbol id="i-hospital" viewBox="0 0 24 24"><path d="M5 3h14a1 1 0 0 1 1 1v17H4V4a1 1 0 0 1 1-1Zm6 3v2H9v2h2v2h2v-2h2V8h-2V6h-2Zm-3 9v2h2v-2H8Zm6 0v2h2v-2h-2Z"/></symbol>
+  <symbol id="i-interrog" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm.1 15.6a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm1.9-6.2c-.8.6-1 .9-1 1.6v.3h-2v-.4c0-1.4.6-2.2 1.6-2.9.7-.5 1-.9 1-1.5 0-.7-.5-1.2-1.4-1.2-.8 0-1.4.4-1.7 1.2l-1.8-.8C9.2 6.4 10.4 5.6 12.2 5.6c2 0 3.4 1.1 3.4 2.9 0 1.2-.6 2-1.6 2.9Z"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><path d="M4 6.5a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Zm0 6.9a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Zm0 6.9a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8ZM8.6 4.2h11.8a1 1 0 0 1 0 2H8.6a1 1 0 0 1 0-2Zm0 6.8h11.8a1 1 0 0 1 0 2H8.6a1 1 0 0 1 0-2Zm0 6.8h11.8a1 1 0 0 1 0 2H8.6a1 1 0 0 1 0-2Z"/></symbol>
+  <symbol id="i-filtro" viewBox="0 0 24 24"><path d="M3 6h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2Zm3 5h12a1 1 0 0 1 0 2H6a1 1 0 0 1 0-2Zm3 5h6a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2Z"/></symbol>
+  <symbol id="i-ajustes" viewBox="0 0 24 24"><path d="M3 6.6h8.2a3.1 3.1 0 0 1 5.9 0H21a1 1 0 0 1 0 2h-3.9a3.1 3.1 0 0 1-5.9 0H3a1 1 0 0 1 0-2Zm0 8.8h3.9a3.1 3.1 0 0 1 5.9 0H21a1 1 0 0 1 0 2h-8.2a3.1 3.1 0 0 1-5.9 0H3a1 1 0 0 1 0-2Z"/></symbol>
+  <symbol id="i-mira" viewBox="0 0 24 24"><path d="M12 1.5a1 1 0 0 1 1 1v1.6a8.1 8.1 0 0 1 6.9 6.9h1.6a1 1 0 0 1 0 2h-1.6a8.1 8.1 0 0 1-6.9 6.9v1.6a1 1 0 0 1-2 0v-1.6a8.1 8.1 0 0 1-6.9-6.9H2.5a1 1 0 0 1 0-2h1.6A8.1 8.1 0 0 1 11 4.1V2.5a1 1 0 0 1 1-1Zm0 4.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0 3.4a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2.5a3.2 3.2 0 0 1 3.2 3.2v6a3.2 3.2 0 0 1-6.4 0v-6A3.2 3.2 0 0 1 12 2.5ZM6 11a1 1 0 0 1 1 1 5 5 0 0 0 10 0 1 1 0 0 1 2 0 7 7 0 0 1-6 6.9v2.1h2.4a1 1 0 0 1 0 2H8.6a1 1 0 0 1 0-2H11v-2.1A7 7 0 0 1 5 12a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-externo" viewBox="0 0 24 24"><path d="M14 3h6a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V6.4l-8.3 8.3a1 1 0 0 1-1.4-1.4L17.6 5H14a1 1 0 0 1 0-2ZM5 6h5a1 1 0 0 1 0 2H6v10h10v-4a1 1 0 0 1 2 0v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-altura" viewBox="0 0 24 24"><path d="M12 2 8.5 6h2.2v12H8.5L12 22l3.5-4h-2.2V6h2.2L12 2Z"/></symbol>
+  <symbol id="i-envelope" viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v.4l-10 5.6L2 6.4V6a1 1 0 0 1 1-1Zm-1 3.7V18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8.7l-9.5 5.3a1 1 0 0 1-1 0L2 8.7Z"/></symbol>
+  <symbol id="i-fone" viewBox="0 0 24 24"><path d="M7.5 2h9A2.5 2.5 0 0 1 19 4.5v15A2.5 2.5 0 0 1 16.5 22h-9A2.5 2.5 0 0 1 5 19.5v-15A2.5 2.5 0 0 1 7.5 2Zm2 2v.6h5V4h-5Zm2.5 13.4a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z"/></symbol>
+  <symbol id="i-bolo" viewBox="0 0 24 24"><path d="M12 1.5c.9 1 1.5 1.8 1.5 2.5a1.5 1.5 0 0 1-3 0c0-.7.6-1.5 1.5-2.5ZM7 6h10a2 2 0 0 1 2 2v2.4c-.8.6-1.6.9-2.3.9-1 0-1.6-.5-2.3-1-.6-.5-1.3-1-2.4-1s-1.8.5-2.4 1c-.7.5-1.3 1-2.3 1-.7 0-1.5-.3-2.3-.9V8a2 2 0 0 1 2-2Zm-2 6.9c.8.4 1.6.6 2.3.6 1.3 0 2.2-.6 2.9-1.1.6-.4 1-.7 1.8-.7s1.2.3 1.8.7c.7.5 1.6 1.1 2.9 1.1.7 0 1.5-.2 2.3-.6V20a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7.1Z"/></symbol>
+  <symbol id="i-cracha" viewBox="0 0 24 24"><path d="M9 2h6v1.5h3A2 2 0 0 1 20 5.5v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h3V2Zm3 6.5a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8ZM7.6 18.5h8.8c0-2-2-3.3-4.4-3.3s-4.4 1.3-4.4 3.3Z"/></symbol>
+  <symbol id="i-despertador" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm1 8.4-2.8 2a1 1 0 0 1-1.2-1.6l2-1.4V7.6a1 1 0 1 1 2 0v4.8ZM5.2 1.7 7 3.3 4.4 6.2 2.6 4.6l2.6-2.9Zm13.6 0 2.6 2.9-1.8 1.6L17 3.3l1.8-1.6Z"/></symbol>
+</svg>
+
+<!-- ===================== Entrada / cadastro =========================== -->
+<section id="entrada" class="on" aria-label="Entrada">
+  <div class="marca">
+    <div class="selo"><svg viewBox="0 0 48 48"><use href="#i-marca"/></svg></div>
+    <div class="nome">BARILIFE</div>
+  </div>
+
+  <div class="passo on" id="passo-1">
+    <div class="hero">
+      <h2>A carteirinha digital do paciente bariátrico.</h2>
+      <p>Identificação, Rede Amiga de descontos, sua equipe multidisciplinar, agenda de consultas e conteúdo de acompanhamento.</p>
+    </div>
+    <div class="itens" style="margin-bottom:22px">
+      <div class="item"><span class="cx">🪪</span><span class="corpo"><span class="t">Carteirinha digital</span><span class="s">Com QR Code que vale por 10 minutos, exclusivo para uso digital.</span></span></div>
+      <div class="item"><span class="cx">⭐</span><span class="corpo"><span class="t">Rede Amiga</span><span class="s">Descontos em restaurantes, academias, farmácias e clínicas.</span></span></div>
+      <div class="item"><span class="cx">👥</span><span class="corpo"><span class="t">COESAS</span><span class="s">Sua equipe multidisciplinar reunida em um só lugar.</span></span></div>
+    </div>
+    <button class="btn cheio" data-ir="2">Criar minha conta</button>
+    <button class="btn cheio neutro" id="btn-demo" style="margin-top:10px">Ver uma demonstração com dados fictícios</button>
+  </div>
+
+  <div class="passo" id="passo-2">
+    <div class="progresso"><i class="on"></i><i></i><i></i></div>
+    <div class="hero"><h2>Seus dados</h2><p>Ficam salvos apenas neste aparelho.</p></div>
+    <form id="form-1" novalidate>
+      <div class="campo"><label for="f-nome">Nome completo</label><input id="f-nome" required autocomplete="name" placeholder="Como aparece no seu documento"></div>
+      <div class="campo"><label for="f-email">E-mail</label><input id="f-email" type="email" required inputmode="email" placeholder="voce@email.com"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-nasc">Nascimento</label><input id="f-nasc" type="date" required></div>
+        <div class="campo"><label for="f-sexo">Sexo</label><select id="f-sexo"></select></div>
+      </div>
+      <div class="campo"><label for="f-cpf">CPF</label><input id="f-cpf" required inputmode="numeric" maxlength="14" placeholder="000.000.000-00"><div class="ajuda">Aparece na frente da carteirinha e é usado pelo cirurgião para conferir o cadastro.</div></div>
+      <div class="campo"><label for="f-tel">Telefone</label><input id="f-tel" type="tel" required inputmode="numeric" maxlength="15" placeholder="(00) 00000-0000"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-cidade">Cidade</label><input id="f-cidade" required placeholder="São Paulo"></div>
+        <div class="campo"><label for="f-uf">UF</label><select id="f-uf"></select></div>
+      </div>
+      <button class="btn cheio" type="submit">Continuar</button>
+      <button class="btn cheio neutro" type="button" data-ir="1" style="margin-top:10px">Voltar</button>
+    </form>
+  </div>
+
+  <div class="passo" id="passo-3">
+    <div class="progresso"><i class="on"></i><i class="on"></i><i></i></div>
+    <div class="hero"><h2>Sua cirurgia</h2><p>O cirurgião confere estes dados antes de liberar a carteirinha.</p></div>
+    <form id="form-2" novalidate>
+      <div class="campo"><label for="f-cirurgia">Tipo de cirurgia</label><select id="f-cirurgia"></select></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-mes">Mês/ano da cirurgia</label><input id="f-mes" type="month" required></div>
+        <div class="campo"><label for="f-alt">Altura (cm)</label><input id="f-alt" type="number" min="100" max="250" inputmode="numeric" placeholder="158"></div>
+      </div>
+      <div class="dupla">
+        <div class="campo"><label for="f-pi">Peso antes (kg)</label><input id="f-pi" type="number" step="0.1" inputmode="decimal" placeholder="125"></div>
+        <div class="campo"><label for="f-pa">Peso atual (kg)</label><input id="f-pa" type="number" step="0.1" inputmode="decimal" placeholder="78"></div>
+      </div>
+      <div class="campo"><label for="f-cirurgiao">Cirurgião responsável</label><input id="f-cirurgiao" required placeholder="Dra. Helena Marques Vidal"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-crm">CRM</label><input id="f-crm" placeholder="CRM-SP 118342"></div>
+        <div class="campo"><label for="f-hosp">Hospital</label><input id="f-hosp" placeholder="Hospital Vitória"></div>
+      </div>
+      <button class="btn cheio" type="submit">Continuar</button>
+      <button class="btn cheio neutro" type="button" data-ir="2" style="margin-top:10px">Voltar</button>
+    </form>
+  </div>
+
+  <div class="passo" id="passo-4">
+    <div class="progresso"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <div class="hero"><h2>Sua foto</h2><p>É a foto que aparece na frente da carteirinha. Prefira um retrato de frente, com o rosto centralizado.</p></div>
+
+    <div class="foto-passo">
+      <div class="previa" id="previa-foto"><span>Sem foto</span></div>
+      <label class="btn vazio" for="f-foto">Escolher foto</label>
+      <input id="f-foto" type="file" accept="image/*" hidden>
+      <button class="btn neutro pequeno" id="f-foto-limpar" hidden>Remover</button>
+    </div>
+
+    <button class="btn cheio" id="f-concluir" style="margin-top:24px">Enviar para validação</button>
+    <button class="btn cheio neutro" type="button" data-ir="3" style="margin-top:10px">Voltar</button>
+    <p class="rodape-aviso"><b>Réplica acadêmica.</b> Não é o aplicativo oficial da SBCBM. Trabalho de curso: a foto e os dados ficam salvos apenas neste aparelho e não são enviados para nenhum servidor.</p>
+  </div>
+</section>
+
+<!-- ===================== Aplicativo =================================== -->
+<div id="app" hidden>
+
+  <header class="topbar" id="topbar" hidden>
+    <button class="voltar" id="btn-voltar" hidden aria-label="Voltar">‹</button>
+    <h1 id="titulo"></h1>
+    <button class="acao" id="btn-acao" hidden></button>
+  </header>
+
+  <main id="main">
+
+    <!-- ---------------- Início ---------------- -->
+    <section class="tela on" id="t-inicio">
+      <div class="cabeca">
+        <div class="topo">
+          <div class="logo"><svg viewBox="0 0 48 48"><use href="#i-marca"/></svg><span>BARILIFE</span></div>
+          <button class="sino" id="btn-sino" aria-label="Notificações"><svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><path d="M18 8.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5Z"/><path d="M10.3 19a2 2 0 0 0 3.4 0"/></svg><b id="sino-n">3</b></button>
+        </div>
+        <div class="resumo" id="resumo"></div>
+      </div>
+      <div class="grade" id="grade"></div>
+      <div style="padding:0 16px calc(20px + var(--base))">
+        <div id="banner-instalar"></div>
+        <p class="rodape-aviso"><b>Réplica acadêmica do Barilife.</b> Trabalho de curso, sem vínculo com a SBCBM. Profissionais e estabelecimentos são fictícios.</p>
+      </div>
+    </section>
+
+    <!-- ---------------- Carteirinha digital ---------------- -->
+    <section class="tela" id="t-carteirinha">
+      <div class="cracha-area">
+        <div class="aviso-ambar">
+          <span class="bola">!</span>
+          <span class="tx"><b>Não imprima a carteirinha</b>O QRCode da carteirinha é válido somente por 10 minutos, exclusivo para o uso digital.</span>
+        </div>
+        <div id="cracha"></div>
+        <div id="contagem"></div>
+        <div id="pendencia"></div>
+        <p class="rodape-aviso" style="margin-top:18px"><b>Réplica acadêmica.</b>
+          Esta não é a carteirinha oficial da SBCBM. Trabalho de curso, sem validade como documento.</p>
+      </div>
+    </section>
+
+    <!-- ---------------- Mídias ---------------- -->
+    <section class="tela" id="t-midias">
+      <div class="corpo">
+        <div class="busca"><svg><use href="#i-busca"/></svg>
+          <input id="busca-midia" placeholder="Pesquisar" aria-label="Pesquisar mídias"></div>
+        <div class="abas" id="abas-midias" hidden>
+          <button class="on" data-tipo="todos">Tudo</button>
+          <button data-tipo="dica">Dicas</button>
+          <button data-tipo="receita">Receitas</button>
+          <button data-tipo="artigo">Artigos</button>
+          <button data-tipo="video">Vídeos</button>
+        </div>
+        <div class="cards" id="lista-midias"></div>
+      </div>
+    </section>
+
+    <!-- ---------------- Locais ---------------- -->
+    <section class="tela" id="t-locais">
+      <div class="segmentado" role="tablist">
+        <button class="on" data-vista="mapa" role="tab"><svg viewBox="0 0 24 24"><use href="#i-locais"/></svg>Mapa</button>
+        <button data-vista="lista" role="tab"><svg viewBox="0 0 24 24"><use href="#i-lista"/></svg>Lista</button>
+      </div>
+
+      <div class="mapa-caixa" id="mapa-caixa">
+        <div class="mapa-tela"></div>
+        <div class="mapa-zoom">
+          <button id="mapa-mais" aria-label="Aproximar">+</button>
+          <span></span>
+          <button id="mapa-menos" aria-label="Afastar">−</button>
+        </div>
+        <button class="mapa-eu" id="mapa-eu" aria-label="Centralizar em mim">
+          <svg viewBox="0 0 24 24"><use href="#i-mira"/></svg>
+        </button>
+        <div class="mapa-aviso"><span class="bola">i</span>Encontre parceiros do Barilife próximos de você</div>
+      </div>
+
+      <div class="corpo" id="vista-lista" hidden>
+        <div class="busca"><svg><use href="#i-busca"/></svg>
+          <input id="busca-local" placeholder="Buscar profissional, hospital ou cidade" aria-label="Buscar local"></div>
+        <div class="chips" id="chips-local"></div>
+        <div class="itens" id="lista-locais"></div>
+      </div>
+    </section>
+
+    <!-- ---------------- Agenda ---------------- -->
+    <section class="tela" id="t-agenda">
+      <div class="corpo" id="corpo-agenda"></div>
+    </section>
+
+    <!-- ---------------- Menu ---------------- -->
+    <section class="tela" id="t-menu">
+      <div class="corpo">
+        <button class="perfil-card" id="card-perfil"></button>
+
+        <h2 class="sec">Minha saúde</h2>
+        <div class="linhas">
+          <button class="linha" data-abrir="dieta"><span class="ic"><svg><use href="#i-despertador"/></svg></span><span class="tx">Alerta de dieta</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="enquetes"><span class="ic"><svg><use href="#i-grafico"/></svg></span><span class="tx">Enquetes</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="coesas"><span class="ic"><svg><use href="#i-equipe"/></svg></span><span class="tx">COESAS (Minha Equipe Multidisciplinar)</span><span class="seta">›</span></button>
+        </div>
+
+        <h2 class="sec">Minha conta</h2>
+        <div class="linhas">
+          <button class="linha" data-abrir="dados"><span class="ic"><svg><use href="#i-corpo"/></svg></span><span class="tx">Meus dados</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="notificacoes"><span class="ic"><svg><use href="#i-sino2"/></svg></span><span class="tx">Notificações e Permissões</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="senha"><span class="ic"><svg><use href="#i-chave"/></svg></span><span class="tx">Trocar senha</span><span class="seta">›</span></button>
+        </div>
+
+        <h2 class="sec">Ajuda &amp; sobre</h2>
+        <div class="linhas">
+          <button class="linha" data-abrir="faq"><span class="ic"><svg><use href="#i-ajuda"/></svg></span><span class="tx">FAQ (Perguntas Frequentes)</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="sobre"><span class="ic"><svg><use href="#i-doc"/></svg></span><span class="tx">Sobre este aplicativo</span><span class="seta">›</span></button>
+          <button class="linha" data-abrir="sair"><span class="ic" style="background:var(--vermelho)"><svg><use href="#i-chave"/></svg></span><span class="tx">Apagar dados e sair</span><span class="seta">›</span></button>
+        </div>
+        <p class="rodape-aviso"><b>Réplica acadêmica.</b> Sem vínculo com a Sociedade Brasileira de Cirurgia Bariátrica e Metabólica. Dados fictícios, salvos só neste aparelho.</p>
+      </div>
+    </section>
+
+    <!-- ---------------- Telas internas ---------------- -->
+    <section class="tela" id="t-dados"><div class="corpo" id="corpo-dados"></div></section>
+    <section class="tela" id="t-documentos"><div class="corpo" id="corpo-documentos"></div></section>
+    <section class="tela" id="t-rede">
+      <div class="corpo">
+        <div class="busca"><svg><use href="#i-busca"/></svg>
+          <input id="busca-parceiro" placeholder="Buscar parceiro, bairro ou cidade" aria-label="Buscar parceiro"></div>
+        <div class="chips" id="chips-categoria"></div>
+        <div class="itens" id="lista-parceiros"></div>
+      </div>
+    </section>
+    <section class="tela" id="t-peso"><div class="corpo" id="corpo-peso"></div></section>
+    <section class="tela" id="t-chat"><div class="corpo" id="corpo-chat"></div></section>
+    <section class="tela" id="t-novidades"><div class="corpo" id="corpo-novidades"></div></section>
+    <section class="tela" id="t-enquetes"><div class="corpo" id="corpo-enquetes"></div></section>
+    <section class="tela" id="t-coesas"><div class="corpo" id="corpo-coesas"></div></section>
+    <section class="tela" id="t-dieta"><div class="corpo" id="corpo-dieta"></div></section>
+    <section class="tela" id="t-notificacoes"><div class="corpo" id="corpo-notificacoes"></div></section>
+    <section class="tela" id="t-senha"><div class="corpo" id="corpo-senha"></div></section>
+    <section class="tela" id="t-faq"><div class="corpo" id="corpo-faq"></div></section>
+    <section class="tela" id="t-sobre"><div class="corpo" id="corpo-sobre"></div></section>
+  </main>
+
+  <button class="baricast" id="btn-baricast" hidden>
+    <span class="mic"><svg viewBox="0 0 24 24"><use href="#i-mic"/></svg></span>
+    <span class="rot">BariCast <svg viewBox="0 0 24 24" class="ext"><use href="#i-externo"/></svg></span>
+  </button>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-aba="midias"><svg><use href="#i-midias"/></svg>Mídias</button>
+    <button data-aba="locais"><svg><use href="#i-locais"/></svg>Locais</button>
+    <div class="centro"><button class="bolha" data-aba="inicio" aria-label="Início"><svg><use href="#i-pessoa"/></svg></button></div>
+    <button data-aba="agenda"><svg><use href="#i-agenda"/></svg>Agenda</button>
+    <button data-aba="menu"><svg><use href="#i-menu"/></svg>Menu</button>
+  </nav>
+
+  <div class="folha-fundo" id="folha-fundo"></div>
+  <aside class="folha" id="folha" role="dialog" aria-modal="true">
+    <div class="puxador"></div>
+    <div class="conteudo" id="folha-conteudo"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script src="assets/js/qr.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/mapa.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
