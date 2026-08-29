@@ -24,6 +24,7 @@
     estudante: null,
     saldo: 0,
     extrato: [],
+    naCarteira: false,
     filtroCategoria: 'Todos',
     busca: ''
   };
@@ -41,7 +42,7 @@
     try {
       localStorage.setItem(CHAVE, JSON.stringify({
         logado: estado.logado, tema: estado.tema, estudante: estado.estudante,
-        saldo: estado.saldo, extrato: estado.extrato
+        saldo: estado.saldo, extrato: estado.extrato, naCarteira: estado.naCarteira
       }));
     } catch (e) {
       aviso('Não foi possível salvar neste aparelho.');
@@ -110,6 +111,12 @@
       h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
     }
     return h.toString(16).toUpperCase().padStart(8, '0');
+  }
+
+  // Código curto usado na conferência pelo validador da meia-entrada.
+  function codigoDeUso(e) {
+    var h = hashCurto(e.numero + e.cpf);
+    return 'DNE ' + h.slice(0, 4) + ' ' + h.slice(4, 8);
   }
 
   var temporizadorToast;
@@ -257,7 +264,7 @@
     $('#cart-validade').textContent = dataBr(e.validade);
     $('#cart-entidade').textContent = e.entidade;
     $('#cart-matricula').textContent = e.matricula;
-    $('#cart-numero').textContent = e.numero;
+    $('#cart-codigo').textContent = codigoDeUso(e);
 
     var selo = $('#selo-validade');
     selo.classList.toggle('vencido', expirado);
@@ -273,13 +280,15 @@
     desenharQr($('#verso-qr'), 'REPLICA-ACADEMICA|VERSO|' + e.numero + '|' + hashCurto(e.numero), 0);
 
     desenharQr($('#cart-qr'), cargaQr(e, tokenAtual()), 0);
+    atualizarBotaoWallet();
 
     $('#carteirinha-dados').innerHTML = linhasDados([
       ['Nome', e.nome], ['CPF', e.cpf], ['Nascimento', dataBr(e.nascimento)],
       ['Matrícula', e.matricula], ['Instituição', e.instituicao], ['Curso', e.curso],
       ['Nível', e.nivel], ['Entidade emissora', e.entidade],
       ['Emissão', dataBr(e.emissao)], ['Validade', dataBr(e.validade)],
-      ['Nº do documento', e.numero]
+      ['Nº do documento', e.numero], ['Código de uso', codigoDeUso(e)],
+      ['Certificação', 'Assinatura digital ITI']
     ]);
   }
 
@@ -377,6 +386,34 @@
     ]) : '<p class="vazio">Nenhum documento emitido.</p>';
   }
 
+  /* ------------------- documento na Carteira do iPhone ------------------ */
+
+  function atualizarBotaoWallet() {
+    $('#btn-wallet-txt').textContent = estado.naCarteira ? 'Já está na Carteira' : 'Adicionar à Carteira';
+    $('#btn-wallet').disabled = !!estado.naCarteira;
+  }
+
+  function abrirFolhaWallet() {
+    var e = estado.estudante;
+    if (!e) return;
+    $('#passe-foto').src = fotoDe(e);
+    $('#passe-nome').textContent = e.nome;
+    $('#passe-inst').textContent = e.instituicao;
+    $('#passe-codigo').textContent = codigoDeUso(e);
+    $('#passe-validade').textContent = dataBr(e.validade);
+    desenharQr($('#passe-qr'), cargaQr(e, tokenAtual()), 0);
+
+    $('#folha-fundo').classList.add('aberta');
+    $('#folha-wallet').classList.add('aberta');
+    $('#folha-wallet').setAttribute('aria-hidden', 'false');
+  }
+
+  function fecharFolhaWallet() {
+    $('#folha-fundo').classList.remove('aberta');
+    $('#folha-wallet').classList.remove('aberta');
+    $('#folha-wallet').setAttribute('aria-hidden', 'true');
+  }
+
   /* ==================== 5. QR CODE E TOKEN ROTATIVO ================== */
 
   var DURACAO_TOKEN = 60;          // segundos
@@ -400,7 +437,7 @@
   function cargaQr(e, tk) {
     return [
       'REPLICA-ACADEMICA-SEM-VALIDADE',
-      'DNE', e.numero, e.cpf, e.nome, e.instituicao, e.validade,
+      'DNE', codigoDeUso(e), e.numero, e.cpf, e.nome, e.instituicao, e.validade,
       tk, hashCurto(e.numero + tk)
     ].join('|');
   }
@@ -524,10 +561,11 @@
   }
 
   function montarPagamento() {
-    var valor = estado.estudante ? 25.00 : 35.00;
+    var valor = 45.00; // taxa praticada pelo documento oficial
     rascunho.valor = valor;
     $('#resumo-pedido').innerHTML = linhasDados([
       [estado.estudante ? 'Renovação do DNE' : 'Emissão do DNE', moeda(valor)],
+      ['Via digital', 'sem frete'],
       ['Estudante', $('#sol-nome').value || '—'],
       ['Instituição', $('#sol-inst').value || '—'],
       ['Validade prevista', dataBr(novaValidade())],
@@ -567,6 +605,7 @@
       creditoTransporte: estado.saldo
     };
     estado.logado = true;
+    estado.naCarteira = false; // documento novo precisa ser adicionado de novo
     salvar();
 
     $('#resumo-emitido').innerHTML = linhasDados([
@@ -663,6 +702,21 @@
       $('#carteira').classList.toggle('virada');
     });
     $('#carteira').addEventListener('click', function () { this.classList.toggle('virada'); });
+
+    /* --- Carteira do iPhone --- */
+    $('#btn-wallet').addEventListener('click', abrirFolhaWallet);
+    $('#btn-wallet-fechar').addEventListener('click', fecharFolhaWallet);
+    $('#folha-fundo').addEventListener('click', fecharFolhaWallet);
+    $('#btn-wallet-confirmar').addEventListener('click', function () {
+      estado.naCarteira = true;
+      salvar();
+      fecharFolhaWallet();
+      atualizarBotaoWallet();
+      aviso('Documento adicionado à Carteira (simulado).');
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') fecharFolhaWallet();
+    });
 
     /* --- apresentação --- */
     $('#btn-fechar-apresentar').addEventListener('click', function () {

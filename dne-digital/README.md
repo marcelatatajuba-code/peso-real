@@ -46,10 +46,11 @@ Não é preciso conta de desenvolvedor da Apple, nem Mac, nem pagar nada.
 |---|---|
 | **Login** | CPF com máscara e validação real dos dígitos verificadores, senha, entrada em modo demonstração |
 | **Início** | Saudação, resumo do documento, atalhos, benefícios em destaque |
-| **Carteirinha** | Documento com foto, dados, selo de validade, QR Code e brilho holográfico; vira em 3D para mostrar o verso |
+| **Carteirinha** | Documento com foto, dados, código de uso, selo de validade, QR Code e brilho holográfico; vira em 3D para mostrar o verso |
+| **Adicionar à Carteira** | Folha inferior que monta o passe no estilo da Carteira (Wallet) do iPhone, como o app oficial passou a permitir |
 | **Apresentar** | QR Code em tela cheia com token que se renova a cada 60 segundos e contador regressivo |
 | **Benefícios** | 12 parceiros fictícios, busca por texto, filtro por categoria e tela de detalhe com regras |
-| **Solicitar/Renovar** | Formulário em 5 passos: dados pessoais, instituição e curso, foto e comprovante, pagamento por Pix simulado, emissão |
+| **Solicitar/Renovar** | Formulário em 5 passos: dados pessoais, instituição e curso, foto e comprovante, pagamento por Pix simulado (taxa de R$ 45, a mesma do documento oficial), emissão |
 | **Transporte** | Saldo do bilhete estudante, recarga simulada e extrato |
 | **ISIC** | Versão internacional do cartão, no formato paisagem |
 | **Perfil** | Dados, troca de foto, tema claro/escuro, sair e apagar dados |
@@ -105,24 +106,36 @@ independente (`jsQR`), que devolveu exatamente o texto de origem em todos os cas
 O CPF não é conferido só pelo formato: a função `cpfValido()` calcula os dois dígitos
 verificadores pelo módulo 11 e rejeita sequências repetidas, como o algoritmo oficial.
 
-### 3. Token rotativo
+### 3. Regras do documento real reproduzidas
+
+- **Validade até 31 de março do ano seguinte ao da emissão**, como determina o art. 1º,
+  § 6º da Lei nº 12.933/2013 — é o que a função `novaValidade()` calcula, em vez de somar
+  365 dias.
+- **Entidade emissora definida pelo nível de ensino**: UBES para ensino médio e técnico,
+  UNE para o superior, ANPG para a pós-graduação.
+- **Código de uso** curto no cartão, além do número longo do documento: no fluxo real, a
+  bilheteria confere o QR Code *ou* esse código no validador oficial da meia-entrada.
+- **Taxa de R$ 45** na emissão e na renovação.
+- Menção à **certificação digital do ITI**, que é o que dá fé pública ao documento oficial.
+
+### 4. Token rotativo
 
 O conteúdo do QR Code carrega um código de verificação que é sorteado a cada 60 segundos
 (`crypto.getRandomValues`). É o mesmo princípio usado por documentos digitais para que uma
 captura de tela perca a validade rapidamente. O contador na tela mostra o tempo restante.
 
-### 4. PWA e funcionamento offline
+### 5. PWA e funcionamento offline
 
 `manifest.webmanifest` descreve o app para o sistema (nome, ícones, cor, modo tela cheia)
 e `sw.js` guarda todos os arquivos em cache na instalação, usando a estratégia
 *cache-first*: o app responde do cache e só busca na rede o que não tiver.
 
-### 5. Persistência local
+### 6. Persistência local
 
 Todo o estado — documento, foto, saldo, tema — fica no `localStorage` do próprio aparelho,
 em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projeto.
 
-### 6. Cuidados de interface para iOS
+### 7. Cuidados de interface para iOS
 
 - `viewport-fit=cover` mais `env(safe-area-inset-*)` para respeitar o entalhe e a barra inferior;
 - campos de formulário com `font-size: 16px`, que impede o Safari de dar zoom ao focar;
@@ -137,7 +150,11 @@ em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projet
 - **Não há back-end.** Login, pagamento e emissão são simulados no próprio aparelho.
 - **Nenhuma validação real de matrícula** — o comprovante enviado não é verificado.
 - **A identidade visual é uma aproximação.** As cores e o arranjo das telas foram
-  reconstruídos a partir da descrição pública do aplicativo, não copiados dele.
+  reconstruídos a partir da descrição pública do aplicativo e das suas funcionalidades
+  documentadas, não copiados dele.
+- **A adição à Carteira do iPhone é simulada.** Um passe de verdade (`.pkpass`) precisa
+  ser assinado com um certificado Apple emitido para uma organização, o que não se aplica
+  a um trabalho de curso. A folha reproduz a interface e o formato do passe.
 - **Marcação de réplica em todas as telas**, por decisão de projeto: um documento de
   estudante convincente e funcional seria um documento falso, então a peça é assumidamente
   identificada como exercício acadêmico.
@@ -146,9 +163,13 @@ em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projet
 
 ## Créditos e referências
 
-- Funcionalidades do aplicativo oficial levantadas nas páginas públicas da UNE, da UBES e
-  das lojas de aplicativos.
-- Meia-entrada estudantil: Lei nº 12.933/2013 e Decreto nº 8.537/2015.
+- Funcionalidades do aplicativo oficial (carteirinha com foto, dados da instituição e QR
+  Code; solicitação, renovação e recarga; carteira internacional ISIC; crédito de
+  transporte do Bilhete Único; adição à Carteira do iPhone) levantadas nas páginas
+  públicas da UNE, da UBES e das lojas de aplicativos.
+- Meia-entrada estudantil: Lei nº 12.933/2013 (validade até 31 de março do ano seguinte,
+  art. 1º § 6º; cota de 40% dos ingressos) e Decreto nº 8.537/2015.
+- Documento emitido por UNE, UBES e ANPG, com certificação digital do ITI.
 - Algoritmo do QR Code: ISO/IEC 18004.
 - Verificação do gerador: biblioteca `qrcode` e decodificador `jsQR` (usados apenas em
   teste, fora do app publicado).

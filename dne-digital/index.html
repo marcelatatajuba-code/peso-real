@@ -40,6 +40,7 @@
     <g id="i-escudo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.5 5.8v6c0 4.5 3.1 8.2 7.5 9.6 4.4-1.4 7.5-5.1 7.5-9.6v-6Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></g>
     <g id="i-lua" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8.4 8.4 0 0 1 9.8 4 8.5 8.5 0 1 0 20 14.2Z"/></g>
     <g id="i-sair" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h3.5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H14"/><path d="M10 8 6 12l4 4M6 12h9"/></g>
+    <g id="i-wallet" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2.5 2.5 0 0 1 2.5 2.5v9A2.5 2.5 0 0 1 18 19H5.5A2.5 2.5 0 0 1 3 16.5Z"/><path d="M3 9.5h11a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H3"/><circle cx="12.5" cy="12" r=".9" fill="currentColor" stroke="none"/></g>
     <g id="i-virar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h13a4.5 4.5 0 0 1 0 9h-2"/><path d="m6.5 4.5-3.5 3.5 3.5 3.5"/></g>
   </defs>
 </svg>
@@ -160,7 +161,7 @@
               <div class="campo"><div class="campo-rot">Curso</div><div class="campo-val" id="cart-curso">—</div></div>
               <div class="campo"><div class="campo-rot">Nível</div><div class="campo-val" id="cart-nivel">—</div></div>
               <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="cart-matricula">—</div></div>
-              <div class="campo"><div class="campo-rot">Nº do documento</div><div class="campo-val" id="cart-numero">—</div></div>
+              <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="cart-codigo">—</div></div>
             </div>
 
             <div class="carteira-rodape">
@@ -200,8 +201,9 @@
 
             <p style="font-size:10px;line-height:1.45;opacity:.72;margin:12px 0 0">
               Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
-              limitada a 40% dos ingressos disponíveis. <strong>Esta peça é uma réplica acadêmica sem
-              qualquer validade legal.</strong>
+              limitada a 40% dos ingressos disponíveis. Documento com certificação digital do ITI,
+              conferido pelo QR Code ou pelo código de uso no validador oficial.
+              <strong>Esta peça é uma réplica acadêmica sem qualquer validade legal.</strong>
             </p>
 
             <div class="grade-campos" style="margin-top:14px">
@@ -235,6 +237,10 @@
       </button>
     </div>
 
+    <button class="btn secundario mt-16" type="button" id="btn-wallet">
+      <svg width="19" height="19"><use href="#i-wallet"/></svg> <span id="btn-wallet-txt">Adicionar à Carteira</span>
+    </button>
+
     <div class="aviso mt-16">
       <svg><use href="#i-escudo"/></svg>
       <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo — o mesmo princípio usado por documentos digitais para dificultar cópias de tela.</span>
@@ -261,7 +267,8 @@
     </div>
     <div class="codigo-token" id="apres-token">—</div>
     <p class="apresentar-sub" style="max-width:320px">
-      Aumente o brilho da tela e aproxime o QR Code do leitor.<br>
+      Aumente o brilho da tela e aproxime o QR Code do leitor — no uso real, a bilheteria confere
+      o código no validador oficial da meia-entrada.<br>
       <strong>Réplica acadêmica — não válida como documento.</strong>
     </p>
     <button class="btn secundario" type="button" id="btn-fechar-apresentar" style="max-width:280px">Fechar</button>
@@ -537,6 +544,45 @@
   <button type="button" data-ir="beneficios"><svg><use href="#i-beneficio"/></svg>Benefícios</button>
   <button type="button" data-ir="perfil"><svg><use href="#i-perfil"/></svg>Perfil</button>
 </nav>
+
+<div class="folha-fundo" id="folha-fundo"></div>
+<section class="folha" id="folha-wallet" role="dialog" aria-modal="true" aria-labelledby="folha-wallet-titulo" aria-hidden="true">
+  <div class="puxador"></div>
+  <h2 id="folha-wallet-titulo">Adicionar à Carteira</h2>
+  <p class="sub">O documento fica disponível no app Carteira do iPhone, sem precisar abrir este aplicativo.</p>
+
+  <div class="passe">
+    <div class="passe-topo">
+      <div>
+        <div class="sigla">DNE</div>
+        <div class="tipo">Documento do estudante</div>
+      </div>
+      <div style="text-align:right">
+        <div class="campo-rot">Validade</div>
+        <div class="campo-val" id="passe-validade">—</div>
+      </div>
+    </div>
+    <div class="passe-corpo">
+      <img id="passe-foto" alt="" src="assets/foto-exemplo.svg">
+      <div style="min-width:0">
+        <div class="campo"><div class="campo-rot">Estudante</div><div class="campo-val" id="passe-nome">—</div></div>
+        <div class="campo"><div class="campo-rot">Instituição</div><div class="campo-val" id="passe-inst">—</div></div>
+        <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="passe-codigo">—</div></div>
+      </div>
+    </div>
+    <div class="passe-rodape">
+      <div class="faixa" id="passe-qr"></div>
+      <p class="legenda">Apresente na bilheteria</p>
+    </div>
+  </div>
+
+  <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Simulação: a adição real à Carteira exige um passe assinado com certificado da Apple, que um trabalho acadêmico não tem.</span></div>
+
+  <div class="pilha mt-16">
+    <button class="btn" type="button" id="btn-wallet-confirmar">Adicionar</button>
+    <button class="btn fantasma" type="button" id="btn-wallet-fechar">Agora não</button>
+  </div>
+</section>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
