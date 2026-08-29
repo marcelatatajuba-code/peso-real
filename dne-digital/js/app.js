@@ -269,6 +269,8 @@
     $('#verso-email').textContent = e.email;
     $('#verso-assinatura').textContent = e.nome.split(/\s+/).slice(0, 2).join(' ');
     $('#verso-hash').textContent = hashCurto(e.cpf + e.numero + e.validade);
+    $('#verso-entidade').textContent = e.entidade;
+    desenharQr($('#verso-qr'), 'REPLICA-ACADEMICA|VERSO|' + e.numero + '|' + hashCurto(e.numero), 0);
 
     desenharQr($('#cart-qr'), cargaQr(e, tokenAtual()), 0);
 

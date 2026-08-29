@@ -184,27 +184,41 @@
               <div class="sigla" style="font-size:15px">DNE</div>
             </div>
 
+            <div class="faixa-magnetica" aria-hidden="true"></div>
+
             <div class="grade-campos">
               <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="verso-matricula">—</div></div>
               <div class="campo"><div class="campo-rot">Emissão</div><div class="campo-val" id="verso-emissao">—</div></div>
               <div class="campo largo"><div class="campo-rot">E-mail cadastrado</div><div class="campo-val" id="verso-email">—</div></div>
             </div>
 
-            <p style="font-size:10.5px;line-height:1.45;opacity:.75;margin:14px 0 0">
+            <ul class="verso-lista">
+              <li>Meia-entrada em cinema, teatro, shows e eventos esportivos</li>
+              <li>Tarifa reduzida no transporte público estudantil</li>
+              <li>Descontos na rede de parceiros do documento</li>
+            </ul>
+
+            <p style="font-size:10px;line-height:1.45;opacity:.72;margin:12px 0 0">
               Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
               limitada a 40% dos ingressos disponíveis. <strong>Esta peça é uma réplica acadêmica sem
               qualquer validade legal.</strong>
             </p>
 
+            <div class="grade-campos" style="margin-top:14px">
+              <div class="campo"><div class="campo-rot">Emitido por</div><div class="campo-val" id="verso-entidade">—</div></div>
+              <div class="campo"><div class="campo-rot">Atendimento ao estudante</div><div class="campo-val">0800 000 0000</div></div>
+            </div>
+
+            <div class="codigo-barras" aria-hidden="true"></div>
+
             <div class="carteira-rodape">
               <div>
                 <div class="campo-rot">Assinatura</div>
                 <div class="assinatura" id="verso-assinatura">—</div>
+                <div class="campo-rot" style="margin-top:8px">Verificação</div>
+                <div class="campo-val" id="verso-hash" style="font-family:ui-monospace,Menlo,monospace;font-size:12px">—</div>
               </div>
-              <div style="text-align:right">
-                <div class="campo-rot">Verificação</div>
-                <div class="campo-val" id="verso-hash" style="font-family:ui-monospace,Menlo,monospace;font-size:11px">—</div>
-              </div>
+              <div class="qr-mini" id="verso-qr" aria-hidden="true"></div>
             </div>
           </div>
         </div>
@@ -429,31 +443,43 @@
   </header>
   <div class="conteudo">
     <div class="carteira-palco">
-      <div class="carteira" style="aspect-ratio:1.586/1">
+      <div class="carteira carteira-isic">
         <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
           <div class="faixa-replica">réplica acadêmica</div>
           <div class="face-corpo">
             <div class="carteira-topo">
-              <div><div class="sigla" style="font-size:24px">ISIC</div><div class="desc">International Student Identity Card</div></div>
+              <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>
               <span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span>
             </div>
-            <div class="carteira-identidade" style="margin-top:12px">
-              <img class="foto" id="isic-foto" alt="" src="assets/foto-exemplo.svg" style="width:66px;height:84px">
+            <div class="carteira-identidade">
+              <img class="foto" id="isic-foto" alt="" src="assets/foto-exemplo.svg">
               <div style="min-width:0">
-                <div class="carteira-nome" id="isic-nome" style="font-size:16px">—</div>
-                <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst" style="font-size:11.5px">—</div></div>
-                <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc" style="font-size:11.5px">—</div></div>
+                <div class="carteira-nome" id="isic-nome">—</div>
+                <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
+                <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
               </div>
             </div>
-            <div class="carteira-rodape" style="padding-top:10px">
+            <div class="carteira-rodape">
               <div><div class="campo-rot">Validity</div><div class="campo-val" id="isic-validade">—</div></div>
-              <div class="qr-mini" id="isic-qr" style="width:56px;height:56px"></div>
+              <div class="qr-mini" id="isic-qr"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <p class="texto-2 centro">Aceita em mais de 130 países pelos parceiros da rede ISIC.</p>
+
+    <div class="secao-titulo"><h2>O que a carteira dá acesso</h2></div>
+    <div class="card">
+      <ul>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Descontos em museus, transportes e hospedagem no exterior</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Comprovação internacional da condição de estudante</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Tarifas reduzidas em passagens e seguros de viagem</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Validade acompanhando a do documento nacional</span></li>
+      </ul>
+    </div>
+
+    <button class="btn mt-16" type="button" data-ir="carteirinha">Ver documento nacional</button>
     <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Cartão fictício, gerado a partir dos mesmos dados de demonstração.</span></div>
   </div>
 </section>

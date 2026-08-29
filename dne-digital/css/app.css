@@ -267,7 +267,52 @@ body.sem-tabbar .tabbar { display: none; }
   pointer-events: none;
 }
 
+/* verso: lista de direitos e faixa em relevo, para preencher o cartão */
+.verso-lista { margin: 12px 0 0; }
+.verso-lista li {
+  position: relative; padding-left: 15px; margin-top: 6px;
+  font-size: 10.5px; line-height: 1.35; opacity: .85;
+}
+.verso-lista li::before {
+  content: ""; position: absolute; left: 0; top: 5px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ciano);
+}
+
+.faixa-magnetica {
+  margin: 14px -18px 2px; height: 32px;
+  background: repeating-linear-gradient(90deg,
+    rgba(255,255,255,.16) 0 2px, rgba(255,255,255,.04) 2px 4px,
+    rgba(255,255,255,.10) 4px 7px, rgba(255,255,255,.02) 7px 11px);
+  border-top: 1px solid rgba(255,255,255,.14);
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+
+/* faixa de código de barras decorativa no verso */
+.codigo-barras {
+  margin-top: auto; height: 34px;
+  background: repeating-linear-gradient(90deg,
+    rgba(255,255,255,.85) 0 2px, transparent 2px 4px,
+    rgba(255,255,255,.85) 4px 5px, transparent 5px 9px,
+    rgba(255,255,255,.85) 9px 12px, transparent 12px 14px);
+  opacity: .5; border-radius: 2px;
+}
+
 .carteira-acoes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* cartão internacional: formato paisagem, tudo proporcionalmente menor */
+.carteira-isic { aspect-ratio: 1.586 / 1; }
+.carteira-isic .face-corpo { padding: 13px 14px; }
+.carteira-isic .marca .sigla { font-size: 19px; }
+.carteira-isic .desc { font-size: 7.5px; max-width: 150px; }
+.carteira-isic .selo-validade { padding: 4px 8px; font-size: 9px; }
+.carteira-isic .carteira-identidade { margin-top: 9px; gap: 11px; }
+.carteira-isic .foto { width: 58px; height: 74px; border-radius: 7px; }
+.carteira-isic .carteira-nome { font-size: 14px; margin-bottom: 6px; }
+.carteira-isic .campo-val { font-size: 11px; }
+.carteira-isic .campo + .campo { margin-top: 4px; }
+.carteira-isic .carteira-rodape { padding-top: 9px; }
+.carteira-isic .qr-mini { width: 48px; height: 48px; padding: 3px; }
+.carteira-isic .faixa-replica { top: 44%; font-size: 8.5px; letter-spacing: .12em; }
 
 /* --------------------------------------------------- tela de apresentação */
 #tela-apresentar { background: #fff; color: #08101f; min-height: 100vh; min-height: 100dvh; }
