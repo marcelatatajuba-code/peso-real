@@ -199,8 +199,8 @@
      ========================================================================== */
   var TELAS = {
     inicio:       { aba: true,  semTopo: true },
-    midias:       { aba: true,  titulo: 'Mídias' },
-    locais:       { aba: true,  titulo: 'Locais' },
+    midias:       { aba: true,  titulo: 'Mídias', acaoIcone: 'i-filtro', acaoFn: function () { alternarAbasMidia(); } },
+    locais:       { aba: true,  titulo: 'Locais', acaoIcone: 'i-ajustes', acaoFn: function () { abrirFiltroLocais(); } },
     agenda:       { aba: true,  titulo: 'Agenda', acao: '+', acaoFn: function () { formAgenda(); } },
     menu:         { aba: true,  titulo: 'Menu' },
     carteirinha:  { titulo: 'Carteirinha digital' },
@@ -248,13 +248,17 @@
       $('#btn-voltar').hidden = this.pilha.length === 0;
 
       var acao = $('#btn-acao');
-      acao.hidden = !cfg.acao;
-      acao.textContent = cfg.acao || '';
+      acao.hidden = !cfg.acao && !cfg.acaoIcone;
+      acao.innerHTML = cfg.acaoIcone
+        ? '<svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:currentColor"><use href="#' + cfg.acaoIcone + '"/></svg>'
+        : (cfg.acao || '');
       acao.onclick = cfg.acaoFn || null;
 
       $$('#tabbar [data-aba]').forEach(function (b) {
         b.classList.toggle('on', b.dataset.aba === Nav.aba && Nav.pilha.length === 0);
       });
+
+      $('#btn-baricast').hidden = tela !== 'midias';
 
       if (RENDER[tela]) RENDER[tela]();
       pararContagem();
@@ -448,15 +452,69 @@
   var filtroMidia = 'todos';
   var ROTULO_MIDIA = { dica: 'Dica', receita: 'Receita', artigo: 'Artigo', video: 'Vídeo' };
 
+  /* quebra um título em linhas com um orçamento de caracteres */
+  function quebrar(txt, max, maxLinhas) {
+    var palavras = String(txt).split(/\s+/), linhas = [], atual = '';
+    palavras.forEach(function (p) {
+      if ((atual + ' ' + p).trim().length <= max) atual = (atual + ' ' + p).trim();
+      else { if (atual) linhas.push(atual); atual = p; }
+    });
+    if (atual) linhas.push(atual);
+    if (linhas.length > maxLinhas) {
+      linhas = linhas.slice(0, maxLinhas);
+      linhas[maxLinhas - 1] = linhas[maxLinhas - 1].replace(/.{2}$/, '…');
+    }
+    return linhas;
+  }
+
+  /* arte do banner gerada em SVG — a réplica não pode usar imagens externas */
+  function bannerSVG(c) {
+    var linhas = quebrar(c.titulo, 20, 3);
+    var alturaTexto = linhas.length * 26;
+    var y0 = 100 - alturaTexto / 2 + 20;
+    return '<svg viewBox="0 0 360 190" role="img" aria-label="' + esc(c.titulo) + '">' +
+      '<defs>' +
+        '<linearGradient id="bg' + c.id + '" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="' + c.cor + '" stop-opacity=".16"/>' +
+          '<stop offset="1" stop-color="' + c.cor + '" stop-opacity=".05"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      '<rect width="360" height="190" fill="#FBFCFE"/>' +
+      '<rect width="360" height="190" fill="url(#bg' + c.id + ')"/>' +
+      '<circle cx="330" cy="18" r="62" fill="' + c.cor + '" opacity=".09"/>' +
+      '<circle cx="24" cy="176" r="46" fill="' + c.cor + '" opacity=".07"/>' +
+      '<g stroke="' + c.cor + '" stroke-opacity=".12" stroke-width="2">' +
+        '<path d="M-10 40 L60 -20"/><path d="M10 60 L80 0"/><path d="M30 80 L100 20"/>' +
+      '</g>' +
+      '<text x="104" y="46" font-size="12" font-weight="700" letter-spacing="1.6" ' +
+        'fill="' + c.cor + '" opacity=".8">' + ROTULO_MIDIA[c.tipo].toUpperCase() + '</text>' +
+      '<text x="18" y="112" font-size="52">' + c.emoji + '</text>' +
+      linhas.map(function (l, i) {
+        return '<text x="104" y="' + (y0 + i * 26) + '" font-size="21" font-weight="800" ' +
+               'fill="#12314F" letter-spacing="-.4">' + esc(l) + '</text>';
+      }).join('') +
+      '<text x="104" y="' + (y0 + linhas.length * 26 + 6) + '" font-size="13" fill="#5E7590">' +
+        esc(c.tempo) + ' de leitura</text>' +
+      '</svg>';
+  }
+
   function renderMidias() {
-    var itens = DB.midias.filter(function (c) { return filtroMidia === 'todos' || c.tipo === filtroMidia; });
-    $('#lista-midias').innerHTML = itens.map(function (c) {
-      return '<button class="post" data-post="' + c.id + '">' +
-        '<span class="capa" style="background:' + c.cor + '1F;color:' + c.cor + '">' + c.emoji + '</span>' +
-        '<span class="txt"><span class="t">' + esc(c.titulo) + '</span>' +
-        '<span class="s">' + esc(c.resumo) + '</span>' +
-        '<span class="meta"><span class="etiqueta">' + ROTULO_MIDIA[c.tipo] + '</span>' + esc(c.tempo) + '</span></span></button>';
-    }).join('');
+    var termo = semAcento($('#busca-midia') ? $('#busca-midia').value : '');
+    var itens = DB.midias.filter(function (c) {
+      if (filtroMidia !== 'todos' && c.tipo !== filtroMidia) return false;
+      if (!termo) return true;
+      return semAcento(c.titulo + ' ' + c.resumo + ' ' + ROTULO_MIDIA[c.tipo]).indexOf(termo) >= 0;
+    });
+
+    $('#lista-midias').innerHTML = itens.length ? itens.map(function (c) {
+      return '<button class="card-midia" data-post="' + c.id + '">' +
+        '<span class="banner">' + bannerSVG(c) +
+          '<span class="selo"><svg viewBox="0 0 24 24"><use href="#i-jornal"/></svg>' + ROTULO_MIDIA[c.tipo] + '</span>' +
+          (c.patrocinado ? '<span class="patrocinado">CONTEÚDO PATROCINADO</span>' : '') +
+        '</span>' +
+        '<span class="tit"><i>' + esc(c.resumo) + '</i></span></button>';
+    }).join('') : '<div class="vazio"><div class="ico">🔍</div><p>Nada encontrado para essa busca.</p></div>';
+
     $$('[data-post]').forEach(function (b) {
       b.addEventListener('click', function () { abrirPost(b.dataset.post); });
     });
@@ -473,6 +531,12 @@
       '<div class="leitura">' + esc(c.texto) + '</div>' +
       '<button class="btn cheio neutro" style="margin-top:22px" data-fechar>Fechar</button>'
     );
+  }
+
+  function alternarAbasMidia() {
+    var abas = $('#abas-midias');
+    abas.hidden = !abas.hidden;
+    if (abas.hidden) { filtroMidia = 'todos'; renderMidias(); }
   }
 
   /* ==========================================================================
@@ -498,7 +562,29 @@
       '<span class="dir"><span style="font-size:19px;color:var(--texto-3)">›</span></span></button>';
   }
 
+  var vistaLocal = 'mapa', mapaAtivo = null;
+
   function renderLocais() {
+    var ehMapa = vistaLocal === 'mapa';
+    $('#mapa-caixa').hidden = !ehMapa;
+    $('#vista-lista').hidden = ehMapa;
+    $$('.segmentado [data-vista]').forEach(function (b) {
+      b.classList.toggle('on', b.dataset.vista === vistaLocal);
+    });
+    if (ehMapa) { montarMapa(); return; }
+    renderListaLocais();
+  }
+  RENDER.locais = renderLocais;
+
+  function montarMapa() {
+    if (mapaAtivo) mapaAtivo.soltar();
+    mapaAtivo = Mapa.montar($('#mapa-caixa'), DB.locais, abrirLocal);
+    $('#mapa-mais').onclick  = function () { mapaAtivo.mais(); };
+    $('#mapa-menos').onclick = function () { mapaAtivo.menos(); };
+    $('#mapa-eu').onclick    = function () { mapaAtivo.centrar(); };
+  }
+
+  function renderListaLocais() {
     var termo = semAcento($('#busca-local').value);
     var itens = DB.locais.filter(function (m) {
       if (filtroLocal !== 'todos' && m.tipo !== filtroLocal) return false;
@@ -510,7 +596,26 @@
       : '<div class="vazio"><div class="ico">📍</div><p>Nenhum local encontrado<br>com esses filtros.</p></div>';
     ligarLocais();
   }
-  RENDER.locais = renderLocais;
+
+  function abrirFiltroLocais() {
+    Folha.abrir('<h2 style="font-size:19px;font-weight:750;margin-bottom:14px">Filtrar locais</h2>' +
+      FILTROS_LOCAL.map(function (f) {
+        return '<button class="linha" data-fl2="' + f.id + '" style="border-radius:12px;margin-bottom:6px">' +
+          '<span class="ic"><svg><use href="#i-locais"/></svg></span>' +
+          '<span class="tx">' + esc(f.rot) + '</span>' +
+          '<span class="seta">' + (filtroLocal === f.id ? '✓' : '') + '</span></button>';
+      }).join('') +
+      '<button class="btn cheio neutro" style="margin-top:14px" data-fechar>Fechar</button>');
+
+    $$('[data-fl2]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        filtroLocal = b.dataset.fl2;
+        $$('[data-fl]').forEach(function (x) { x.classList.toggle('on', x.dataset.fl === filtroLocal); });
+        vistaLocal = 'lista';
+        Folha.fechar(); renderLocais();
+      });
+    });
+  }
 
   function ligarLocais(escopo) {
     $$('[data-local]', escopo).forEach(function (b) {
@@ -1410,7 +1515,24 @@
     });
 
     $('#busca-parceiro').addEventListener('input', renderRede);
-    $('#busca-local').addEventListener('input', renderLocais);
+    $('#busca-local').addEventListener('input', renderListaLocais);
+    $('#busca-midia').addEventListener('input', renderMidias);
+    $$('.segmentado [data-vista]').forEach(function (b) {
+      b.addEventListener('click', function () { vistaLocal = b.dataset.vista; renderLocais(); });
+    });
+    $('#btn-baricast').addEventListener('click', function () {
+      Folha.abrir('<div style="text-align:center;padding:6px 0 4px">' +
+        '<div style="width:64px;height:64px;border-radius:50%;background:var(--azul-vivo);margin:0 auto 14px;' +
+        'display:grid;place-items:center"><svg viewBox="0 0 24 24" style="width:32px;height:32px;fill:#fff">' +
+        '<use href="#i-mic"/></svg></div>' +
+        '<h2 style="font-size:21px;font-weight:780">BariCast</h2>' +
+        '<p style="color:var(--texto-2);font-size:14.5px;line-height:1.6;margin-top:8px">' +
+        'O podcast do paciente bariátrico, com episódios sobre alimentação, atividade física, ' +
+        'saúde mental e histórias de quem já passou pela cirurgia.</p>' +
+        '<p style="color:var(--texto-3);font-size:12.5px;margin-top:14px">' +
+        'Nesta réplica acadêmica o player é apenas ilustrativo.</p></div>' +
+        '<button class="btn cheio neutro" style="margin-top:18px" data-fechar>Fechar</button>');
+    });
 
     $$('#abas-midias button').forEach(function (b) {
       b.addEventListener('click', function () {

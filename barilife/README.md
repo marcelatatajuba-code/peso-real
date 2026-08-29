@@ -27,8 +27,8 @@ Cinco abas, com o botão de início elevado no centro, como no aplicativo real:
 |---|---|
 | **Início** | Cabeçalho azul com a marca e o sino de notificações, cartão-resumo da carteirinha (foto, nome, CPF e *ver carteirinha completa*) sobre a faixa SBCBM, e a grade de atalhos: Meu peso, Chat, Novidades, Rede Amiga, Perto de você, Enquetes e COESAS. |
 | **Carteirinha digital** | O crachá com furo de cordão, logo, foto, nome e CPF, e o **QR Code com validade de 10 minutos** — com contagem regressiva e regeneração ao expirar. O aviso "Não imprima a carteirinha" reproduz o do original. |
-| **Mídias** | Dicas, receitas, artigos e vídeos, com abas e leitor de artigo. |
-| **Locais** | Cirurgiões, equipe multidisciplinar, hospitais e laboratórios, com busca, filtro por tipo, distância e ficha completa com agendamento. |
+| **Mídias** | Feed de cards com banner, selo do tipo encaixado no canto e faixa de *conteúdo patrocinado*, além de busca, filtro e leitor de artigo. Traz também o botão flutuante do BariCast. |
+| **Locais** | Alternador **Mapa / Lista**. O mapa mostra os parceiros ao redor da sua localização, com arraste, zoom, botão de recentralizar e ficha ao tocar num marcador. A lista traz busca, filtro por tipo, distância e agendamento. |
 | **Agenda** | Alertas de consultas, retornos e exames. Reproduz o estado vazio do original, inclusive o aviso de que os alertas de dieta ficam em outro lugar. |
 | **Menu** | Cartão do perfil e as três seções do original: Minha saúde, Minha conta e Ajuda & sobre. |
 | **Meus dados** | Foto, documentos enviados e os blocos do original — *Já fez a cirurgia bariátrica?*, Medidas, Cirurgia, Hospital, Cirurgião e Contato — em pílulas com glifos. |
@@ -89,6 +89,7 @@ barilife/
 │   ├── img/perfil.jpg      foto do perfil de demonstração
 │   └── js/
 │       ├── qr.js           gerador de QR Code próprio
+│       ├── mapa.js         mapa vetorial em SVG, sem serviço de tiles
 │       ├── data.js         base de dados fictícia
 │       └── app.js          store, navegação e todas as telas
 └── icons/                  ícones do app
@@ -98,6 +99,19 @@ barilife/
 
 **HTML, CSS e JavaScript puros.** Sem framework, sem CDN, sem dependência
 externa — o que também é o que permite o funcionamento offline completo.
+
+**Mapa desenhado em SVG** (`assets/js/mapa.js`). O aplicativo original usa um
+mapa nativo. Como esta réplica não pode depender de rede — precisa abrir offline
+e sem CDN —, a malha viária é gerada aqui de forma determinística (mesmo desenho
+a cada abertura) e desenhada em SVG: quadras, avenidas com o nome acompanhando a
+curva, rodovia, parques, rio e nomes de bairro. Os marcadores são posicionados ao
+redor do usuário conforme a distância de cada parceiro, e o mapa responde a
+arraste e zoom recalculando a janela do `viewBox`. Espessuras e corpo de texto são
+proporcionais ao zoom, então permanecem constantes na tela.
+
+**Banners gerados em SVG.** As artes dos cards de Mídias também são desenhadas em
+tempo de execução a partir do título, do tipo e da cor de cada conteúdo — nenhuma
+imagem externa é carregada.
 
 **Gerador de QR Code próprio** (`assets/js/qr.js`), implementado do zero
 seguindo a **ISO/IEC 18004**: aritmética em GF(256), correção de erro
