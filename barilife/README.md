@@ -38,9 +38,9 @@ Cinco abas, com o botão de início elevado no centro, como no aplicativo real:
 
 ### Cadastro e validação pelo cirurgião
 
-O cadastro segue o fluxo real: dados pessoais (nome, e-mail, nascimento, CPF,
-sexo, telefone, cidade e UF) e dados da cirurgia (tipo, mês, altura, pesos,
-cirurgião e CRM).
+O cadastro tem três etapas: dados pessoais (nome, e-mail, nascimento, CPF, sexo,
+telefone, cidade e UF), dados da cirurgia (tipo, mês, altura, pesos, cirurgião e
+CRM) e a foto do paciente, com prévia circular antes de confirmar.
 
 No Barilife, o cirurgião **recebe o cadastro, confere os dados e libera a
 carteirinha**. A réplica reproduz o ciclo: o cadastro nasce com status
@@ -60,6 +60,17 @@ python3 -m http.server 8000
 
 Abra <http://localhost:8000>. Também funciona abrindo `index.html` direto, mas
 sem o modo offline (o navegador bloqueia Service Worker em `file://`).
+
+## Encaminhando para outra pessoa
+
+Basta mandar o link. Quem abrir cai direto no cadastro e preenche os próprios
+dados — nome, e-mail, nascimento, CPF, telefone, cidade, dados da cirurgia e a
+**própria foto**, escolhida da galeria ou tirada na hora. Tudo fica salvo apenas
+no aparelho de quem preencheu, no `localStorage` do navegador: nada é enviado
+para servidores e ninguém vê os dados de ninguém.
+
+Quem quiser só espiar antes de se cadastrar pode tocar em *Ver uma demonstração
+com dados fictícios*, que carrega um perfil de exemplo.
 
 ## Como instalar no iPhone
 
@@ -86,7 +97,7 @@ barilife/
 ├── sw.js                   Service Worker — cache para uso offline
 ├── assets/
 │   ├── css/app.css         tokens, componentes e telas
-│   ├── img/perfil.jpg      foto do perfil de demonstração
+│   ├── img/sbcbm.png       logotipo da SBCBM, recortado com transparência
 │   └── js/
 │       ├── qr.js           gerador de QR Code próprio
 │       ├── mapa.js         mapa vetorial em SVG, sem serviço de tiles
@@ -137,6 +148,14 @@ cursor.
 em `localStorage`. Nada é enviado para servidores. O contador de água zera
 sozinho quando vira o dia e a foto do perfil é redimensionada para 384 px antes
 de ser guardada.
+
+**Marca e logotipos.** A marca do Barilife foi extraída das capturas do
+aplicativo e vetorizada: os contornos brancos são isolados, aproximados e
+convertidos em curvas de Bézier por interpolação Catmull–Rom, virando um único
+`<symbol>` SVG que serve tanto à interface quanto aos ícones do app. O logotipo
+da SBCBM, que é colorido, foi recortado com extração de matte — o fundo é
+estimado linha a linha e removido da mistura, o que preserva o degradê das letras
+e o amarelo da estrela sem deixar franja azul nas bordas.
 
 **Tema claro e escuro** automáticos e respeito às áreas seguras do iPhone.
 

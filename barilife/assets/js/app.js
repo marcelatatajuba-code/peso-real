@@ -302,16 +302,7 @@
     $('#cracha').innerHTML =
       '<div class="cracha"><div class="miolo">' +
         '<div class="furo"></div>' +
-        '<div class="sbcbm">' +
-          '<svg viewBox="0 0 200 68" aria-label="SBCBM">' +
-            '<path d="M14 20 C60 4, 140 4, 188 16" fill="none" stroke="#1E5FA8" stroke-width="4" stroke-linecap="round"/>' +
-            '<path d="M176 4 l3.4 7 7.6 1-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6L165 12l7.6-1L176 4z" fill="#FFC107"/>' +
-            '<text x="100" y="41" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700" fill="#0E3F76" letter-spacing="1">SBCBM</text>' +
-            '<text x="100" y="48" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.4" font-weight="700" fill="#0E3F76" letter-spacing=".5">SOCIEDADE BRASILEIRA</text>' +
-            '<text x="100" y="55.5" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.4" font-weight="700" fill="#0E3F76" letter-spacing=".5">DE CIRURGIA BARIÁTRICA</text>' +
-            '<text x="100" y="63" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.4" font-weight="700" fill="#0E3F76" letter-spacing=".5">E METABÓLICA</text>' +
-          '</svg>' +
-        '</div>' +
+        '<div class="sbcbm"><img src="assets/img/sbcbm.png" alt="SBCBM — Sociedade Brasileira de Cirurgia Bariátrica e Metabólica"></div>' +
         avatarHTML(p) +
         '<div class="nome">' + esc(p.nome) + '</div>' +
         '<div class="cpf">' + esc(p.cpf || '—') + '</div>' +
@@ -1457,14 +1448,52 @@
       if (!cirurgiao) return toast('Informe o cirurgião responsável.');
       if (alt && (alt < 100 || alt > 250)) return toast('Altura fora do intervalo esperado.');
 
+      rascunho.cirurgia = $('#f-cirurgia').value;
+      rascunho.mesCirurgia = mesBR(mes);
+      rascunho.altura = alt; rascunho.pesoInicial = pi; rascunho.peso = pa;
+      rascunho.cirurgiao = cirurgiao;
+      rascunho.crm = $('#f-crm').value.trim() || '—';
+      rascunho.hospital = $('#f-hosp').value.trim();
+      irPasso(4);
+    });
+
+    /* ---- passo da foto ---- */
+    $('#f-foto').addEventListener('change', function (ev) {
+      var arq = ev.target.files && ev.target.files[0];
+      if (!arq) return;
+      if (!/^image\//.test(arq.type)) return toast('Escolha um arquivo de imagem.');
+      if (arq.size > 8 * 1024 * 1024) return toast('Escolha uma imagem de até 8 MB.');
+      var l = new FileReader();
+      l.onload = function () {
+        redimensionar(l.result, 420, function (uri) {
+          rascunho.foto = uri;
+          $('#previa-foto').innerHTML = '<img src="' + uri + '" alt="Prévia da sua foto">';
+          $('#f-foto-limpar').hidden = false;
+          toast('Foto escolhida.');
+        });
+      };
+      l.onerror = function () { toast('Não foi possível ler a imagem.'); };
+      l.readAsDataURL(arq);
+    });
+
+    $('#f-foto-limpar').addEventListener('click', function () {
+      rascunho.foto = null;
+      $('#previa-foto').innerHTML = '<span>Sem foto</span>';
+      $('#f-foto').value = '';
+      this.hidden = true;
+    });
+
+    $('#f-concluir').addEventListener('click', function () {
       Store.e.perfil = {
         nome: rascunho.nome, email: rascunho.email, cpf: rascunho.cpf,
         nascimento: rascunho.nascimento, sexo: rascunho.sexo, telefone: rascunho.telefone,
-        cidade: rascunho.cidade, uf: rascunho.uf, foto: null,
-        jaFezCirurgia: true, peso: pa, altura: alt, pesoInicial: pi,
-        cirurgia: $('#f-cirurgia').value, mesCirurgia: mesBR(mes),
-        hospital: $('#f-hosp').value.trim(), hospitalCidade: rascunho.cidade + ' – ' + rascunho.uf,
-        cirurgiao: cirurgiao, crm: $('#f-crm').value.trim() || '—',
+        cidade: rascunho.cidade, uf: rascunho.uf, foto: rascunho.foto || null,
+        jaFezCirurgia: true,
+        peso: rascunho.peso, altura: rascunho.altura, pesoInicial: rascunho.pesoInicial,
+        cirurgia: rascunho.cirurgia, mesCirurgia: rascunho.mesCirurgia,
+        hospital: rascunho.hospital,
+        hospitalCidade: rascunho.cidade + ' – ' + rascunho.uf,
+        cirurgiao: rascunho.cirurgiao, crm: rascunho.crm,
         status: 'pendente', validadaEm: null
       };
       Store.salvar(); abrirApp(); Nav.abrir('carteirinha');

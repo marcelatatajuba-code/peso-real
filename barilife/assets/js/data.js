@@ -6,19 +6,20 @@
 window.DB = {
 
   /* ---- Perfil de demonstração -------------------------------------------
-     O CPF abaixo é de exemplo (dígitos verificadores válidos, mas não
-     pertence a ninguém). Os dados de saúde também são ilustrativos —
-     preencha os seus em "Meus dados", que ficam salvos só no aparelho.     */
+     Pessoa fictícia, para quem quiser só espiar o aplicativo antes de criar
+     a própria conta. O CPF tem dígitos verificadores válidos, mas não
+     pertence a ninguém. Quem se cadastra preenche os próprios dados e a
+     própria foto, que ficam salvos apenas no aparelho.                      */
   perfilDemo: {
-    nome: 'Marcela Rodrigues Tatajuba De Barros',
-    email: 'marcela@exemplo.com.br',
+    nome: 'Ana Paula Ribeiro Costa',
+    email: 'ana.paula@exemplo.com.br',
     cpf: '111.444.777-35',
     nascimento: '1994-07-21',
     sexo: 'Feminino',
     telefone: '(11) 98765-4321',
     cidade: 'São Paulo',
     uf: 'SP',
-    foto: 'assets/img/perfil.jpg',
+    foto: null,
 
     jaFezCirurgia: true,
     peso: 78,
