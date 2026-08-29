@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projetos — Marcela Tatajuba</title>
+<meta name="description" content="Réplicas de aplicativos desenvolvidas como trabalho de curso.">
+<meta name="theme-color" content="#101826">
+<style>
+  :root{
+    --fundo:#0E141F; --carta:#18202E; --linha:#26303F;
+    --texto:#EEF3F9; --texto-2:#93A2B5; --texto-3:#6B7B8F;
+    --realce:#5B9BE8;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --fundo:#F2F5F9; --carta:#FFFFFF; --linha:#E2E8F0;
+           --texto:#111C2B; --texto-2:#53637A; --texto-3:#8494A8; --realce:#1F6FD0; }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;background:var(--fundo);color:var(--texto);
+    font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .env{max-width:660px;margin:0 auto;padding:clamp(32px,8vw,72px) 22px 56px;}
+  header{margin-bottom:38px;}
+  h1{font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-1px;margin:0 0 10px;}
+  header p{color:var(--texto-2);font-size:16px;margin:0;max-width:46ch;}
+  .lista{display:flex;flex-direction:column;gap:14px;}
+  a.proj{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;
+    background:var(--carta);border:1px solid var(--linha);border-radius:18px;padding:18px 20px;
+    transition:transform .15s ease, border-color .15s ease;}
+  a.proj:hover,a.proj:focus-visible{transform:translateY(-2px);border-color:var(--realce);outline:none;}
+  .ic{width:54px;height:54px;border-radius:15px;flex:0 0 auto;display:grid;place-items:center;}
+  .ic svg{width:32px;height:32px;}
+  .txt{flex:1;min-width:0;}
+  .txt h2{font-size:17.5px;font-weight:700;margin:0 0 3px;letter-spacing:-.3px;}
+  .txt p{font-size:14px;color:var(--texto-2);margin:0;line-height:1.45;}
+  .seta{color:var(--texto-3);font-size:22px;flex:0 0 auto;}
+  footer{margin-top:40px;padding-top:22px;border-top:1px solid var(--linha);
+    color:var(--texto-3);font-size:13px;line-height:1.6;}
+  footer b{color:var(--texto-2);}
+</style>
+</head>
+<body>
+<div class="env">
+  <header>
+    <h1>Projetos</h1>
+    <p>Réplicas de aplicativos desenvolvidas como trabalho de curso. Rodam direto no navegador e podem ser instaladas no celular.</p>
+  </header>
+
+  <div class="lista">
+    <a class="proj" href="../barilife/">
+      <span class="ic" style="background:#3472D0">
+        <svg viewBox="0 0 100 85.41" fill="#fff" aria-hidden="true"><path d="M40.6 3.3C33 4.8 25.9 8.4 20.2 13.6 12.4 20.7 8 30.2 8 40.1c0 9.6 4 18.6 11.3 25.4 6.3 5.9 14.6 9.7 23.5 10.8 2.3.3 2.6 1 .8 1.9-2.8 1.3-9.7 2-16.3 1.6C13.6 78.9 4.6 72.6 1.6 63.4-1.3 54.5.4 44 6.3 35.3 13.5 24.6 26 16.6 39.9 13.7c3.4-.7 3.7-1.4.7-1.6-6.6-.4-15.6 1.6-22.3 5-1.4.7-2 .5-1.2-.5 3.4-4.3 12.6-9.6 20.4-11.7 3.5-1 3.9-1.4 3.1-1.6Z"/><path d="M57.3 1.2c-3.9.5-4.3 1.2-1.3 2.1 8.6 2.5 14.7 7.6 16.6 13.9 2.4 7.8-1.4 16.1-9.9 21.7-2.9 1.9-2.7 2.6.6 1.9 3-.6 3.6-.4 6.3 1.4 11.4 7.6 17.4 18.2 16.3 28.7-.5 4.7-2 8.4-4.9 12.2-1.6 2-1.4 2.5.8 1.7 6.7-2.4 12.4-9.4 14.4-17.5 3.1-12.7-3.2-26.4-16.2-35.1-2.5-1.7-2.6-2-.9-3.8 5.2-5.6 6.4-13.5 3.1-20.2C78.4 1.5 68.3-.3 57.3 1.2Z"/></svg>
+      </span>
+      <span class="txt">
+        <h2>Barilife</h2>
+        <p>Carteirinha digital do paciente bariátrico, com QR Code, rede de descontos e mapa de parceiros.</p>
+      </span>
+      <span class="seta">›</span>
+    </a>
+
+    <a class="proj" href="../dne-digital/">
+      <span class="ic" style="background:#1D6F4A">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7.5 1.6V8H18l-4.5-4.4ZM7.5 12h9v1.8h-9V12Zm0 3.6h9v1.8h-9v-1.8Z"/></svg>
+      </span>
+      <span class="txt">
+        <h2>DNE Digital</h2>
+        <p>Réplica do aplicativo de documento digital do estudante.</p>
+      </span>
+      <span class="seta">›</span>
+    </a>
+
+    <a class="proj" href="../">
+      <span class="ic" style="background:#C9922E">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1.2 15.3v1.4h-2v-1.3c-1.9-.2-3.4-1.3-3.8-3.2l2.1-.5c.3 1.2 1.2 1.9 2.6 1.9 1.2 0 2-.5 2-1.4 0-.8-.5-1.2-2.3-1.7-2.5-.6-4-1.4-4-3.5 0-1.7 1.3-2.9 3.4-3.2V4.5h2v1.4c1.8.3 3 1.4 3.4 3l-2.1.6c-.3-1-1-1.6-2.2-1.6-1.1 0-1.8.5-1.8 1.3 0 .8.6 1.1 2.4 1.6 2.5.6 3.9 1.5 3.9 3.6 0 1.8-1.4 3.1-3.6 3.4Z"/></svg>
+      </span>
+      <span class="txt">
+        <h2>Peso → Real</h2>
+        <p>Conversor de preços pela câmera, de peso chileno para real.</p>
+      </span>
+      <span class="seta">›</span>
+    </a>
+  </div>
+
+  <footer>
+    <b>Trabalhos acadêmicos.</b> As réplicas foram feitas para estudo de interface e de desenvolvimento web.
+    Não têm vínculo com as instituições ou empresas responsáveis pelos aplicativos originais, e os dados
+    exibidos são fictícios.
+  </footer>
+</div>
+</body>
+</html>
