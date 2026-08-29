@@ -172,6 +172,26 @@
     tToast = setTimeout(function () { el.classList.remove('on'); }, 2400);
   }
 
+  /* marca o campo problemático, além de mostrar a mensagem */
+  function limparErros() {
+    $$('.campo.erro').forEach(function (c) { c.classList.remove('erro'); });
+  }
+
+  function erro(seletor, msg) {
+    toast(msg);
+    var el = $(seletor);
+    if (!el) return;
+    var campo = el.closest('.campo');
+    if (campo) {
+      campo.classList.add('erro');
+      var m = campo.querySelector('.erro-msg');
+      if (!m) { m = document.createElement('div'); m.className = 'erro-msg'; campo.appendChild(m); }
+      m.textContent = msg;
+    }
+    try { el.focus({ preventScroll: true }); } catch (x) { try { el.focus(); } catch (y) {} }
+    if (el.scrollIntoView) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
   var Folha = {
     abrir: function (html) {
       $('#folha-conteudo').innerHTML = html;
@@ -1404,7 +1424,12 @@
     ligarMascara('#f-tel', mascaraTelefone);
 
     $$('[data-ir]').forEach(function (b) {
-      b.addEventListener('click', function () { irPasso(b.dataset.ir); });
+      b.addEventListener('click', function () { limparErros(); irPasso(b.dataset.ir); });
+    });
+
+    $('#entrada').addEventListener('input', function (ev) {
+      var campo = ev.target.closest && ev.target.closest('.campo.erro');
+      if (campo) campo.classList.remove('erro');
     });
 
     $('#btn-demo').addEventListener('click', function () {
@@ -1415,20 +1440,21 @@
 
     $('#form-1').addEventListener('submit', function (ev) {
       ev.preventDefault();
+      limparErros();
       var nome = $('#f-nome').value.trim(), email = $('#f-email').value.trim();
       var nasc = $('#f-nasc').value, cpf = $('#f-cpf').value.trim();
       var tel = $('#f-tel').value.trim(), cidade = $('#f-cidade').value.trim();
 
-      if (nome.split(/\s+/).length < 2) return toast('Informe nome e sobrenome.');
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast('E-mail inválido.');
-      if (!nasc) return toast('Informe a data de nascimento.');
+      if (nome.split(/\s+/).length < 2) return erro('#f-nome', 'Informe nome e sobrenome.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return erro('#f-email', 'E-mail inválido.');
+      if (!nasc) return erro('#f-nasc', 'Informe a data de nascimento.');
       var a = idade(nasc);
-      if (a === null || a < 0) return toast('Data de nascimento inválida.');
-      if (a < 16) return toast('É preciso ter ao menos 16 anos.');
-      if (a > 110) return toast('Confira a data de nascimento.');
-      if (!cpfValido(cpf)) return toast('CPF inválido — confira os números.');
-      if (soDigitos(tel).length < 10) return toast('Telefone incompleto.');
-      if (!cidade) return toast('Informe a cidade.');
+      if (a === null || a < 0) return erro('#f-nasc', 'Data de nascimento inválida.');
+      if (a < 16) return erro('#f-nasc', 'É preciso ter ao menos 16 anos.');
+      if (a > 110) return erro('#f-nasc', 'Confira a data de nascimento.');
+      if (!cpfValido(cpf)) return erro('#f-cpf', 'CPF inválido — confira os números.');
+      if (soDigitos(tel).length < 10) return erro('#f-tel', 'Telefone incompleto.');
+      if (!cidade) return erro('#f-cidade', 'Informe a cidade.');
 
       rascunho = { nome: nome, email: email, nascimento: nasc, sexo: $('#f-sexo').value,
         cpf: mascaraCPF(cpf), telefone: mascaraTelefone(tel), cidade: cidade, uf: $('#f-uf').value };
@@ -1437,16 +1463,17 @@
 
     $('#form-2').addEventListener('submit', function (ev) {
       ev.preventDefault();
+      limparErros();
       var mes = $('#f-mes').value, cirurgiao = $('#f-cirurgiao').value.trim();
       var alt = parseInt($('#f-alt').value, 10) || null;
       var pi = parseFloat($('#f-pi').value) || null;
       var pa = parseFloat($('#f-pa').value) || null;
 
-      if (!mes) return toast('Informe o mês da cirurgia.');
-      if (mes > hoje().slice(0, 7)) return toast('A cirurgia não pode ser futura.');
-      if (rascunho.nascimento && mes < rascunho.nascimento.slice(0, 7)) return toast('A cirurgia não pode ser anterior ao nascimento.');
-      if (!cirurgiao) return toast('Informe o cirurgião responsável.');
-      if (alt && (alt < 100 || alt > 250)) return toast('Altura fora do intervalo esperado.');
+      if (!mes) return erro('#f-mes', 'Informe o mês da cirurgia.');
+      if (mes > hoje().slice(0, 7)) return erro('#f-mes', 'A cirurgia não pode ser futura.');
+      if (rascunho.nascimento && mes < rascunho.nascimento.slice(0, 7)) return erro('#f-mes', 'A cirurgia não pode ser anterior ao nascimento.');
+      if (!cirurgiao) return erro('#f-cirurgiao', 'Informe o cirurgião responsável.');
+      if (alt && (alt < 100 || alt > 250)) return erro('#f-alt', 'Altura fora do intervalo esperado.');
 
       rascunho.cirurgia = $('#f-cirurgia').value;
       rascunho.mesCirurgia = mesBR(mes);
