@@ -8,6 +8,3 @@ Repositório com projetos independentes:
   Android. Veja [`barilife/README.md`](barilife/README.md).
 - **`dne-digital/`** — réplica da **DNE Digital**, a carteira de estudante digital.
   Veja [`dne-digital/README.md`](dne-digital/README.md).
-- **`letterbooks/`** — *Letterbooks*: diário de leitura no espírito do Letterboxd, mas
-  para livros — busca no acervo da Open Library, estrelas, resenhas e listas.
-  Veja [`letterbooks/README.md`](letterbooks/README.md).
