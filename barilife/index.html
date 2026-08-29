@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Barilife — Carteirinha Digital</title>
+<meta name="description" content="Réplica acadêmica do aplicativo Barilife: carteirinha digital do paciente bariátrico, rede de descontos, busca de profissionais, conteúdo e lembretes.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1B7F5F" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1412" media="(prefers-color-scheme: dark)">
+
+<!-- iOS: instalacao pela tela de inicio do Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Barilife">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<!-- ====================== SVGs reutilizaveis ========================== -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-selo" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2.2 4.6 5.4v6.1c0 4.6 3.1 8.9 7.4 10.3 4.3-1.4 7.4-5.7 7.4-10.3V5.4L12 2.2Z" opacity=".95"/>
+    <path d="m10.6 15.2-2.9-2.9 1.3-1.3 1.6 1.6 4.4-4.4 1.3 1.3-5.7 5.7Z" fill="#1B7F5F"/>
+  </symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 9.5h19M6.5 14h4"/></symbol>
+  <symbol id="i-tag"  viewBox="0 0 24 24"><path d="M3 12.4V4.5A1.5 1.5 0 0 1 4.5 3h7.9a2 2 0 0 1 1.4.6l7 7a2 2 0 0 1 0 2.8l-6.4 6.4a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1-.6-1.4Z"/><circle cx="7.8" cy="7.8" r="1.4"/></symbol>
+  <symbol id="i-pino" viewBox="0 0 24 24"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-livro" viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H11a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H5.5A1.5 1.5 0 0 1 4 15.5Z"/><path d="M20 4.5A1.5 1.5 0 0 0 18.5 3H13a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h5.5a1.5 1.5 0 0 0 1.5-1.5Z"/></symbol>
+  <symbol id="i-sino" viewBox="0 0 24 24"><path d="M18 8.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5Z"/><path d="M10.3 19a2 2 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+</svg>
+
+<!-- ====================== Tela de entrada ============================= -->
+<section id="tela-entrada" class="on" aria-label="Entrada">
+  <div class="marca">
+    <div class="selo"><svg viewBox="0 0 24 24"><use href="#i-selo"/></svg></div>
+    <div class="nome">Bari<span>life</span></div>
+  </div>
+
+  <!-- passo 1: apresentacao -->
+  <div class="passo on" id="passo-1">
+    <div class="entrada-hero">
+      <h2>Sua carteirinha do<br>paciente bariátrico.</h2>
+      <p>Identificação digital, rede de descontos, profissionais credenciados, conteúdo de acompanhamento e lembretes — tudo em um só lugar.</p>
+    </div>
+    <ul class="lista" style="margin-bottom:22px">
+      <li class="item"><div class="ico-box">🪪</div><div class="corpo"><div class="t">Carteirinha digital</div><div class="s">Substitui a carteirinha física, com QR Code de validação.</div></div></li>
+      <li class="item"><div class="ico-box">🏷️</div><div class="corpo"><div class="t">Descontos exclusivos</div><div class="s">Restaurantes, academias, farmácias e clínicas parceiras.</div></div></li>
+      <li class="item"><div class="ico-box">🩺</div><div class="corpo"><div class="t">Profissionais credenciados</div><div class="s">Encontre cirurgiões, nutrição e psicologia perto de você.</div></div></li>
+    </ul>
+    <button class="btn cheio" data-ir="2">Criar minha carteirinha</button>
+    <button class="btn cheio neutro" id="btn-demo" style="margin-top:10px">Entrar com perfil de demonstração</button>
+  </div>
+
+  <!-- passo 2: dados pessoais -->
+  <div class="passo" id="passo-2">
+    <div class="progresso"><i class="on"></i><i></i></div>
+    <div class="entrada-hero"><h2>Seus dados</h2><p>Usados apenas neste dispositivo para montar a carteirinha.</p></div>
+    <form id="form-1" novalidate>
+      <div class="campo"><label for="f-nome">Nome completo</label><input id="f-nome" required autocomplete="name" placeholder="Como aparece no seu documento"></div>
+      <div class="campo"><label for="f-email">E-mail</label><input id="f-email" type="email" required autocomplete="email" placeholder="voce@email.com"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-cidade">Cidade</label><input id="f-cidade" required placeholder="São Paulo"></div>
+        <div class="campo"><label for="f-uf">UF</label><select id="f-uf"></select></div>
+      </div>
+      <button class="btn cheio" type="submit">Continuar</button>
+      <button class="btn cheio neutro" type="button" data-ir="1" style="margin-top:10px">Voltar</button>
+    </form>
+  </div>
+
+  <!-- passo 3: dados da cirurgia -->
+  <div class="passo" id="passo-3">
+    <div class="progresso"><i class="on"></i><i class="on"></i></div>
+    <div class="entrada-hero"><h2>Sua cirurgia</h2><p>Esses dados aparecem na frente da carteirinha.</p></div>
+    <form id="form-2" novalidate>
+      <div class="campo"><label for="f-cirurgia">Tipo de cirurgia</label><select id="f-cirurgia"></select></div>
+      <div class="campo"><label for="f-data">Data da cirurgia</label><input id="f-data" type="date" required></div>
+      <div class="campo"><label for="f-cirurgiao">Cirurgião responsável</label><input id="f-cirurgiao" required placeholder="Dra. Helena Marques Vidal"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-crm">CRM</label><input id="f-crm" required placeholder="CRM-SP 118342"></div>
+        <div class="campo"><label for="f-hospital">Hospital</label><input id="f-hospital" placeholder="Hospital Santa Vitória"></div>
+      </div>
+      <button class="btn cheio" type="submit">Gerar carteirinha</button>
+      <button class="btn cheio neutro" type="button" data-ir="2" style="margin-top:10px">Voltar</button>
+    </form>
+    <div class="aviso"><b>Réplica acadêmica.</b> Este não é o aplicativo oficial da SBCBM. Foi desenvolvido como trabalho de curso e nenhum dado é enviado para servidores — tudo fica salvo apenas neste navegador.</div>
+  </div>
+</section>
+
+<!-- ====================== Aplicativo ================================== -->
+<div id="app" hidden>
+
+  <header class="topbar">
+    <button class="voltar" id="btn-voltar" hidden aria-label="Voltar">‹</button>
+    <div class="titulo"><h1 id="tit">Carteirinha</h1><p id="sub">Paciente bariátrico</p></div>
+    <button class="avatar" id="btn-perfil" aria-label="Abrir perfil"></button>
+  </header>
+
+  <main>
+    <!-- ---------- Carteirinha ---------- -->
+    <section class="tela on" id="t-carteirinha">
+      <div id="banner-instalar"></div>
+      <div class="carteira" id="carteira"></div>
+      <div class="acoes-rapidas">
+        <button id="a-qr"><span class="ico">⛶</span>Ampliar QR</button>
+        <button id="a-compartilhar"><span class="ico">↗</span>Compartilhar</button>
+        <button id="a-editar"><span class="ico">✎</span>Editar dados</button>
+      </div>
+
+      <h2 class="secao-tit">Minha jornada</h2>
+      <div class="metricas" id="metricas"></div>
+
+      <h2 class="secao-tit">Próximo compromisso</h2>
+      <div id="proximo"></div>
+
+      <h2 class="secao-tit">Descontos perto de você</h2>
+      <div class="lista" id="destaques"></div>
+
+      <div class="aviso"><b>Réplica acadêmica.</b> Projeto de estudo, sem vínculo com a SBCBM. Dados de profissionais e estabelecimentos são fictícios.</div>
+    </section>
+
+    <!-- ---------- Descontos ---------- -->
+    <section class="tela" id="t-descontos">
+      <div class="busca">
+        <svg><use href="#i-busca"/></svg>
+        <input id="busca-parceiro" placeholder="Buscar parceiro, bairro ou cidade" aria-label="Buscar parceiro">
+      </div>
+      <div class="chips" id="chips-categoria"></div>
+      <div class="lista" id="lista-parceiros"></div>
+    </section>
+
+    <!-- ---------- Profissionais ---------- -->
+    <section class="tela" id="t-medicos">
+      <div class="busca">
+        <svg><use href="#i-busca"/></svg>
+        <input id="busca-medico" placeholder="Buscar nome, especialidade ou cidade" aria-label="Buscar profissional">
+      </div>
+      <div class="chips" id="chips-uf"></div>
+      <div class="lista" id="lista-medicos"></div>
+    </section>
+
+    <!-- ---------- Conteudo ---------- -->
+    <section class="tela" id="t-conteudo">
+      <div class="abas" id="abas-conteudo">
+        <button class="on" data-tipo="todos">Tudo</button>
+        <button data-tipo="dica">Dicas</button>
+        <button data-tipo="receita">Receitas</button>
+        <button data-tipo="artigo">Artigos</button>
+        <button data-tipo="video">Vídeos</button>
+      </div>
+      <div class="lista" id="lista-conteudo"></div>
+    </section>
+
+    <!-- ---------- Lembretes ---------- -->
+    <section class="tela" id="t-lembretes">
+      <h2 class="secao-tit">Hidratação de hoje</h2>
+      <div class="agua" id="agua"></div>
+
+      <h2 class="secao-tit">Meus lembretes</h2>
+      <div class="lista" id="lista-lembretes"></div>
+      <button class="btn cheio vazio" id="btn-novo-lembrete" style="margin-top:14px">+ Novo lembrete</button>
+    </section>
+
+    <!-- ---------- Perfil ---------- -->
+    <section class="tela" id="t-perfil">
+      <div class="perfil-topo">
+        <button class="avatar g" id="perfil-foto" aria-label="Trocar foto"></button>
+        <input type="file" id="input-foto" accept="image/*" hidden>
+        <div class="nome" id="perfil-nome"></div>
+        <div class="sub" id="perfil-sub"></div>
+        <span class="etiqueta" id="perfil-selo">✓ Carteirinha validada</span>
+      </div>
+      <div class="cartao">
+        <button class="linha-menu" id="m-dados"><span class="ico">👤</span><span class="t">Meus dados</span><span class="seta">›</span></button>
+        <button class="linha-menu" id="m-favoritos"><span class="ico">❤️</span><span class="t">Parceiros favoritos</span><span class="seta">›</span></button>
+        <button class="linha-menu" id="m-meta"><span class="ico">💧</span><span class="t">Meta diária de água</span><span class="seta">›</span></button>
+        <button class="linha-menu" id="m-sobre"><span class="ico">ℹ️</span><span class="t">Sobre este aplicativo</span><span class="seta">›</span></button>
+        <button class="linha-menu" id="m-sair"><span class="ico">🚪</span><span class="t">Apagar dados e sair</span><span class="seta">›</span></button>
+      </div>
+      <div class="aviso"><b>Réplica acadêmica do Barilife.</b> Trabalho de curso, sem vínculo com a Sociedade Brasileira de Cirurgia Bariátrica e Metabólica. Todos os dados são fictícios e ficam salvos apenas neste dispositivo.</div>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="on" data-tela="carteirinha"><svg><use href="#i-card"/></svg>Carteirinha</button>
+    <button data-tela="descontos"><svg><use href="#i-tag"/></svg>Descontos</button>
+    <button data-tela="medicos"><svg><use href="#i-pino"/></svg>Profissionais</button>
+    <button data-tela="conteudo"><svg><use href="#i-livro"/></svg>Conteúdo</button>
+    <button data-tela="lembretes"><svg><use href="#i-sino"/></svg>Lembretes</button>
+  </nav>
+
+  <div class="folha-fundo" id="folha-fundo"></div>
+  <aside class="folha" id="folha" role="dialog" aria-modal="true">
+    <div class="puxador"></div>
+    <div class="conteudo" id="folha-conteudo"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script src="assets/js/qr.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
