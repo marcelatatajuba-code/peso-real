@@ -11,6 +11,8 @@
   Os dados ficam apenas no aparelho de quem abre, no localStorage; não há
   servidor, cadastro nem emissão de documento de verdade.
 
+  USO INTERNO — NÃO PUBLICAR em endereço público. Ver NAO-PUBLICAR.md.
+
   A identificação de réplica também está:
     - nesta marcação e nas meta tags abaixo;
     - no atributo data-replica do elemento da carteirinha;
@@ -27,6 +29,7 @@
 <meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
 <meta name="replica" content="academica">
 <meta name="validade-legal" content="nenhuma">
+<meta name="uso" content="interno-academico-nao-publicar">
 <meta name="robots" content="noindex, nofollow">
 
 <!-- Ajustes para instalação como app no iPhone (Adicionar à Tela de Início) -->
@@ -63,10 +66,13 @@
     <g id="i-escudo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.5 5.8v6c0 4.5 3.1 8.2 7.5 9.6 4.4-1.4 7.5-5.1 7.5-9.6v-6Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></g>
     <g id="i-lua" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8.4 8.4 0 0 1 9.8 4 8.5 8.5 0 1 0 20 14.2Z"/></g>
     <g id="i-sair" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h3.5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H14"/><path d="M10 8 6 12l4 4M6 12h9"/></g>
+    <g id="i-copiar" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M15 6.5A2.5 2.5 0 0 0 12.5 4h-6A2.5 2.5 0 0 0 4 6.5v6A2.5 2.5 0 0 0 6.5 15"/></g>
     <g id="i-wallet" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2.5 2.5 0 0 1 2.5 2.5v9A2.5 2.5 0 0 1 18 19H5.5A2.5 2.5 0 0 1 3 16.5Z"/><path d="M3 9.5h11a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H3"/><circle cx="12.5" cy="12" r=".9" fill="currentColor" stroke="none"/></g>
     <g id="i-virar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h13a4.5 4.5 0 0 1 0 9h-2"/><path d="m6.5 4.5-3.5 3.5 3.5 3.5"/></g>
   </defs>
 </svg>
+
+<div id="splash" aria-hidden="true"><span class="logo-dne">dne</span></div>
 
 <div id="app">
 
@@ -74,38 +80,44 @@
 <section class="tela" id="tela-login" aria-label="Entrar">
   <div class="login-corpo">
     <div class="login-marca">
-      <div class="sigla">DNE</div>
+      <div class="logo-dne">dne</div>
       <p>Documento Nacional do Estudante</p>
     </div>
 
     <!-- primeira abertura: a pessoa monta o próprio documento -->
     <div id="bloco-boas-vindas">
-      <p class="boas-vindas-txt">
-        Monte o seu documento de estudante: coloque a sua foto, o seu nome e os dados da
-        sua instituição. Tudo fica guardado só no seu aparelho.
+      <p class="abertura-txt">
+        Olá! Monte o seu documento de estudante e tenha a meia-entrada sempre à mão.
+        Coloque a sua foto, o seu nome e os dados da sua instituição.
       </p>
-      <div class="pilha mt-24">
+      <div class="pilha">
         <button class="btn" type="button" data-ir="solicitar">Criar o meu documento</button>
         <button class="btn secundario" type="button" id="btn-demo">Ver um exemplo pronto</button>
-        <button class="btn fantasma" type="button" id="btn-mostrar-login">Entrar com CPF e senha</button>
+        <button class="btn fantasma" type="button" id="btn-mostrar-login">Já tenho o meu DNE</button>
       </div>
     </div>
 
-    <!-- entrada por CPF e senha, mantida para demonstrar o fluxo do app oficial -->
+    <!-- entrada por CPF e senha, no formato do aplicativo original -->
     <form id="form-login" novalidate hidden>
-      <div class="campo-form" id="cf-login-cpf">
+      <p class="abertura-txt">
+        Que bom te ver de novo. Para começar, informe o seu CPF.
+      </p>
+      <div class="campo-linha" id="cf-login-cpf">
         <label for="login-cpf">CPF</label>
         <input id="login-cpf" name="cpf" type="tel" inputmode="numeric" autocomplete="username"
                placeholder="000.000.000-00" maxlength="14">
+        <p class="ajuda">Digite apenas números</p>
         <p class="erro">Informe um CPF válido.</p>
       </div>
-      <div class="campo-form" id="cf-login-senha">
+      <div class="campo-linha" id="cf-login-senha">
         <label for="login-senha">Senha</label>
         <input id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="••••••">
         <p class="erro">A senha precisa ter ao menos 4 caracteres.</p>
       </div>
-      <button class="btn" type="submit">Entrar</button>
-      <button class="btn fantasma mt-16" type="button" id="btn-voltar-boas-vindas">Voltar</button>
+      <div class="pilha mt-24">
+        <button class="btn" type="submit">Continuar</button>
+        <button class="btn fantasma" type="button" id="btn-voltar-boas-vindas">Voltar</button>
+      </div>
     </form>
 
   </div>
@@ -113,20 +125,22 @@
 
 <!-- ============================== INÍCIO ============================== -->
 <section class="tela" id="tela-inicio" aria-label="Início">
-  <header class="topo">
-    <h1 id="saudacao-topo">Início</h1>
-    <button class="topo-acao" type="button" data-ir="perfil" aria-label="Abrir perfil">Perfil</button>
+  <header class="topo topo-marca">
+    <span class="logo-dne">dne</span>
+    <span class="selos" aria-label="Entidades estudantis">
+      <span class="selo une">UNE</span><span class="selo ubes">UBES</span><span class="selo anpg">ANPG</span>
+    </span>
   </header>
   <div class="conteudo">
     <p class="saudacao">Olá,<strong id="inicio-nome">—</strong></p>
 
-    <button class="resumo-carteira mt-16" type="button" data-ir="carteirinha" style="width:100%;text-align:left">
+    <button class="resumo-carteira mt-16" type="button" data-ir="carteirinha">
       <img class="foto-mini" id="inicio-foto" alt="" src="assets/foto-exemplo.svg">
       <span class="txt">
         <strong id="inicio-inst">—</strong>
         <span id="inicio-status">—</span>
       </span>
-      <svg class="seta" width="20" height="20" style="opacity:.7"><use href="#i-seta-dir"/></svg>
+      <svg class="seta" width="20" height="20"><use href="#i-seta-dir"/></svg>
     </button>
 
     <div class="atalhos">
@@ -152,127 +166,118 @@
 
 <!-- =========================== CARTEIRINHA =========================== -->
 <section class="tela" id="tela-carteirinha" aria-label="Carteirinha">
-  <header class="topo"><h1>Carteirinha</h1></header>
+  <header class="topo topo-marca">
+    <span class="logo-dne">dne</span>
+    <span class="selos" aria-label="Entidades estudantis">
+      <span class="selo une">UNE</span><span class="selo ubes">UBES</span><span class="selo anpg">ANPG</span>
+    </span>
+  </header>
+
   <div class="conteudo">
-    <div class="carteira-palco">
-      <div class="carteira" id="carteira" role="img"
-           aria-label="Documento do estudante"
-           data-replica="academica" data-validade-legal="nenhuma">
 
-        <!-- ---------------------------- frente ---------------------------- -->
-        <div class="face frente">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div class="marca">
-                <div>
-                  <div class="sigla">DNE</div>
-                  <div class="desc">Documento Nacional do Estudante</div>
-                </div>
-              </div>
-              <span class="selo-validade" id="selo-validade"><i class="ponto"></i><span>Válido</span></span>
-            </div>
+    <!-- faixa de aviso, no formato do aplicativo original -->
+    <div class="banner">
+      <div class="balao">
+        <span class="emoji">🎉</span>
+        <span>
+          <strong>Uhul! Chegou!</strong>
+          <span id="banner-texto">Desbloqueie o seu DNE e aproveite.</span>
+        </span>
+      </div>
+      <button class="btn-redondo" type="button" id="btn-apresentar-topo" aria-label="Apresentar documento">
+        <svg><use href="#i-qr"/></svg>
+      </button>
+    </div>
 
-            <div class="carteira-identidade">
-              <img class="foto" id="cart-foto" alt="Foto do estudante" src="assets/foto-exemplo.svg">
-              <div style="min-width:0">
-                <div class="carteira-nome" id="cart-nome">—</div>
-                <div class="campo"><div class="campo-rot">CPF</div><div class="campo-val" id="cart-cpf">—</div></div>
-                <div class="campo"><div class="campo-rot">Nascimento</div><div class="campo-val" id="cart-nasc">—</div></div>
-              </div>
-            </div>
+    <!-- documento -->
+    <div class="cartao" id="carteira" role="img" aria-label="Documento do estudante"
+         data-replica="academica" data-validade-legal="nenhuma">
 
-            <div class="grade-campos">
-              <div class="campo largo"><div class="campo-rot">Instituição de ensino</div><div class="campo-val" id="cart-inst">—</div></div>
-              <div class="campo"><div class="campo-rot">Curso</div><div class="campo-val" id="cart-curso">—</div></div>
-              <div class="campo"><div class="campo-rot">Nível</div><div class="campo-val" id="cart-nivel">—</div></div>
-              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="cart-matricula">—</div></div>
-              <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="cart-codigo">—</div></div>
-            </div>
-
-            <div class="carteira-rodape">
-              <div>
-                <div class="campo-rot">Validade</div>
-                <div class="campo-val" id="cart-validade" style="font-size:16px">—</div>
-                <div class="campo-rot" style="margin-top:8px">Entidade emissora</div>
-                <div class="campo-val" id="cart-entidade">—</div>
-              </div>
-              <div class="qr-mini" id="cart-qr" aria-hidden="true"></div>
-            </div>
-          </div>
+      <div class="cartao-linha">
+        <div class="tile tile-foto">
+          <img id="cart-foto" alt="Foto do estudante" src="assets/foto-exemplo.svg">
         </div>
-
-        <!-- ----------------------------- verso ---------------------------- -->
-        <div class="face verso">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div><div class="campo-rot">Número do documento</div><div class="campo-val" id="verso-numero" style="font-size:15px;letter-spacing:.05em">—</div></div>
-              <div class="sigla" style="font-size:15px">DNE</div>
-            </div>
-
-            <div class="faixa-magnetica" aria-hidden="true"></div>
-
-            <div class="grade-campos">
-              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="verso-matricula">—</div></div>
-              <div class="campo"><div class="campo-rot">Emissão</div><div class="campo-val" id="verso-emissao">—</div></div>
-              <div class="campo largo"><div class="campo-rot">E-mail cadastrado</div><div class="campo-val" id="verso-email">—</div></div>
-            </div>
-
-            <ul class="verso-lista">
-              <li>Meia-entrada em cinema, teatro, shows e eventos esportivos</li>
-              <li>Tarifa reduzida no transporte público estudantil</li>
-              <li>Descontos na rede de parceiros do documento</li>
-            </ul>
-
-            <p style="font-size:10px;line-height:1.45;opacity:.72;margin:12px 0 0">
-              Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
-              limitada a 40% dos ingressos disponíveis. Documento com certificação digital do ITI,
-              conferido pelo QR Code ou pelo código de uso no validador oficial.
-            </p>
-
-            <div class="grade-campos" style="margin-top:14px">
-              <div class="campo"><div class="campo-rot">Emitido por</div><div class="campo-val" id="verso-entidade">—</div></div>
-              <div class="campo"><div class="campo-rot">Atendimento ao estudante</div><div class="campo-val">0800 000 0000</div></div>
-            </div>
-
-            <div class="codigo-barras" aria-hidden="true"></div>
-
-            <div class="carteira-rodape">
-              <div>
-                <div class="campo-rot">Assinatura</div>
-                <div class="assinatura" id="verso-assinatura">—</div>
-                <div class="campo-rot" style="margin-top:8px">Verificação</div>
-                <div class="campo-val" id="verso-hash" style="font-family:ui-monospace,Menlo,monospace;font-size:12px">—</div>
-              </div>
-              <div class="qr-mini" id="verso-qr" aria-hidden="true"></div>
-            </div>
-          </div>
+        <div class="tile tile-qr">
+          <div class="qr" id="cart-qr"></div>
+          <span class="numero" id="cart-codigo">—</span>
         </div>
+      </div>
 
+      <div class="tile tile-dados">
+        <div class="cartao-nome" id="cart-nome">—</div>
+        <p class="cartao-campo">Ins. Ensino: <b id="cart-inst">—</b></p>
+        <p class="cartao-campo">Curso: <b id="cart-curso">—</b></p>
+        <p class="cartao-campo">Nível de ensino: <b id="cart-nivel">—</b></p>
+        <p class="cartao-campo">CPF: <b id="cart-cpf">—</b></p>
+        <p class="cartao-campo">Data de Nasc.: <b id="cart-nasc">—</b></p>
+        <p class="cartao-campo">Validade: <b id="cart-validade">—</b></p>
+        <p style="margin:11px 0 0"><span class="selo-validade" id="selo-validade"><i class="ponto"></i><span>Válido</span></span></p>
       </div>
     </div>
 
-    <div class="carteira-acoes">
-      <button class="btn secundario" type="button" id="btn-virar">
-        <svg width="18" height="18"><use href="#i-virar"/></svg> Virar
-      </button>
-      <button class="btn" type="button" data-ir="apresentar">
-        <svg width="18" height="18"><use href="#i-qr"/></svg> Apresentar
+    <div class="wallet-apple">
+      <button class="btn escuro" type="button" id="btn-wallet">
+        <svg width="19" height="19"><use href="#i-wallet"/></svg>
+        <span id="btn-wallet-txt">Adicionar à Carteira da Apple</span>
       </button>
     </div>
 
-    <button class="btn secundario mt-16" type="button" id="btn-wallet">
-      <svg width="19" height="19"><use href="#i-wallet"/></svg> <span id="btn-wallet-txt">Adicionar à Carteira</span>
-    </button>
-
-    <div class="aviso mt-16">
-      <svg><use href="#i-escudo"/></svg>
-      <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo — o mesmo princípio usado por documentos digitais para dificultar cópias de tela.</span>
+    <div class="pilha mt-16">
+      <button class="btn" type="button" data-ir="apresentar">
+        <svg width="19" height="19"><use href="#i-qr"/></svg> Apresentar documento
+      </button>
+      <button class="btn secundario" type="button" data-ir="certificado">
+        <svg width="19" height="19"><use href="#i-escudo"/></svg> Ver certificado
+      </button>
     </div>
 
     <div class="secao-titulo"><h2>Dados completos</h2></div>
     <div class="card"><div class="lista-dados" id="carteirinha-dados"></div></div>
 
-    <button class="btn secundario mt-16" type="button" data-ir="solicitar">Renovar documento</button>
+    <div class="aviso mt-16">
+      <svg><use href="#i-escudo"/></svg>
+      <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo.</span>
+    </div>
+
+    <button class="btn secundario mt-16" type="button" data-ir="solicitar">Editar dados do documento</button>
+  </div>
+</section>
+
+<!-- =========================== CERTIFICADO =========================== -->
+<section class="tela" id="tela-certificado" aria-label="Certificado">
+  <header class="topo">
+    <button class="voltar" type="button" data-voltar><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Voltar</button>
+    <h1 style="font-size:17px">Certificado</h1>
+    <span style="width:70px"></span>
+  </header>
+  <div class="conteudo">
+    <p class="validado-titulo">Validado</p>
+    <p class="validado-sub">no portal da meia-entrada</p>
+
+    <div class="card">
+      <div class="cert-marca">
+        <span class="icone"><svg><use href="#i-check"/></svg></span>
+        <span>
+          <span class="nome">MEIA-ENTRADA</span>
+          <span class="dom">ORG.BR</span>
+        </span>
+      </div>
+      <p class="cert-texto" id="cert-texto">—</p>
+
+      <div class="pem">
+        <div class="pem-topo">
+          <span>Certificado de Atributo (PEM)</span>
+          <button type="button" id="btn-copiar-pem">
+            <svg><use href="#i-copiar"/></svg> COPIAR
+          </button>
+        </div>
+        <div class="pem-corpo" id="pem-corpo"></div>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <div class="lista-dados" id="cert-dados"></div>
+    </div>
   </div>
 </section>
 
@@ -471,30 +476,29 @@
     <span style="width:70px"></span>
   </header>
   <div class="conteudo">
-    <div class="carteira-palco">
-      <div class="carteira carteira-isic" data-replica="academica" data-validade-legal="nenhuma">
-        <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>
-              <span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span>
-            </div>
-            <div class="carteira-identidade">
-              <img class="foto" id="isic-foto" alt="" src="assets/foto-exemplo.svg">
-              <div style="min-width:0">
-                <div class="carteira-nome" id="isic-nome">—</div>
-                <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
-                <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
-              </div>
-            </div>
-            <div class="carteira-rodape">
-              <div><div class="campo-rot">Validity</div><div class="campo-val" id="isic-validade">—</div></div>
-              <div class="qr-mini" id="isic-qr"></div>
-            </div>
-          </div>
+    <div class="cartao cartao-isic" data-replica="academica" data-validade-legal="nenhuma">
+      <div class="cartao-linha" style="align-items:stretch">
+        <div class="tile tile-foto" style="flex:0 0 108px">
+          <img id="isic-foto" alt="" src="assets/foto-exemplo.svg">
+        </div>
+        <div class="tile" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--azul)">ISIC</div>
+          <div class="campo-rot" style="margin-bottom:8px">International Student Identity Card</div>
+          <div class="campo"><div class="campo-rot">Name</div><div class="campo-val" id="isic-nome">—</div></div>
+          <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
+          <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
         </div>
       </div>
+      <div class="tile tile-dados" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <div class="campo-rot">Validity</div>
+          <div class="campo-val" id="isic-validade" style="font-size:16px">—</div>
+          <p style="margin:9px 0 0"><span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span></p>
+        </div>
+        <div class="qr" id="isic-qr" style="width:86px;flex:none"></div>
+      </div>
     </div>
+
     <p class="texto-2 centro">Aceita em mais de 130 países pelos parceiros da rede ISIC.</p>
 
     <div class="secao-titulo"><h2>O que a carteira dá acesso</h2></div>
@@ -575,8 +579,8 @@
   <div class="passe">
     <div class="passe-topo">
       <div>
-        <div class="sigla">DNE</div>
-        <div class="tipo">Documento do estudante</div>
+        <div class="logo-dne">dne</div>
+        <div class="campo-rot">Documento do estudante</div>
       </div>
       <div style="text-align:right">
         <div class="campo-rot">Validade</div>

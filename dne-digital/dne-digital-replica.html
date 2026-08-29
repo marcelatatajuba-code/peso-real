@@ -17,6 +17,8 @@
   Os dados ficam apenas no aparelho de quem abre, no localStorage; não há
   servidor, cadastro nem emissão de documento de verdade.
 
+  USO INTERNO — NÃO PUBLICAR em endereço público. Ver NAO-PUBLICAR.md.
+
   A identificação de réplica também está:
     - nesta marcação e nas meta tags abaixo;
     - no atributo data-replica do elemento da carteirinha;
@@ -33,6 +35,7 @@
 <meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
 <meta name="replica" content="academica">
 <meta name="validade-legal" content="nenhuma">
+<meta name="uso" content="interno-academico-nao-publicar">
 <meta name="robots" content="noindex, nofollow">
 
 <!-- Ajustes para instalação como app no iPhone (Adicionar à Tela de Início) -->
@@ -46,120 +49,139 @@
 <link rel="icon" href="data:image/png;base64,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">
 <style>
 /* =========================================================================
-   DNE Digital — Réplica acadêmica
-   Folha de estilo única. Mobile-first, pensada para iPhone (Safari/PWA).
+   DNE Digital — reprodução acadêmica (uso interno, não publicar)
+   Padrão visual seguindo o aplicativo original: tema claro, tipografia
+   arredondada, azul na marca, laranja nas ações e faixa colorida no cartão.
    ========================================================================= */
 
 /* ------------------------------------------------------------- variáveis */
 :root {
-  --azul-900: #071233;
-  --azul-800: #0d1e4d;
-  --azul-700: #14306e;
-  --azul-600: #1d47a5;
-  --azul-500: #2563eb;
-  --azul-400: #4f89f5;
-  --ciano:    #22d3ee;
-  --verde:    #16a34a;
-  --verde-cl: #dcfce7;
-  --amarelo:  #f5b301;
-  --vermelho: #dc2626;
+  --azul:        #26509e;
+  --azul-forte:  #1b3a78;
+  --azul-suave:  #eaf0fb;
+  --laranja:     #f26522;
+  --laranja-esc: #d4511a;
+  --roxo:        #8e3e7e;
+  --magenta:     #bd4a80;
+  --verde:       #16a34a;
+  --verde-cl:    #e4f7ea;
+  --vermelho:    #d92d20;
 
-  --fundo:      #f4f6fb;
-  --superficie: #ffffff;
-  --superficie-2: #eef2fa;
-  --borda:      #dfe5f2;
-  --texto:      #0f1830;
-  --texto-2:    #5b6684;
-  --texto-3:    #8d97b0;
+  --fundo:        #e9eef8;
+  --superficie:   #ffffff;
+  --superficie-2: #f3f6fd;
+  --borda:        #dde5f3;
+  --texto:        #1b2440;
+  --texto-2:      #5a6480;
+  --texto-3:      #939cb4;
 
-  --sombra-1: 0 1px 2px rgba(9, 20, 51, .06), 0 1px 3px rgba(9, 20, 51, .04);
-  --sombra-2: 0 4px 12px rgba(9, 20, 51, .08), 0 2px 4px rgba(9, 20, 51, .04);
-  --sombra-3: 0 18px 40px rgba(9, 20, 51, .18);
+  --sombra-1: 0 1px 2px rgba(27, 42, 90, .05), 0 2px 6px rgba(27, 42, 90, .05);
+  --sombra-2: 0 6px 18px rgba(27, 42, 90, .09);
+  --sombra-3: 0 18px 44px rgba(27, 42, 90, .16);
 
-  --raio:    14px;
+  --raio:    16px;
   --raio-lg: 22px;
   --topo:    env(safe-area-inset-top, 0px);
   --base:    env(safe-area-inset-bottom, 0px);
   --tabbar:  62px;
+
+  --fonte: "Nunito", "Quicksand", ui-rounded, "SF Pro Rounded",
+           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 html[data-tema="escuro"] {
-  --fundo:      #070c1c;
-  --superficie: #101830;
-  --superficie-2: #18213d;
-  --borda:      #24304f;
-  --texto:      #eef2fb;
-  --texto-2:    #9aa6c4;
-  --texto-3:    #6d7899;
-  --verde-cl:   #0d2a1a;
-  --sombra-1: 0 1px 2px rgba(0, 0, 0, .4);
-  --sombra-2: 0 4px 12px rgba(0, 0, 0, .45);
-  --sombra-3: 0 18px 40px rgba(0, 0, 0, .6);
+  --fundo:        #101627;
+  --superficie:   #19203a;
+  --superficie-2: #212a48;
+  --borda:        #2b3555;
+  --texto:        #eef2fb;
+  --texto-2:      #a3adc8;
+  --texto-3:      #77819c;
+  --azul-suave:   #1d2949;
+  --verde-cl:     #102c1c;
+  --sombra-1: 0 1px 3px rgba(0, 0, 0, .4);
+  --sombra-2: 0 6px 18px rgba(0, 0, 0, .45);
+  --sombra-3: 0 18px 44px rgba(0, 0, 0, .6);
   color-scheme: dark;
 }
 
 /* ------------------------------------------------------------------ reset */
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html, body {
-  margin: 0;
-  height: 100%;
-  overscroll-behavior-y: none;
-}
+html, body { margin: 0; height: 100%; overscroll-behavior-y: none; }
 
 body {
   background: var(--fundo);
   color: var(--texto);
-  font: 400 16px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font: 400 16px/1.45 var(--fonte);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 button, input, select, textarea { font: inherit; color: inherit; }
 button { border: 0; background: none; cursor: pointer; }
-a { color: var(--azul-500); text-decoration: none; }
+a { color: var(--azul); text-decoration: none; }
 img { max-width: 100%; display: block; }
-h1, h2, h3, h4 { margin: 0; line-height: 1.2; letter-spacing: -.01em; }
+h1, h2, h3 { margin: 0; line-height: 1.2; }
 ul { margin: 0; padding: 0; list-style: none; }
-
-:focus-visible { outline: 2px solid var(--azul-500); outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; border-radius: 6px; }
 
 /* --------------------------------------------------------------- estrutura */
-#app {
-  min-height: 100%;
-  padding-bottom: calc(var(--tabbar) + var(--base));
-}
+#app { min-height: 100%; padding-bottom: calc(var(--tabbar) + var(--base)); }
 body.sem-tabbar #app { padding-bottom: var(--base); }
 
 .tela { display: none; animation: entra .22s ease both; }
 .tela.ativa { display: block; }
-
 @keyframes entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-.conteudo { padding: 16px; max-width: 560px; margin: 0 auto; }
+.conteudo { padding: 14px 16px; max-width: 560px; margin: 0 auto; }
+
+/* ------------------------------------------------------------------- marca */
+.logo-dne {
+  font-family: var(--fonte);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -.055em;
+  color: var(--azul);
+  line-height: 1;
+  display: inline-block;
+}
+.logo-dne::first-letter { letter-spacing: -.07em; }
+
+.selos { display: flex; gap: 6px; align-items: center; }
+.selo {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 7.5px; font-weight: 800; letter-spacing: -.02em;
+  color: #fff; border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(27, 42, 90, .2);
+}
+.selo.une  { background: linear-gradient(140deg, #2f6fd0, #1c4694); }
+.selo.ubes { background: linear-gradient(140deg, #2fa564, #157a44); }
+.selo.anpg { background: linear-gradient(140deg, #8e3e7e, #66285a); font-size: 6.5px; }
 
 /* ---------------------------------------------------------------- cabeçalho */
 .topo {
   position: sticky; top: 0; z-index: 40;
-  padding: calc(var(--topo) + 10px) 16px 12px;
-  background: color-mix(in srgb, var(--fundo) 88%, transparent);
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  padding: calc(var(--topo) + 12px) 16px 12px;
+  background: color-mix(in srgb, var(--fundo) 90%, transparent);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
   border-bottom: 1px solid transparent;
   display: flex; align-items: center; gap: 10px;
   transition: border-color .2s;
 }
 .topo.rolado { border-bottom-color: var(--borda); }
-.topo h1 { font-size: 20px; font-weight: 700; flex: 1; }
-.topo .voltar { font-size: 15px; color: var(--azul-500); font-weight: 600; display: flex; align-items: center; gap: 2px; margin-left: -6px; }
-.topo-acao { color: var(--azul-500); font-weight: 600; font-size: 15px; }
+.topo h1 { font-size: 19px; font-weight: 800; flex: 1; letter-spacing: -.01em; }
+.topo .voltar { font-size: 15px; color: var(--azul); font-weight: 700; display: flex; align-items: center; gap: 2px; margin-left: -6px; }
+.topo-acao { color: var(--azul); font-weight: 700; font-size: 15px; }
+.topo-marca { justify-content: space-between; }
 
 /* ------------------------------------------------------------------ tabbar */
 .tabbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
   display: grid; grid-template-columns: repeat(4, 1fr);
   padding-bottom: var(--base);
-  background: color-mix(in srgb, var(--superficie) 90%, transparent);
+  background: color-mix(in srgb, var(--superficie) 92%, transparent);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-top: 1px solid var(--borda);
@@ -168,356 +190,317 @@ body.sem-tabbar .tabbar { display: none; }
 .tabbar button {
   height: var(--tabbar);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  color: var(--texto-3); font-size: 10.5px; font-weight: 600; letter-spacing: .01em;
+  color: var(--texto-3); font-size: 10.5px; font-weight: 700;
 }
 .tabbar button svg { width: 24px; height: 24px; }
-.tabbar button[aria-current="page"] { color: var(--azul-500); }
+.tabbar button[aria-current="page"] { color: var(--azul); }
 
 /* ------------------------------------------------------------------ botões */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; min-height: 50px; padding: 0 18px;
-  border-radius: var(--raio); font-size: 16px; font-weight: 600;
-  background: var(--azul-500); color: #fff;
-  box-shadow: 0 6px 16px rgba(37, 99, 235, .28);
+  width: 100%; min-height: 52px; padding: 0 20px;
+  border-radius: 999px; font-size: 16px; font-weight: 800;
+  background: var(--laranja); color: #fff;
+  box-shadow: 0 6px 16px rgba(242, 101, 34, .3);
   transition: transform .12s, filter .12s, opacity .12s;
 }
 .btn:active { transform: scale(.978); filter: brightness(.94); }
 .btn[disabled] { opacity: .45; box-shadow: none; pointer-events: none; }
-.btn.secundario { background: var(--superficie-2); color: var(--texto); box-shadow: none; border: 1px solid var(--borda); }
-.btn.fantasma { background: transparent; color: var(--azul-500); box-shadow: none; }
-.btn.perigo { background: transparent; color: var(--vermelho); box-shadow: none; border: 1px solid var(--borda); }
-.btn.pequeno { min-height: 38px; width: auto; font-size: 14px; padding: 0 14px; border-radius: 10px; }
+.btn.azul { background: var(--azul); box-shadow: 0 6px 16px rgba(38, 80, 158, .28); }
+.btn.secundario {
+  background: var(--superficie); color: var(--azul);
+  border: 1.5px solid var(--borda); box-shadow: none;
+}
+.btn.escuro { background: #0b0b0d; color: #fff; box-shadow: none; border-radius: 12px; }
+.btn.fantasma { background: transparent; color: var(--azul); box-shadow: none; }
+.btn.perigo { background: transparent; color: var(--vermelho); box-shadow: none; border: 1.5px solid var(--borda); }
+.btn.pequeno { min-height: 40px; width: auto; font-size: 14px; padding: 0 16px; }
+
+.btn-redondo {
+  width: 52px; height: 52px; flex: none; border-radius: 15px;
+  display: grid; place-items: center; color: #fff;
+  background: var(--laranja); box-shadow: 0 6px 14px rgba(242, 101, 34, .32);
+}
+.btn-redondo svg { width: 22px; height: 22px; }
 
 /* ------------------------------------------------------------------- cards */
 .card {
   background: var(--superficie);
-  border: 1px solid var(--borda);
   border-radius: var(--raio-lg);
   box-shadow: var(--sombra-1);
   padding: 16px;
 }
 .card + .card { margin-top: 12px; }
 
-.secao-titulo {
-  display: flex; align-items: baseline; justify-content: space-between;
-  margin: 24px 4px 10px;
-}
-.secao-titulo h2 { font-size: 17px; font-weight: 700; }
-.secao-titulo a { font-size: 14px; font-weight: 600; }
+.secao-titulo { display: flex; align-items: baseline; justify-content: space-between; margin: 22px 4px 10px; }
+.secao-titulo h2 { font-size: 17px; font-weight: 800; }
+.secao-titulo a { font-size: 14px; font-weight: 700; }
 
-.vazio { text-align: center; color: var(--texto-2); padding: 40px 20px; }
+.vazio { text-align: center; color: var(--texto-2); padding: 36px 20px; }
 .vazio strong { display: block; color: var(--texto); margin-bottom: 4px; }
 
+/* aviso em faixa, com emoji, no estilo do app original */
+.banner {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.banner .balao {
+  flex: 1; display: flex; gap: 11px; align-items: flex-start;
+  background: var(--superficie); border-radius: var(--raio);
+  box-shadow: var(--sombra-1); padding: 14px 15px;
+}
+.banner .emoji { font-size: 22px; line-height: 1; }
+.banner strong { display: block; font-size: 15px; font-weight: 800; }
+.banner span { font-size: 13.5px; color: var(--texto-2); line-height: 1.35; }
+
 /* =========================================================================
-   A CARTEIRINHA — peça central do app
+   CARTEIRINHA
    ========================================================================= */
-.carteira-palco { perspective: 1600px; margin: 4px 0 14px; }
-
-.carteira {
-  position: relative;
-  aspect-ratio: 1 / 1.34;
-  transform-style: preserve-3d;
-  transition: transform .65s cubic-bezier(.3, .8, .3, 1);
+.cartao {
+  position: relative; overflow: hidden;
+  border-radius: var(--raio-lg);
+  background: var(--superficie-2);
+  box-shadow: var(--sombra-2);
+  padding: 14px;
 }
-.carteira.virada { transform: rotateY(180deg); }
-
-.face {
-  position: absolute; inset: 0;
-  backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: var(--sombra-3);
-  color: #fff;
-  background:
-    radial-gradient(120% 80% at 100% 0%, rgba(34, 211, 238, .38), transparent 55%),
-    radial-gradient(110% 70% at 0% 100%, rgba(79, 137, 245, .40), transparent 60%),
-    linear-gradient(160deg, var(--azul-800), var(--azul-900) 65%);
+/* faixas coloridas ao fundo, como no cartão original */
+.cartao::before, .cartao::after {
+  content: ""; position: absolute; pointer-events: none; z-index: 0;
 }
-.face.verso { transform: rotateY(180deg); }
-
-/* trama de segurança impressa no fundo */
-.face::before {
-  content: ""; position: absolute; inset: 0; opacity: .16; pointer-events: none;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, .5) 0 1px, transparent 1px 9px),
-    repeating-linear-gradient(-45deg, rgba(255, 255, 255, .3) 0 1px, transparent 1px 14px);
+.cartao::before {
+  left: -12%; right: -12%; top: 24%; height: 74px;
+  background: linear-gradient(92deg, var(--roxo), var(--magenta));
+  transform: rotate(-7deg); opacity: .85;
 }
-/* brilho holográfico que percorre a carteirinha */
-.face::after {
-  content: ""; position: absolute; top: -60%; left: -160%;
-  width: 90%; height: 260%; pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .30), rgba(34, 211, 238, .18), transparent);
-  transform: rotate(14deg);
-  animation: holograma 5.5s ease-in-out infinite;
-}
-@keyframes holograma {
-  0%, 62% { left: -160%; }
-  100%    { left: 190%; }
+.cartao::after {
+  left: -18%; right: -8%; bottom: 6%; height: 58px;
+  background: linear-gradient(92deg, var(--magenta), #e0759f);
+  transform: rotate(6deg); opacity: .55;
 }
 
-.face-corpo { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; padding: 18px; }
-
-.carteira-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-.marca { display: flex; align-items: center; gap: 9px; }
-.marca .sigla {
-  font-size: 21px; font-weight: 800; letter-spacing: .10em;
-  background: linear-gradient(92deg, #fff, var(--ciano));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+.cartao-linha { position: relative; z-index: 1; display: flex; gap: 12px; }
+.tile {
+  background: var(--superficie); border-radius: 14px;
+  box-shadow: var(--sombra-1); padding: 10px;
 }
-.marca .desc { font-size: 8.5px; line-height: 1.25; opacity: .75; text-transform: uppercase; letter-spacing: .08em; max-width: 130px; }
+.tile-foto { flex: 1; display: grid; place-items: center; }
+.tile-foto img { width: 100%; max-width: 148px; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; }
+.tile-qr { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; }
+.tile-qr .qr { width: 100%; max-width: 132px; }
+.tile-qr .qr svg { width: 100%; height: auto; display: block; }
+.tile-qr .numero { font-size: 14px; font-weight: 800; letter-spacing: .04em; color: var(--texto); }
+
+.tile-dados { position: relative; z-index: 1; margin-top: 12px; }
+.cartao-nome { font-size: 19px; font-weight: 800; line-height: 1.15; margin-bottom: 9px; letter-spacing: -.01em; }
+.cartao-campo { font-size: 13.5px; line-height: 1.5; color: var(--texto-2); }
+.cartao-campo b { color: var(--texto); font-weight: 700; }
 
 .selo-validade {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 9px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
-  background: rgba(22, 163, 74, .22); color: #6ee7a8;
-  border: 1px solid rgba(110, 231, 168, .45);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--verde-cl); color: var(--verde);
 }
-.selo-validade.vencido { background: rgba(220, 38, 38, .2); color: #fca5a5; border-color: rgba(252, 165, 165, .45); }
+.selo-validade.vencido { background: #fdeceb; color: var(--vermelho); }
 .selo-validade .ponto { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: pulsa 1.8s ease-in-out infinite; }
 @keyframes pulsa { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 
-.carteira-identidade { display: flex; gap: 14px; margin-top: 16px; }
-.foto {
-  width: 92px; height: 118px; flex: none;
-  border-radius: 10px; object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, .55);
-  background: rgba(255, 255, 255, .1);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
-}
-.carteira-nome { font-size: 19px; font-weight: 700; line-height: 1.15; margin-bottom: 8px; word-break: break-word; }
-
-.campo-rot { font-size: 8.5px; text-transform: uppercase; letter-spacing: .1em; opacity: .62; margin-bottom: 1px; }
-.campo-val { font-size: 13px; font-weight: 600; line-height: 1.25; }
-.campo + .campo { margin-top: 7px; }
-
-.grade-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; margin-top: 14px; }
-.grade-campos .largo { grid-column: 1 / -1; }
-
-.carteira-rodape {
-  margin-top: auto; padding-top: 14px;
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
-  border-top: 1px solid rgba(255, 255, 255, .16);
-}
-.qr-mini { width: 74px; height: 74px; border-radius: 8px; padding: 5px; background: #fff; flex: none; }
-.qr-mini svg { width: 100%; height: 100%; display: block; }
-
-.assinatura { font-family: "Snell Roundhand", "Segoe Script", cursive; font-size: 19px; opacity: .9; }
-
-/* verso: lista de direitos e faixa em relevo, para preencher o cartão */
-.verso-lista { margin: 12px 0 0; }
-.verso-lista li {
-  position: relative; padding-left: 15px; margin-top: 6px;
-  font-size: 10.5px; line-height: 1.35; opacity: .85;
-}
-.verso-lista li::before {
-  content: ""; position: absolute; left: 0; top: 5px;
-  width: 5px; height: 5px; border-radius: 50%; background: var(--ciano);
-}
-
-.faixa-magnetica {
-  margin: 14px -18px 2px; height: 32px;
-  background: repeating-linear-gradient(90deg,
-    rgba(255,255,255,.16) 0 2px, rgba(255,255,255,.04) 2px 4px,
-    rgba(255,255,255,.10) 4px 7px, rgba(255,255,255,.02) 7px 11px);
-  border-top: 1px solid rgba(255,255,255,.14);
-  border-bottom: 1px solid rgba(255,255,255,.14);
-}
-
-/* faixa de código de barras decorativa no verso */
-.codigo-barras {
-  margin-top: auto; height: 34px;
-  background: repeating-linear-gradient(90deg,
-    rgba(255,255,255,.85) 0 2px, transparent 2px 4px,
-    rgba(255,255,255,.85) 4px 5px, transparent 5px 9px,
-    rgba(255,255,255,.85) 9px 12px, transparent 12px 14px);
-  opacity: .5; border-radius: 2px;
-}
-
-.carteira-acoes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-/* cartão internacional: formato paisagem, tudo proporcionalmente menor */
-.carteira-isic { aspect-ratio: 1.586 / 1; }
-.carteira-isic .face-corpo { padding: 13px 14px; }
-.carteira-isic .marca .sigla { font-size: 19px; }
-.carteira-isic .desc { font-size: 7.5px; max-width: 150px; }
-.carteira-isic .selo-validade { padding: 4px 8px; font-size: 9px; }
-.carteira-isic .carteira-identidade { margin-top: 9px; gap: 11px; }
-.carteira-isic .foto { width: 58px; height: 74px; border-radius: 7px; }
-.carteira-isic .carteira-nome { font-size: 14px; margin-bottom: 6px; }
-.carteira-isic .campo-val { font-size: 11px; }
-.carteira-isic .campo + .campo { margin-top: 4px; }
-.carteira-isic .carteira-rodape { padding-top: 9px; }
-.carteira-isic .qr-mini { width: 48px; height: 48px; padding: 3px; }
+.wallet-apple { margin-top: 12px; }
+.wallet-apple .btn { min-height: 46px; font-size: 14.5px; }
 
 /* --------------------------------------------------- tela de apresentação */
-#tela-apresentar { background: #fff; color: #08101f; min-height: 100vh; min-height: 100dvh; }
-html[data-tema="escuro"] #tela-apresentar { background: #fff; }
+#tela-apresentar { background: #fff; color: #14203c; min-height: 100vh; min-height: 100dvh; }
 .apresentar-corpo {
   min-height: 100vh; min-height: 100dvh;
   padding: calc(var(--topo) + 18px) 20px calc(var(--base) + 18px);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   text-align: center;
 }
-.qr-grande { width: min(78vw, 330px); padding: 14px; background: #fff; border-radius: 18px; box-shadow: var(--sombra-2); }
+.qr-grande { width: min(78vw, 320px); }
 .qr-grande svg { width: 100%; height: auto; display: block; }
-.apresentar-nome { font-size: 22px; font-weight: 700; }
-.apresentar-sub { color: #5b6684; font-size: 14px; }
+.apresentar-nome { font-size: 22px; font-weight: 800; }
+.apresentar-sub { color: #5a6480; font-size: 14px; }
 .contador {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 14px; border-radius: 999px;
-  background: #eef2fa; color: #14306e; font-weight: 700; font-size: 14px;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 8px 15px; border-radius: 999px;
+  background: var(--azul-suave); color: var(--azul); font-weight: 800; font-size: 14px;
 }
-.contador .barra { width: 60px; height: 5px; border-radius: 3px; background: #cbd6ee; overflow: hidden; }
-.contador .barra i { display: block; height: 100%; background: var(--azul-500); transition: width 1s linear; }
-.codigo-token { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; letter-spacing: .16em; color: #5b6684; }
+.contador .barra { width: 60px; height: 5px; border-radius: 3px; background: #c9d8f2; overflow: hidden; }
+.contador .barra i { display: block; height: 100%; background: var(--azul); transition: width 1s linear; }
+.codigo-token { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; letter-spacing: .14em; color: #5a6480; }
+
+/* ------------------------------------------------------------- certificado */
+.cert-marca { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.cert-marca .icone {
+  width: 34px; height: 34px; border-radius: 50%; flex: none;
+  border: 2.5px solid var(--texto); display: grid; place-items: center; color: var(--texto);
+}
+.cert-marca .icone svg { width: 17px; height: 17px; }
+.cert-marca .nome { font-size: 17px; font-weight: 900; letter-spacing: -.02em; line-height: 1; }
+.cert-marca .dom { font-size: 10px; font-weight: 700; color: var(--texto-2); letter-spacing: .04em; }
+
+.cert-texto { font-size: 15px; line-height: 1.55; margin: 0 0 16px; }
+
+.pem { border-radius: 12px; overflow: hidden; box-shadow: var(--sombra-1); }
+.pem-topo {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--laranja); color: #fff; padding: 11px 14px;
+  font-size: 13.5px; font-weight: 800;
+}
+.pem-topo button { color: #fff; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
+.pem-topo svg { width: 14px; height: 14px; }
+.pem-corpo {
+  background: var(--superficie); padding: 14px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px; line-height: 1.55; color: var(--texto-2);
+  word-break: break-all; max-height: 320px; overflow-y: auto;
+}
+.pem-corpo .cerca { display: block; text-align: center; color: var(--texto); font-weight: 700; margin: 4px 0; }
+
+.validado-titulo { font-size: 34px; font-weight: 900; color: var(--azul); text-align: center; letter-spacing: -.02em; }
+.validado-sub { font-size: 19px; text-align: center; color: var(--texto); margin: 2px 0 20px; }
 
 /* ------------------------------------------------------------- formulários */
-.campo-form { margin-bottom: 14px; }
-.campo-form label { display: block; font-size: 13px; font-weight: 600; color: var(--texto-2); margin-bottom: 6px; }
+.campo-form { margin-bottom: 15px; }
+.campo-form label { display: block; font-size: 13px; font-weight: 700; color: var(--texto-2); margin-bottom: 6px; }
 .campo-form input, .campo-form select, .campo-form textarea {
-  width: 100%; min-height: 50px; padding: 12px 14px;
-  background: var(--superficie); border: 1px solid var(--borda);
-  border-radius: var(--raio); font-size: 16px; /* 16px evita zoom automático no iOS */
+  width: 100%; min-height: 52px; padding: 12px 15px;
+  background: var(--superficie); border: 1.5px solid var(--borda);
+  border-radius: 14px; font-size: 16px;
   transition: border-color .15s, box-shadow .15s;
   -webkit-appearance: none; appearance: none;
 }
 .campo-form select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238d97b0' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23939cb4' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center; padding-right: 38px;
 }
-.campo-form input:focus, .campo-form select:focus, .campo-form textarea:focus {
-  outline: none; border-color: var(--azul-500); box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+.campo-form input:focus, .campo-form select:focus {
+  outline: none; border-color: var(--azul); box-shadow: 0 0 0 3px rgba(38, 80, 158, .13);
 }
-.campo-form .erro { display: none; color: var(--vermelho); font-size: 12.5px; margin-top: 5px; font-weight: 600; }
+.campo-form .erro { display: none; color: var(--vermelho); font-size: 12.5px; margin-top: 5px; font-weight: 700; }
 .campo-form.invalido input, .campo-form.invalido select { border-color: var(--vermelho); }
 .campo-form.invalido .erro { display: block; }
 .campo-form .ajuda { font-size: 12.5px; color: var(--texto-3); margin-top: 5px; }
 
-/* passos do fluxo de solicitação */
-.passos { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; }
-.passos i {
-  flex: 1; height: 4px; border-radius: 2px; background: var(--borda);
-  transition: background .3s;
+/* campo sublinhado, como na entrada por CPF do app original */
+.campo-linha { margin-bottom: 18px; }
+.campo-linha label { display: block; font-size: 12px; font-weight: 700; color: var(--texto-2); }
+.campo-linha input {
+  width: 100%; min-height: 44px; padding: 4px 0;
+  background: none; border: 0; border-bottom: 1.5px solid var(--texto-3);
+  border-radius: 0; font-size: 22px; font-weight: 700; letter-spacing: .01em;
+  -webkit-appearance: none; appearance: none;
 }
-.passos i.feito { background: var(--azul-500); }
-.passo-rot { font-size: 12.5px; font-weight: 700; color: var(--azul-500); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.campo-linha input:focus { outline: none; border-bottom-color: var(--azul); }
+.campo-linha .ajuda { font-size: 12px; color: var(--texto-3); margin: 6px 0 0; }
+.campo-linha .erro { display: none; color: var(--vermelho); font-size: 12.5px; margin-top: 6px; font-weight: 700; }
+.campo-linha.invalido input { border-bottom-color: var(--vermelho); }
+.campo-linha.invalido .erro { display: block; }
 
-/* área de envio de foto/documento */
+.passos { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+.passos i { flex: 1; height: 4px; border-radius: 2px; background: var(--borda); transition: background .3s; }
+.passos i.feito { background: var(--laranja); }
+.passo-rot { font-size: 12.5px; font-weight: 800; color: var(--laranja); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+
 .upload {
   position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   min-height: 150px; padding: 18px; text-align: center;
   border: 2px dashed var(--borda); border-radius: var(--raio-lg);
-  background: var(--superficie-2); color: var(--texto-2); font-size: 14px;
+  background: var(--superficie); color: var(--texto-2); font-size: 14px;
 }
 .upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload img { width: 104px; height: 132px; object-fit: cover; border-radius: 10px; box-shadow: var(--sombra-2); }
-.upload .icone { width: 40px; height: 40px; color: var(--texto-3); }
+.upload img { width: 104px; height: 132px; object-fit: cover; border-radius: 10px; box-shadow: var(--sombra-1); }
+.upload .icone { width: 38px; height: 38px; color: var(--texto-3); }
 
 /* --------------------------------------------------------------- benefícios */
 .busca { position: relative; margin-bottom: 12px; }
-.busca input { width: 100%; min-height: 46px; padding: 0 14px 0 40px; border-radius: 12px; border: 1px solid var(--borda); background: var(--superficie); font-size: 16px; }
-.busca svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--texto-3); }
+.busca input { width: 100%; min-height: 48px; padding: 0 14px 0 42px; border-radius: 14px; border: 1.5px solid var(--borda); background: var(--superficie); font-size: 16px; }
+.busca svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--texto-3); }
 
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
 .chip {
-  flex: none; padding: 8px 14px; border-radius: 999px; font-size: 13.5px; font-weight: 600;
-  background: var(--superficie); border: 1px solid var(--borda); color: var(--texto-2); white-space: nowrap;
+  flex: none; padding: 9px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 700;
+  background: var(--superficie); border: 1.5px solid var(--borda); color: var(--texto-2); white-space: nowrap;
 }
-.chip[aria-pressed="true"] { background: var(--azul-500); border-color: var(--azul-500); color: #fff; }
+.chip[aria-pressed="true"] { background: var(--azul); border-color: var(--azul); color: #fff; }
 
 .item {
   display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
   padding: 13px 14px; background: var(--superficie);
-  border: 1px solid var(--borda); border-radius: var(--raio);
-  box-shadow: var(--sombra-1); margin-bottom: 10px;
+  border-radius: var(--raio); box-shadow: var(--sombra-1); margin-bottom: 10px;
   transition: transform .12s;
 }
 .item:active { transform: scale(.99); }
-.item .logo {
-  width: 46px; height: 46px; flex: none; border-radius: 12px;
-  display: grid; place-items: center; font-weight: 800; font-size: 16px; color: #fff;
-}
+.item .logo { width: 46px; height: 46px; flex: none; border-radius: 13px; display: grid; place-items: center; font-weight: 800; font-size: 16px; color: #fff; }
 .item .txt { flex: 1; min-width: 0; }
-.item .txt strong { display: block; font-size: 15px; font-weight: 650; }
+.item .txt strong { display: block; font-size: 15px; font-weight: 800; }
 .item .txt span { display: block; font-size: 13px; color: var(--texto-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.item .tag {
-  flex: none; font-size: 12px; font-weight: 800; color: var(--verde);
-  background: var(--verde-cl); padding: 5px 9px; border-radius: 8px;
-}
+.item .tag { flex: none; font-size: 12px; font-weight: 800; color: var(--verde); background: var(--verde-cl); padding: 5px 9px; border-radius: 8px; }
 .item .seta { color: var(--texto-3); flex: none; }
 
 /* ------------------------------------------------------------------- início */
 .saudacao { font-size: 14px; color: var(--texto-2); }
-.saudacao strong { display: block; font-size: 24px; color: var(--texto); font-weight: 700; margin-top: 2px; }
+.saudacao strong { display: block; font-size: 25px; color: var(--texto); font-weight: 800; margin-top: 2px; }
 
-.atalhos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
+.atalhos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
 .atalho {
   display: flex; flex-direction: column; align-items: center; gap: 7px;
   padding: 14px 6px; border-radius: var(--raio);
-  background: var(--superficie); border: 1px solid var(--borda); box-shadow: var(--sombra-1);
-  font-size: 11px; font-weight: 600; color: var(--texto-2); text-align: center; line-height: 1.2;
+  background: var(--superficie); box-shadow: var(--sombra-1);
+  font-size: 11px; font-weight: 700; color: var(--texto-2); text-align: center; line-height: 1.2;
 }
-.atalho .bolha { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; background: var(--superficie-2); color: var(--azul-500); }
+.atalho .bolha { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; background: var(--azul-suave); color: var(--azul); }
 .atalho svg { width: 21px; height: 21px; }
 
 .resumo-carteira {
-  display: flex; align-items: center; gap: 14px; padding: 16px;
-  border-radius: var(--raio-lg); color: #fff; box-shadow: var(--sombra-2);
-  background: linear-gradient(135deg, var(--azul-700), var(--azul-900));
-  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 14px; padding: 15px;
+  border-radius: var(--raio-lg); background: var(--superficie); box-shadow: var(--sombra-1);
+  width: 100%; text-align: left;
 }
-.resumo-carteira .foto-mini { width: 54px; height: 54px; border-radius: 14px; object-fit: cover; border: 2px solid rgba(255, 255, 255, .5); flex: none; }
+.resumo-carteira .foto-mini { width: 54px; height: 54px; border-radius: 14px; object-fit: cover; flex: none; }
 .resumo-carteira .txt { flex: 1; min-width: 0; }
-.resumo-carteira .txt strong { display: block; font-size: 16px; }
-.resumo-carteira .txt span { font-size: 12.5px; opacity: .78; }
+.resumo-carteira .txt strong { display: block; font-size: 15.5px; font-weight: 800; }
+.resumo-carteira .txt span { font-size: 12.5px; color: var(--texto-2); }
+.resumo-carteira .seta { color: var(--texto-3); }
 
-.lista-dados { border-top: 1px solid var(--borda); }
+.lista-dados { }
 .linha-dado { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--borda); font-size: 14.5px; }
+.linha-dado:last-child { border-bottom: 0; }
 .linha-dado span { color: var(--texto-2); flex: none; }
-.linha-dado strong { font-weight: 600; text-align: right; word-break: break-word; }
+.linha-dado strong { font-weight: 700; text-align: right; word-break: break-word; }
 
 .aviso {
   display: flex; gap: 10px; padding: 13px 14px; border-radius: var(--raio);
-  background: var(--superficie-2); border: 1px solid var(--borda);
-  font-size: 13px; color: var(--texto-2); line-height: 1.4;
+  background: var(--azul-suave); font-size: 13px; color: var(--texto-2); line-height: 1.4;
 }
-.aviso svg { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--azul-500); }
-.aviso.destaque { background: #fff8e6; border-color: #f7dfa5; color: #6b4e00; }
-html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4a3c10; color: #f5d98a; }
+.aviso svg { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--azul); }
 
-/* --------------------------------------------------------------- login */
-#tela-login { background: linear-gradient(165deg, var(--azul-800), var(--azul-900) 70%); color: #fff; min-height: 100vh; min-height: 100dvh; }
+/* ------------------------------------------------------ abertura e splash */
+#tela-login { background: var(--superficie); min-height: 100vh; min-height: 100dvh; }
 .login-corpo {
   min-height: 100vh; min-height: 100dvh; max-width: 460px; margin: 0 auto;
-  padding: calc(var(--topo) + 46px) 24px calc(var(--base) + 28px);
+  padding: calc(var(--topo) + 34px) 26px calc(var(--base) + 26px);
   display: flex; flex-direction: column;
 }
-.login-marca { text-align: center; margin-bottom: 34px; }
-.login-marca .sigla { font-size: 46px; font-weight: 800; letter-spacing: .14em; background: linear-gradient(92deg, #fff, var(--ciano)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.login-marca p { margin: 6px 0 0; font-size: 13px; opacity: .72; }
-#tela-login .campo-form label { color: rgba(255, 255, 255, .8); }
-#tela-login .campo-form input {
-  background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .22); color: #fff;
-}
-#tela-login .campo-form input::placeholder { color: rgba(255, 255, 255, .45); }
-#tela-login .campo-form input:focus { border-color: var(--ciano); box-shadow: 0 0 0 3px rgba(34, 211, 238, .2); }
-#tela-login .btn.fantasma { color: var(--ciano); }
-.boas-vindas-txt {
-  text-align: center; font-size: 15px; line-height: 1.55;
-  color: rgba(255, 255, 255, .82); margin: 0 8px;
-}
+.login-marca { text-align: center; margin-bottom: 26px; }
+.login-marca .logo-dne { font-size: 54px; }
+.login-marca p { margin: 8px 0 0; font-size: 17px; color: var(--texto-2); font-weight: 600; line-height: 1.35; }
+.abertura-txt { font-size: 20px; font-weight: 600; line-height: 1.4; color: var(--texto); margin: 0 0 22px; }
+.login-rodape { margin-top: auto; padding-top: 24px; text-align: center; font-size: 11.5px; color: var(--texto-3); line-height: 1.5; }
 
-.login-rodape { margin-top: auto; padding-top: 26px; text-align: center; font-size: 11.5px; opacity: .6; line-height: 1.5; }
+#splash {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center; background: var(--superficie);
+  transition: opacity .45s ease;
+}
+#splash .logo-dne { font-size: 64px; animation: surge .5s cubic-bezier(.2, 1.3, .4, 1) both; }
+#splash.saindo { opacity: 0; pointer-events: none; }
 
-/* =========================================================================
-   FOLHA INFERIOR (bottom sheet) — usada para adicionar o documento à Carteira
-   ========================================================================= */
+/* --------------------------------------------------------- folha inferior */
 .folha-fundo {
   position: fixed; inset: 0; z-index: 90;
-  background: rgba(6, 12, 28, .55);
+  background: rgba(15, 25, 55, .45);
   backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   opacity: 0; pointer-events: none; transition: opacity .25s;
 }
@@ -527,50 +510,44 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 91;
   max-height: 92vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
   padding: 10px 18px calc(var(--base) + 18px);
-  background: var(--superficie);
-  border-radius: 26px 26px 0 0;
-  box-shadow: 0 -14px 44px rgba(9, 20, 51, .28);
+  background: var(--superficie); border-radius: 26px 26px 0 0;
+  box-shadow: 0 -14px 44px rgba(27, 42, 90, .26);
   transform: translateY(101%);
   transition: transform .32s cubic-bezier(.25, 1, .35, 1);
 }
 .folha.aberta { transform: none; }
 .folha .puxador { width: 38px; height: 4px; border-radius: 2px; background: var(--borda); margin: 0 auto 16px; }
-.folha h2 { font-size: 20px; text-align: center; }
+.folha h2 { font-size: 20px; font-weight: 800; text-align: center; }
 .folha .sub { text-align: center; color: var(--texto-2); font-size: 14px; margin: 6px 0 18px; }
 
-/* Passe no estilo dos cartões da Carteira do iPhone */
 .passe {
-  border-radius: 16px; overflow: hidden; color: #fff;
-  background: linear-gradient(155deg, var(--azul-700), var(--azul-900));
-  box-shadow: var(--sombra-2);
-  max-width: 330px; margin: 0 auto;
+  border-radius: 16px; overflow: hidden; max-width: 330px; margin: 0 auto;
+  background: var(--superficie-2); box-shadow: var(--sombra-2);
+  border: 1px solid var(--borda);
 }
 .passe-topo {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, .14);
+  padding: 13px 15px; background: var(--superficie); border-bottom: 1px solid var(--borda);
 }
-.passe-topo .sigla { font-size: 17px; font-weight: 800; letter-spacing: .1em; }
-.passe-topo .tipo { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; opacity: .7; }
-.passe-corpo { display: flex; gap: 14px; padding: 16px; }
-.passe-corpo img { width: 58px; height: 74px; border-radius: 8px; object-fit: cover; flex: none; border: 1px solid rgba(255,255,255,.4); }
-.passe-corpo .campo-val { font-size: 12.5px; }
-.passe-rodape { padding: 0 16px 16px; }
-.passe-rodape .faixa { background: #fff; border-radius: 8px; padding: 7px; max-width: 132px; margin: 0 auto; }
-.passe-rodape .legenda { text-align: center; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; opacity: .65; margin: 8px 0 0; }
+.passe-topo .logo-dne { font-size: 22px; }
+.passe-topo .campo-rot { font-size: 9px; }
+.passe-corpo { display: flex; gap: 13px; padding: 14px 15px; }
+.passe-corpo img { width: 58px; height: 74px; border-radius: 9px; object-fit: cover; flex: none; }
+.passe-rodape { padding: 0 15px 15px; }
+.passe-rodape .faixa { background: #fff; border-radius: 8px; padding: 7px; max-width: 132px; margin: 0 auto; box-shadow: var(--sombra-1); }
 .passe-rodape .faixa svg { width: 100%; height: auto; display: block; }
+.passe-rodape .legenda { text-align: center; font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--texto-3); margin: 8px 0 0; }
 
-/* ------------------------------------------------------- diversos e utilidades */
-.faixa-aviso {
-  padding: 7px 16px; text-align: center;
-  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  background: var(--amarelo); color: #3d2c00;
-}
+.campo-rot { font-size: 9.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--texto-3); font-weight: 700; }
+.campo-val { font-size: 13px; font-weight: 700; }
+.campo + .campo { margin-top: 7px; }
 
+/* ------------------------------------------------------------------ toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--tabbar) + var(--base) + 16px);
   transform: translate(-50%, 20px); z-index: 100;
-  padding: 12px 18px; border-radius: 12px; max-width: min(90vw, 380px);
-  background: #0f1830; color: #fff; font-size: 14px; font-weight: 600;
+  padding: 12px 18px; border-radius: 14px; max-width: min(90vw, 380px);
+  background: #16203c; color: #fff; font-size: 14px; font-weight: 700;
   box-shadow: var(--sombra-3);
   opacity: 0; pointer-events: none; transition: opacity .22s, transform .22s;
 }
@@ -620,10 +597,13 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
     <g id="i-escudo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.5 5.8v6c0 4.5 3.1 8.2 7.5 9.6 4.4-1.4 7.5-5.1 7.5-9.6v-6Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></g>
     <g id="i-lua" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8.4 8.4 0 0 1 9.8 4 8.5 8.5 0 1 0 20 14.2Z"/></g>
     <g id="i-sair" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h3.5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H14"/><path d="M10 8 6 12l4 4M6 12h9"/></g>
+    <g id="i-copiar" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M15 6.5A2.5 2.5 0 0 0 12.5 4h-6A2.5 2.5 0 0 0 4 6.5v6A2.5 2.5 0 0 0 6.5 15"/></g>
     <g id="i-wallet" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2.5 2.5 0 0 1 2.5 2.5v9A2.5 2.5 0 0 1 18 19H5.5A2.5 2.5 0 0 1 3 16.5Z"/><path d="M3 9.5h11a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H3"/><circle cx="12.5" cy="12" r=".9" fill="currentColor" stroke="none"/></g>
     <g id="i-virar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h13a4.5 4.5 0 0 1 0 9h-2"/><path d="m6.5 4.5-3.5 3.5 3.5 3.5"/></g>
   </defs>
 </svg>
+
+<div id="splash" aria-hidden="true"><span class="logo-dne">dne</span></div>
 
 <div id="app">
 
@@ -631,38 +611,44 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
 <section class="tela" id="tela-login" aria-label="Entrar">
   <div class="login-corpo">
     <div class="login-marca">
-      <div class="sigla">DNE</div>
+      <div class="logo-dne">dne</div>
       <p>Documento Nacional do Estudante</p>
     </div>
 
     <!-- primeira abertura: a pessoa monta o próprio documento -->
     <div id="bloco-boas-vindas">
-      <p class="boas-vindas-txt">
-        Monte o seu documento de estudante: coloque a sua foto, o seu nome e os dados da
-        sua instituição. Tudo fica guardado só no seu aparelho.
+      <p class="abertura-txt">
+        Olá! Monte o seu documento de estudante e tenha a meia-entrada sempre à mão.
+        Coloque a sua foto, o seu nome e os dados da sua instituição.
       </p>
-      <div class="pilha mt-24">
+      <div class="pilha">
         <button class="btn" type="button" data-ir="solicitar">Criar o meu documento</button>
         <button class="btn secundario" type="button" id="btn-demo">Ver um exemplo pronto</button>
-        <button class="btn fantasma" type="button" id="btn-mostrar-login">Entrar com CPF e senha</button>
+        <button class="btn fantasma" type="button" id="btn-mostrar-login">Já tenho o meu DNE</button>
       </div>
     </div>
 
-    <!-- entrada por CPF e senha, mantida para demonstrar o fluxo do app oficial -->
+    <!-- entrada por CPF e senha, no formato do aplicativo original -->
     <form id="form-login" novalidate hidden>
-      <div class="campo-form" id="cf-login-cpf">
+      <p class="abertura-txt">
+        Que bom te ver de novo. Para começar, informe o seu CPF.
+      </p>
+      <div class="campo-linha" id="cf-login-cpf">
         <label for="login-cpf">CPF</label>
         <input id="login-cpf" name="cpf" type="tel" inputmode="numeric" autocomplete="username"
                placeholder="000.000.000-00" maxlength="14">
+        <p class="ajuda">Digite apenas números</p>
         <p class="erro">Informe um CPF válido.</p>
       </div>
-      <div class="campo-form" id="cf-login-senha">
+      <div class="campo-linha" id="cf-login-senha">
         <label for="login-senha">Senha</label>
         <input id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="••••••">
         <p class="erro">A senha precisa ter ao menos 4 caracteres.</p>
       </div>
-      <button class="btn" type="submit">Entrar</button>
-      <button class="btn fantasma mt-16" type="button" id="btn-voltar-boas-vindas">Voltar</button>
+      <div class="pilha mt-24">
+        <button class="btn" type="submit">Continuar</button>
+        <button class="btn fantasma" type="button" id="btn-voltar-boas-vindas">Voltar</button>
+      </div>
     </form>
 
   </div>
@@ -670,20 +656,22 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
 
 <!-- ============================== INÍCIO ============================== -->
 <section class="tela" id="tela-inicio" aria-label="Início">
-  <header class="topo">
-    <h1 id="saudacao-topo">Início</h1>
-    <button class="topo-acao" type="button" data-ir="perfil" aria-label="Abrir perfil">Perfil</button>
+  <header class="topo topo-marca">
+    <span class="logo-dne">dne</span>
+    <span class="selos" aria-label="Entidades estudantis">
+      <span class="selo une">UNE</span><span class="selo ubes">UBES</span><span class="selo anpg">ANPG</span>
+    </span>
   </header>
   <div class="conteudo">
     <p class="saudacao">Olá,<strong id="inicio-nome">—</strong></p>
 
-    <button class="resumo-carteira mt-16" type="button" data-ir="carteirinha" style="width:100%;text-align:left">
+    <button class="resumo-carteira mt-16" type="button" data-ir="carteirinha">
       <img class="foto-mini" id="inicio-foto" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzgwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM4MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGb3RvIGRlIGV4ZW1wbG8iPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTBmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzlmYjhlOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzODAiIGZpbGw9InVybCgjZikiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNDUiIHI9IjY2IiBmaWxsPSIjNWI3ZWM0Ii8+CiAgPHBhdGggZD0iTTQwIDM4MGMwLTYyIDQ5LTEwNCAxMTAtMTA0czExMCA0MiAxMTAgMTA0eiIgZmlsbD0iIzViN2VjNCIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMzY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjJmNmZmIiBvcGFjaXR5PSIuODUiPkZPVE8gM3g0PC90ZXh0Pgo8L3N2Zz4K">
       <span class="txt">
         <strong id="inicio-inst">—</strong>
         <span id="inicio-status">—</span>
       </span>
-      <svg class="seta" width="20" height="20" style="opacity:.7"><use href="#i-seta-dir"/></svg>
+      <svg class="seta" width="20" height="20"><use href="#i-seta-dir"/></svg>
     </button>
 
     <div class="atalhos">
@@ -709,127 +697,118 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
 
 <!-- =========================== CARTEIRINHA =========================== -->
 <section class="tela" id="tela-carteirinha" aria-label="Carteirinha">
-  <header class="topo"><h1>Carteirinha</h1></header>
+  <header class="topo topo-marca">
+    <span class="logo-dne">dne</span>
+    <span class="selos" aria-label="Entidades estudantis">
+      <span class="selo une">UNE</span><span class="selo ubes">UBES</span><span class="selo anpg">ANPG</span>
+    </span>
+  </header>
+
   <div class="conteudo">
-    <div class="carteira-palco">
-      <div class="carteira" id="carteira" role="img"
-           aria-label="Documento do estudante"
-           data-replica="academica" data-validade-legal="nenhuma">
 
-        <!-- ---------------------------- frente ---------------------------- -->
-        <div class="face frente">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div class="marca">
-                <div>
-                  <div class="sigla">DNE</div>
-                  <div class="desc">Documento Nacional do Estudante</div>
-                </div>
-              </div>
-              <span class="selo-validade" id="selo-validade"><i class="ponto"></i><span>Válido</span></span>
-            </div>
+    <!-- faixa de aviso, no formato do aplicativo original -->
+    <div class="banner">
+      <div class="balao">
+        <span class="emoji">🎉</span>
+        <span>
+          <strong>Uhul! Chegou!</strong>
+          <span id="banner-texto">Desbloqueie o seu DNE e aproveite.</span>
+        </span>
+      </div>
+      <button class="btn-redondo" type="button" id="btn-apresentar-topo" aria-label="Apresentar documento">
+        <svg><use href="#i-qr"/></svg>
+      </button>
+    </div>
 
-            <div class="carteira-identidade">
-              <img class="foto" id="cart-foto" alt="Foto do estudante" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzgwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM4MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGb3RvIGRlIGV4ZW1wbG8iPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTBmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzlmYjhlOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzODAiIGZpbGw9InVybCgjZikiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNDUiIHI9IjY2IiBmaWxsPSIjNWI3ZWM0Ii8+CiAgPHBhdGggZD0iTTQwIDM4MGMwLTYyIDQ5LTEwNCAxMTAtMTA0czExMCA0MiAxMTAgMTA0eiIgZmlsbD0iIzViN2VjNCIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMzY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjJmNmZmIiBvcGFjaXR5PSIuODUiPkZPVE8gM3g0PC90ZXh0Pgo8L3N2Zz4K">
-              <div style="min-width:0">
-                <div class="carteira-nome" id="cart-nome">—</div>
-                <div class="campo"><div class="campo-rot">CPF</div><div class="campo-val" id="cart-cpf">—</div></div>
-                <div class="campo"><div class="campo-rot">Nascimento</div><div class="campo-val" id="cart-nasc">—</div></div>
-              </div>
-            </div>
+    <!-- documento -->
+    <div class="cartao" id="carteira" role="img" aria-label="Documento do estudante"
+         data-replica="academica" data-validade-legal="nenhuma">
 
-            <div class="grade-campos">
-              <div class="campo largo"><div class="campo-rot">Instituição de ensino</div><div class="campo-val" id="cart-inst">—</div></div>
-              <div class="campo"><div class="campo-rot">Curso</div><div class="campo-val" id="cart-curso">—</div></div>
-              <div class="campo"><div class="campo-rot">Nível</div><div class="campo-val" id="cart-nivel">—</div></div>
-              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="cart-matricula">—</div></div>
-              <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="cart-codigo">—</div></div>
-            </div>
-
-            <div class="carteira-rodape">
-              <div>
-                <div class="campo-rot">Validade</div>
-                <div class="campo-val" id="cart-validade" style="font-size:16px">—</div>
-                <div class="campo-rot" style="margin-top:8px">Entidade emissora</div>
-                <div class="campo-val" id="cart-entidade">—</div>
-              </div>
-              <div class="qr-mini" id="cart-qr" aria-hidden="true"></div>
-            </div>
-          </div>
+      <div class="cartao-linha">
+        <div class="tile tile-foto">
+          <img id="cart-foto" alt="Foto do estudante" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzgwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM4MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGb3RvIGRlIGV4ZW1wbG8iPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTBmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzlmYjhlOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzODAiIGZpbGw9InVybCgjZikiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNDUiIHI9IjY2IiBmaWxsPSIjNWI3ZWM0Ii8+CiAgPHBhdGggZD0iTTQwIDM4MGMwLTYyIDQ5LTEwNCAxMTAtMTA0czExMCA0MiAxMTAgMTA0eiIgZmlsbD0iIzViN2VjNCIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMzY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjJmNmZmIiBvcGFjaXR5PSIuODUiPkZPVE8gM3g0PC90ZXh0Pgo8L3N2Zz4K">
         </div>
-
-        <!-- ----------------------------- verso ---------------------------- -->
-        <div class="face verso">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div><div class="campo-rot">Número do documento</div><div class="campo-val" id="verso-numero" style="font-size:15px;letter-spacing:.05em">—</div></div>
-              <div class="sigla" style="font-size:15px">DNE</div>
-            </div>
-
-            <div class="faixa-magnetica" aria-hidden="true"></div>
-
-            <div class="grade-campos">
-              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="verso-matricula">—</div></div>
-              <div class="campo"><div class="campo-rot">Emissão</div><div class="campo-val" id="verso-emissao">—</div></div>
-              <div class="campo largo"><div class="campo-rot">E-mail cadastrado</div><div class="campo-val" id="verso-email">—</div></div>
-            </div>
-
-            <ul class="verso-lista">
-              <li>Meia-entrada em cinema, teatro, shows e eventos esportivos</li>
-              <li>Tarifa reduzida no transporte público estudantil</li>
-              <li>Descontos na rede de parceiros do documento</li>
-            </ul>
-
-            <p style="font-size:10px;line-height:1.45;opacity:.72;margin:12px 0 0">
-              Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
-              limitada a 40% dos ingressos disponíveis. Documento com certificação digital do ITI,
-              conferido pelo QR Code ou pelo código de uso no validador oficial.
-            </p>
-
-            <div class="grade-campos" style="margin-top:14px">
-              <div class="campo"><div class="campo-rot">Emitido por</div><div class="campo-val" id="verso-entidade">—</div></div>
-              <div class="campo"><div class="campo-rot">Atendimento ao estudante</div><div class="campo-val">0800 000 0000</div></div>
-            </div>
-
-            <div class="codigo-barras" aria-hidden="true"></div>
-
-            <div class="carteira-rodape">
-              <div>
-                <div class="campo-rot">Assinatura</div>
-                <div class="assinatura" id="verso-assinatura">—</div>
-                <div class="campo-rot" style="margin-top:8px">Verificação</div>
-                <div class="campo-val" id="verso-hash" style="font-family:ui-monospace,Menlo,monospace;font-size:12px">—</div>
-              </div>
-              <div class="qr-mini" id="verso-qr" aria-hidden="true"></div>
-            </div>
-          </div>
+        <div class="tile tile-qr">
+          <div class="qr" id="cart-qr"></div>
+          <span class="numero" id="cart-codigo">—</span>
         </div>
+      </div>
 
+      <div class="tile tile-dados">
+        <div class="cartao-nome" id="cart-nome">—</div>
+        <p class="cartao-campo">Ins. Ensino: <b id="cart-inst">—</b></p>
+        <p class="cartao-campo">Curso: <b id="cart-curso">—</b></p>
+        <p class="cartao-campo">Nível de ensino: <b id="cart-nivel">—</b></p>
+        <p class="cartao-campo">CPF: <b id="cart-cpf">—</b></p>
+        <p class="cartao-campo">Data de Nasc.: <b id="cart-nasc">—</b></p>
+        <p class="cartao-campo">Validade: <b id="cart-validade">—</b></p>
+        <p style="margin:11px 0 0"><span class="selo-validade" id="selo-validade"><i class="ponto"></i><span>Válido</span></span></p>
       </div>
     </div>
 
-    <div class="carteira-acoes">
-      <button class="btn secundario" type="button" id="btn-virar">
-        <svg width="18" height="18"><use href="#i-virar"/></svg> Virar
-      </button>
-      <button class="btn" type="button" data-ir="apresentar">
-        <svg width="18" height="18"><use href="#i-qr"/></svg> Apresentar
+    <div class="wallet-apple">
+      <button class="btn escuro" type="button" id="btn-wallet">
+        <svg width="19" height="19"><use href="#i-wallet"/></svg>
+        <span id="btn-wallet-txt">Adicionar à Carteira da Apple</span>
       </button>
     </div>
 
-    <button class="btn secundario mt-16" type="button" id="btn-wallet">
-      <svg width="19" height="19"><use href="#i-wallet"/></svg> <span id="btn-wallet-txt">Adicionar à Carteira</span>
-    </button>
-
-    <div class="aviso mt-16">
-      <svg><use href="#i-escudo"/></svg>
-      <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo — o mesmo princípio usado por documentos digitais para dificultar cópias de tela.</span>
+    <div class="pilha mt-16">
+      <button class="btn" type="button" data-ir="apresentar">
+        <svg width="19" height="19"><use href="#i-qr"/></svg> Apresentar documento
+      </button>
+      <button class="btn secundario" type="button" data-ir="certificado">
+        <svg width="19" height="19"><use href="#i-escudo"/></svg> Ver certificado
+      </button>
     </div>
 
     <div class="secao-titulo"><h2>Dados completos</h2></div>
     <div class="card"><div class="lista-dados" id="carteirinha-dados"></div></div>
 
-    <button class="btn secundario mt-16" type="button" data-ir="solicitar">Renovar documento</button>
+    <div class="aviso mt-16">
+      <svg><use href="#i-escudo"/></svg>
+      <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo.</span>
+    </div>
+
+    <button class="btn secundario mt-16" type="button" data-ir="solicitar">Editar dados do documento</button>
+  </div>
+</section>
+
+<!-- =========================== CERTIFICADO =========================== -->
+<section class="tela" id="tela-certificado" aria-label="Certificado">
+  <header class="topo">
+    <button class="voltar" type="button" data-voltar><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Voltar</button>
+    <h1 style="font-size:17px">Certificado</h1>
+    <span style="width:70px"></span>
+  </header>
+  <div class="conteudo">
+    <p class="validado-titulo">Validado</p>
+    <p class="validado-sub">no portal da meia-entrada</p>
+
+    <div class="card">
+      <div class="cert-marca">
+        <span class="icone"><svg><use href="#i-check"/></svg></span>
+        <span>
+          <span class="nome">MEIA-ENTRADA</span>
+          <span class="dom">ORG.BR</span>
+        </span>
+      </div>
+      <p class="cert-texto" id="cert-texto">—</p>
+
+      <div class="pem">
+        <div class="pem-topo">
+          <span>Certificado de Atributo (PEM)</span>
+          <button type="button" id="btn-copiar-pem">
+            <svg><use href="#i-copiar"/></svg> COPIAR
+          </button>
+        </div>
+        <div class="pem-corpo" id="pem-corpo"></div>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <div class="lista-dados" id="cert-dados"></div>
+    </div>
   </div>
 </section>
 
@@ -1028,30 +1007,29 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
     <span style="width:70px"></span>
   </header>
   <div class="conteudo">
-    <div class="carteira-palco">
-      <div class="carteira carteira-isic" data-replica="academica" data-validade-legal="nenhuma">
-        <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
-          <div class="face-corpo">
-            <div class="carteira-topo">
-              <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>
-              <span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span>
-            </div>
-            <div class="carteira-identidade">
-              <img class="foto" id="isic-foto" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzgwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM4MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGb3RvIGRlIGV4ZW1wbG8iPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTBmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzlmYjhlOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzODAiIGZpbGw9InVybCgjZikiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNDUiIHI9IjY2IiBmaWxsPSIjNWI3ZWM0Ii8+CiAgPHBhdGggZD0iTTQwIDM4MGMwLTYyIDQ5LTEwNCAxMTAtMTA0czExMCA0MiAxMTAgMTA0eiIgZmlsbD0iIzViN2VjNCIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMzY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjJmNmZmIiBvcGFjaXR5PSIuODUiPkZPVE8gM3g0PC90ZXh0Pgo8L3N2Zz4K">
-              <div style="min-width:0">
-                <div class="carteira-nome" id="isic-nome">—</div>
-                <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
-                <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
-              </div>
-            </div>
-            <div class="carteira-rodape">
-              <div><div class="campo-rot">Validity</div><div class="campo-val" id="isic-validade">—</div></div>
-              <div class="qr-mini" id="isic-qr"></div>
-            </div>
-          </div>
+    <div class="cartao cartao-isic" data-replica="academica" data-validade-legal="nenhuma">
+      <div class="cartao-linha" style="align-items:stretch">
+        <div class="tile tile-foto" style="flex:0 0 108px">
+          <img id="isic-foto" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMzgwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjM4MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJGb3RvIGRlIGV4ZW1wbG8iPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTBmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzlmYjhlOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzODAiIGZpbGw9InVybCgjZikiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxNDUiIHI9IjY2IiBmaWxsPSIjNWI3ZWM0Ii8+CiAgPHBhdGggZD0iTTQwIDM4MGMwLTYyIDQ5LTEwNCAxMTAtMTA0czExMCA0MiAxMTAgMTA0eiIgZmlsbD0iIzViN2VjNCIvPgogIDx0ZXh0IHg9IjE1MCIgeT0iMzY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE5IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjJmNmZmIiBvcGFjaXR5PSIuODUiPkZPVE8gM3g0PC90ZXh0Pgo8L3N2Zz4K">
+        </div>
+        <div class="tile" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--azul)">ISIC</div>
+          <div class="campo-rot" style="margin-bottom:8px">International Student Identity Card</div>
+          <div class="campo"><div class="campo-rot">Name</div><div class="campo-val" id="isic-nome">—</div></div>
+          <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
+          <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
         </div>
       </div>
+      <div class="tile tile-dados" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <div class="campo-rot">Validity</div>
+          <div class="campo-val" id="isic-validade" style="font-size:16px">—</div>
+          <p style="margin:9px 0 0"><span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span></p>
+        </div>
+        <div class="qr" id="isic-qr" style="width:86px;flex:none"></div>
+      </div>
     </div>
+
     <p class="texto-2 centro">Aceita em mais de 130 países pelos parceiros da rede ISIC.</p>
 
     <div class="secao-titulo"><h2>O que a carteira dá acesso</h2></div>
@@ -1132,8 +1110,8 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
   <div class="passe">
     <div class="passe-topo">
       <div>
-        <div class="sigla">DNE</div>
-        <div class="tipo">Documento do estudante</div>
+        <div class="logo-dne">dne</div>
+        <div class="campo-rot">Documento do estudante</div>
       </div>
       <div style="text-align:right">
         <div class="campo-rot">Validade</div>
@@ -1745,6 +1723,7 @@ window.DADOS = {
     + 'UNE, UBES, ANPG ou com o aplicativo oficial. O documento montado aqui não '
     + 'comprova matrícula, não dá direito a meia-entrada e não tem validade legal.';
   var PREFIXO_QR = 'REPLICA-ACADEMICA-SEM-VALIDADE';
+  var USO = 'interno-academico — nao publicar em endereco publico (ver NAO-PUBLICAR.md)';
   var DADOS = window.DADOS;
 
   /* ============================ 1. ESTADO ============================ */
@@ -1853,6 +1832,18 @@ window.DADOS = {
     return h.toString(16).toUpperCase().padStart(8, '0');
   }
 
+  // Validade abreviada, como aparece no cartão: Mar/2027.
+  var MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+  function mesAno(iso) {
+    var p = String(iso || '').split('-');
+    return p.length === 3 ? MESES[Number(p[1]) - 1] + '/' + p[0] : '—';
+  }
+
+  // Número de nove dígitos impresso abaixo do QR Code.
+  function numeroCurto(e) {
+    return String(parseInt(hashCurto(e.numero + e.cpf), 16) % 1000000000).padStart(9, '0');
+  }
+
   // Código curto usado na conferência pelo validador da meia-entrada.
   function codigoDeUso(e) {
     var h = hashCurto(e.numero + e.cpf);
@@ -1880,6 +1871,7 @@ window.DADOS = {
     login: { id: 'tela-login', tabbar: false },
     inicio: { id: 'tela-inicio', tabbar: true, aba: 'inicio' },
     carteirinha: { id: 'tela-carteirinha', tabbar: true, aba: 'carteirinha' },
+    certificado: { id: 'tela-certificado', tabbar: false },
     apresentar: { id: 'tela-apresentar', tabbar: false },
     beneficios: { id: 'tela-beneficios', tabbar: true, aba: 'beneficios' },
     beneficio: { id: 'tela-beneficio', tabbar: false },
@@ -1905,7 +1897,7 @@ window.DADOS = {
     if (estado.logado && rota === 'login') rota = 'inicio';
 
     // documento ainda não emitido: telas que dependem dele voltam para o início
-    if (estado.logado && !estado.estudante && ['carteirinha', 'apresentar', 'internacional'].indexOf(rota) >= 0) {
+    if (estado.logado && !estado.estudante && ['carteirinha', 'apresentar', 'internacional', 'certificado'].indexOf(rota) >= 0) {
       rota = 'inicio';
     }
 
@@ -1930,6 +1922,7 @@ window.DADOS = {
       case 'inicio': renderInicio(); break;
       case 'carteirinha': renderCarteirinha(); break;
       case 'apresentar': iniciarToken(); break;
+      case 'certificado': renderCertificado(); break;
       case 'beneficios': renderBeneficios(); break;
       case 'beneficio': renderDetalheBeneficio(param); break;
       case 'solicitar': abrirSolicitacao(); break;
@@ -1953,7 +1946,6 @@ window.DADOS = {
 
   function renderInicio() {
     var e = estado.estudante;
-    $('#saudacao-topo').textContent = 'Início';
     $('#inicio-nome').textContent = e ? primeiroNome(e.nome) : 'estudante';
     $('#inicio-foto').src = fotoDe(e);
 
@@ -1996,30 +1988,23 @@ window.DADOS = {
 
     $('#cart-foto').src = fotoDe(e);
     $('#cart-nome').textContent = e.nome;
-    $('#cart-cpf').textContent = e.cpf;
-    $('#cart-nasc').textContent = dataBr(e.nascimento);
     $('#cart-inst').textContent = e.instituicao;
     $('#cart-curso').textContent = e.curso;
     $('#cart-nivel').textContent = e.nivel;
-    $('#cart-validade').textContent = dataBr(e.validade);
-    $('#cart-entidade').textContent = e.entidade;
-    $('#cart-matricula').textContent = e.matricula;
-    $('#cart-codigo').textContent = codigoDeUso(e);
+    $('#cart-cpf').textContent = e.cpf;
+    $('#cart-nasc').textContent = dataBr(e.nascimento);
+    $('#cart-validade').textContent = mesAno(e.validade);
+    $('#cart-codigo').textContent = numeroCurto(e);
 
     var selo = $('#selo-validade');
     selo.classList.toggle('vencido', expirado);
     selo.lastElementChild.textContent = expirado ? 'Vencido' : 'Válido';
 
-    $('#verso-numero').textContent = e.numero;
-    $('#verso-matricula').textContent = e.matricula;
-    $('#verso-emissao').textContent = dataBr(e.emissao);
-    $('#verso-email').textContent = e.email;
-    $('#verso-assinatura').textContent = e.nome.split(/\s+/).slice(0, 2).join(' ');
-    $('#verso-hash').textContent = hashCurto(e.cpf + e.numero + e.validade);
-    $('#verso-entidade').textContent = e.entidade;
-    desenharQr($('#verso-qr'), 'REPLICA-ACADEMICA|VERSO|' + e.numero + '|' + hashCurto(e.numero), 0);
+    $('#banner-texto').textContent = expirado
+      ? 'Seu documento venceu. Renove para continuar usando.'
+      : 'Seu DNE está liberado, aproveite.';
 
-    desenharQr($('#cart-qr'), cargaQr(e, tokenAtual()), 0);
+    desenharQr($('#cart-qr'), cargaQrCurta(e, tokenAtual()), 0);
     atualizarBotaoWallet();
 
     $('#carteirinha-dados').innerHTML = linhasDados([
@@ -2029,6 +2014,56 @@ window.DADOS = {
       ['Emissão', dataBr(e.emissao)], ['Validade', dataBr(e.validade)],
       ['Nº do documento', e.numero], ['Código de uso', codigoDeUso(e)],
       ['Certificação', 'Assinatura digital ITI']
+    ]);
+  }
+
+  /* ------------------------------ certificado ------------------------------ */
+
+  /*
+   * Bloco no formato PEM montado a partir dos dados do documento, apenas para
+   * reproduzir a aparência da tela de certificado do aplicativo original.
+   * Não é um certificado de verdade: não há par de chaves, nem assinatura,
+   * nem autoridade certificadora envolvida — são caracteres derivados do
+   * próprio conteúdo por uma congruência linear.
+   */
+  function blocoPem(e) {
+    var alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    var semente = parseInt(hashCurto(e.numero + e.cpf + e.validade), 16) || 1;
+    var linhas = [], i, j, linha;
+    for (i = 0; i < 18; i++) {
+      linha = '';
+      for (j = 0; j < 64; j++) {
+        semente = (semente * 1103515245 + 12345) & 0x7fffffff;
+        linha += alfabeto[(semente >>> 16) & 63];
+      }
+      linhas.push(linha);
+    }
+    return linhas;
+  }
+
+  function textoPem(e) {
+    return '-----BEGIN CERTIFICATE-----\n' + blocoPem(e).join('\n') + '\n-----END CERTIFICATE-----';
+  }
+
+  function renderCertificado() {
+    var e = estado.estudante;
+    if (!e) { ir('inicio'); return; }
+
+    $('#cert-texto').innerHTML = e.entidade + ' atesta que <b>' + e.nome
+      + '</b> é estudante e está regularmente matriculado(a) em ' + e.curso
+      + ' da instituição ' + e.instituicao;
+
+    $('#pem-corpo').innerHTML =
+      '<span class="cerca">-----BEGIN CERTIFICATE-----</span>'
+      + blocoPem(e).join('<br>')
+      + '<span class="cerca">-----END CERTIFICATE-----</span>';
+
+    $('#cert-dados').innerHTML = linhasDados([
+      ['Titular', e.nome],
+      ['Emissor', e.entidade],
+      ['Nº do documento', e.numero],
+      ['Código de uso', codigoDeUso(e)],
+      ['Válido até', dataBr(e.validade)]
     ]);
   }
 
@@ -2129,7 +2164,9 @@ window.DADOS = {
   /* ------------------- documento na Carteira do iPhone ------------------ */
 
   function atualizarBotaoWallet() {
-    $('#btn-wallet-txt').textContent = estado.naCarteira ? 'Já está na Carteira' : 'Adicionar à Carteira';
+    $('#btn-wallet-txt').textContent = estado.naCarteira
+      ? 'Já está na Carteira da Apple'
+      : 'Adicionar à Carteira da Apple';
     $('#btn-wallet').disabled = !!estado.naCarteira;
   }
 
@@ -2141,7 +2178,7 @@ window.DADOS = {
     $('#passe-inst').textContent = e.instituicao;
     $('#passe-codigo').textContent = codigoDeUso(e);
     $('#passe-validade').textContent = dataBr(e.validade);
-    desenharQr($('#passe-qr'), cargaQr(e, tokenAtual()), 0);
+    desenharQr($('#passe-qr'), cargaQrCurta(e, tokenAtual()), 0);
 
     $('#folha-fundo').classList.add('aberta');
     $('#folha-wallet').classList.add('aberta');
@@ -2174,6 +2211,11 @@ window.DADOS = {
   }
 
   // Conteúdo do QR: propositalmente marcado como réplica sem validade.
+  // versão reduzida, para o QR pequeno impresso no cartão
+  function cargaQrCurta(e, tk) {
+    return [PREFIXO_QR, numeroCurto(e), tk].join('|');
+  }
+
   function cargaQr(e, tk) {
     return [
       PREFIXO_QR,
@@ -2447,10 +2489,19 @@ window.DADOS = {
     });
 
     /* --- carteirinha --- */
-    $('#btn-virar').addEventListener('click', function () {
-      $('#carteira').classList.toggle('virada');
+    $('#btn-apresentar-topo').addEventListener('click', function () { ir('apresentar'); });
+    $('#btn-copiar-pem').addEventListener('click', function () {
+      var e = estado.estudante;
+      if (!e) return;
+      var texto = textoPem(e);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto)
+          .then(function () { aviso('Certificado copiado.'); })
+          .catch(function () { aviso('Não foi possível copiar.'); });
+      } else {
+        aviso('Cópia não disponível neste navegador.');
+      }
     });
-    $('#carteira').addEventListener('click', function () { this.classList.toggle('virada'); });
 
     /* --- Carteira do iPhone --- */
     $('#btn-wallet').addEventListener('click', abrirFolhaWallet);
@@ -2583,7 +2634,7 @@ window.DADOS = {
   }
 
   function iniciar() {
-    if (window.console && console.info) console.info(AVISO_REPLICA);
+    if (window.console && console.info) console.info(AVISO_REPLICA + ' USO: ' + USO + '.');
     document.documentElement.setAttribute('data-replica', 'academica');
     carregar();
     aplicarTema();
@@ -2591,6 +2642,12 @@ window.DADOS = {
     if (!location.hash) location.hash = estado.logado ? '#/inicio' : '#/login';
     aplicarRota();
     registrarServiceWorker();
+
+    var splash = document.getElementById('splash');
+    if (splash) {
+      setTimeout(function () { splash.classList.add('saindo'); }, 650);
+      setTimeout(function () { splash.remove(); }, 1150);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', iniciar);

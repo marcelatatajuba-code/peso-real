@@ -1,0 +1,3 @@
+# Projeto de uso interno. Não deve ser indexado nem publicado abertamente.
+User-agent: *
+Disallow: /

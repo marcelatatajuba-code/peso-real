@@ -94,7 +94,8 @@ Não é preciso conta de desenvolvedor da Apple, nem Mac, nem pagar nada.
 |---|---|
 | **Login** | CPF com máscara e validação real dos dígitos verificadores, senha, entrada em modo demonstração |
 | **Início** | Saudação, resumo do documento, atalhos, benefícios em destaque |
-| **Carteirinha** | Documento com foto, dados, código de uso, selo de validade, QR Code e brilho holográfico; vira em 3D para mostrar o verso |
+| **Carteirinha** | Documento no padrão do aplicativo original: faixa de aviso, foto e QR Code lado a lado sobre a faixa colorida, dados em lista e botão da Carteira da Apple |
+| **Certificado** | Tela "Validado no portal da meia-entrada", com a atestação da entidade e o bloco do certificado de atributo em PEM |
 | **Adicionar à Carteira** | Folha inferior que monta o passe no estilo da Carteira (Wallet) do iPhone, como o app oficial passou a permitir |
 | **Apresentar** | QR Code em tela cheia com token que se renova a cada 60 segundos e contador regressivo |
 | **Benefícios** | 12 parceiros fictícios, busca por texto, filtro por categoria e tela de detalhe com regras |
@@ -104,6 +105,16 @@ Não é preciso conta de desenvolvedor da Apple, nem Mac, nem pagar nada.
 | **Perfil** | Dados, troca de foto, tema claro/escuro, sair e apagar dados |
 
 ---
+
+## Padrão visual
+
+O layout segue o aplicativo original: tema claro sobre fundo off-white, cartões brancos
+arredondados, azul na marca e na tipografia, laranja nas ações, faixa roxa/magenta ao fundo
+do documento e tipografia arredondada (`ui-rounded` / `SF Pro Rounded`, sem fonte externa,
+para o app continuar funcionando offline).
+
+O logotipo `dne` e os selos das entidades são **desenhos tipográficos próprios**, feitos no
+mesmo estilo do original — não são os arquivos de marca da UNE, da UBES ou da ANPG.
 
 ## Estrutura dos arquivos
 
@@ -118,6 +129,8 @@ dne-digital/
 ├── assets/                 ícones do app e foto de exemplo
 ├── testes/verificar-qr.js  prova que o gerador de QR Code está correto
 ├── construir-arquivo-unico.js   junta tudo em um .html só, para enviar
+├── NAO-PUBLICAR.md         por que este projeto não vai para endereço público
+├── robots.txt              Disallow para todos os robôs
 └── dne-digital-replica.html     o app inteiro em um arquivo (gerado)
 ├── manifest.webmanifest    metadados da instalação (nome, ícones, cores)
 ├── sw.js                   service worker: guarda o app em cache para uso offline
