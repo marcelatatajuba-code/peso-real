@@ -1,0 +1,154 @@
+# DNE Digital — réplica acadêmica
+
+Réplica do aplicativo **DNE Digital** (Documento Nacional do Estudante), desenvolvida
+como trabalho de curso. É um **PWA** — um aplicativo web que se instala no celular,
+funciona sem internet e não precisa de loja de aplicativos.
+
+> **Aviso.** Este projeto não tem qualquer vínculo com a UNE, a UBES, a ANPG ou com o
+> aplicativo oficial. Todos os dados são fictícios, a carteirinha exibida é marcada como
+> réplica em todas as telas e **não possui validade legal** — não serve como comprovante
+> de matrícula nem dá direito a meia-entrada.
+
+---
+
+## Como abrir
+
+### No computador (para desenvolver e apresentar)
+
+O app precisa ser servido por um servidor HTTP — abrir o `index.html` direto do disco
+faz o service worker não registrar.
+
+```bash
+cd dne-digital
+python3 -m http.server 8000
+```
+
+Depois abra <http://localhost:8000> no navegador. Para ver como fica no celular, use as
+ferramentas de desenvolvedor (F12) e ative o modo dispositivo (iPhone 14, por exemplo).
+
+### No iPhone (instalar como aplicativo, de graça)
+
+1. Publique a pasta em qualquer endereço `https` — o mais simples é o **GitHub Pages**:
+   no repositório, vá em **Settings → Pages**, escolha a branch e a pasta raiz, salve.
+   O app fica em `https://<seu-usuario>.github.io/<repositorio>/dne-digital/`.
+2. Abra esse endereço no **Safari** do iPhone (precisa ser o Safari).
+3. Toque no botão de compartilhar e escolha **Adicionar à Tela de Início**.
+4. O ícone aparece junto com os outros apps. Ao abrir, roda em tela cheia, sem barra de
+   navegador — e continua funcionando no modo avião.
+
+Não é preciso conta de desenvolvedor da Apple, nem Mac, nem pagar nada.
+
+---
+
+## O que o app faz
+
+| Tela | O que tem |
+|---|---|
+| **Login** | CPF com máscara e validação real dos dígitos verificadores, senha, entrada em modo demonstração |
+| **Início** | Saudação, resumo do documento, atalhos, benefícios em destaque |
+| **Carteirinha** | Documento com foto, dados, selo de validade, QR Code e brilho holográfico; vira em 3D para mostrar o verso |
+| **Apresentar** | QR Code em tela cheia com token que se renova a cada 60 segundos e contador regressivo |
+| **Benefícios** | 12 parceiros fictícios, busca por texto, filtro por categoria e tela de detalhe com regras |
+| **Solicitar/Renovar** | Formulário em 5 passos: dados pessoais, instituição e curso, foto e comprovante, pagamento por Pix simulado, emissão |
+| **Transporte** | Saldo do bilhete estudante, recarga simulada e extrato |
+| **ISIC** | Versão internacional do cartão, no formato paisagem |
+| **Perfil** | Dados, troca de foto, tema claro/escuro, sair e apagar dados |
+
+---
+
+## Estrutura dos arquivos
+
+```
+dne-digital/
+├── index.html              estrutura de todas as telas + ícones SVG
+├── css/app.css             design system completo (variáveis, temas, componentes)
+├── js/
+│   ├── qr.js               gerador de QR Code escrito do zero (ISO/IEC 18004)
+│   ├── dados.js            dados fictícios: estudante, instituições, parceiros
+│   └── app.js              estado, roteador, telas, validações e fluxos
+├── assets/                 ícones do app e foto de exemplo
+├── testes/verificar-qr.js  prova que o gerador de QR Code está correto
+├── manifest.webmanifest    metadados da instalação (nome, ícones, cores)
+└── sw.js                   service worker: guarda o app em cache para uso offline
+```
+
+Sem framework, sem `npm install`, sem build. Três arquivos JavaScript e uma folha de
+estilo — o que facilita ler, explicar e apresentar o código.
+
+---
+
+## Pontos técnicos que valem ser explicados na apresentação
+
+### 1. Gerador de QR Code próprio (`js/qr.js`)
+
+O QR Code não vem de biblioteca externa nem de API na internet: é gerado no próprio
+aparelho. O arquivo implementa a norma ISO/IEC 18004 completa:
+
+- codificação em **modo byte** com UTF-8 e escolha automática da versão (1 a 40);
+- **correção de erros Reed-Solomon** sobre o corpo finito GF(256), nos quatro níveis (L, M, Q, H);
+- divisão em blocos, cálculo da redundância e **intercalação** dos códigos;
+- desenho dos padrões funcionais (localizadores, alinhamento, temporizadores);
+- teste das **8 máscaras** com cálculo de penalidade, escolhendo a de menor pontuação;
+- informação de formato e de versão com códigos BCH.
+
+Isso é o que permite o app funcionar offline — que é justamente o cenário de uso real
+(bilheteria, catraca, lugar sem sinal).
+
+**Como foi verificado.** Rode `dne-digital/testes/verificar-qr.js` (instruções no
+topo do arquivo). As matrizes geradas foram comparadas módulo a módulo com a
+biblioteca de referência `qrcode` (npm): **295 matrizes idênticas**, cobrindo as versões
+1 a 40 e os quatro níveis de correção. Depois, os códigos foram lidos por um decodificador
+independente (`jsQR`), que devolveu exatamente o texto de origem em todos os casos.
+
+### 2. Validação de CPF (`js/app.js`)
+
+O CPF não é conferido só pelo formato: a função `cpfValido()` calcula os dois dígitos
+verificadores pelo módulo 11 e rejeita sequências repetidas, como o algoritmo oficial.
+
+### 3. Token rotativo
+
+O conteúdo do QR Code carrega um código de verificação que é sorteado a cada 60 segundos
+(`crypto.getRandomValues`). É o mesmo princípio usado por documentos digitais para que uma
+captura de tela perca a validade rapidamente. O contador na tela mostra o tempo restante.
+
+### 4. PWA e funcionamento offline
+
+`manifest.webmanifest` descreve o app para o sistema (nome, ícones, cor, modo tela cheia)
+e `sw.js` guarda todos os arquivos em cache na instalação, usando a estratégia
+*cache-first*: o app responde do cache e só busca na rede o que não tiver.
+
+### 5. Persistência local
+
+Todo o estado — documento, foto, saldo, tema — fica no `localStorage` do próprio aparelho,
+em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projeto.
+
+### 6. Cuidados de interface para iOS
+
+- `viewport-fit=cover` mais `env(safe-area-inset-*)` para respeitar o entalhe e a barra inferior;
+- campos de formulário com `font-size: 16px`, que impede o Safari de dar zoom ao focar;
+- `-webkit-backdrop-filter` nas barras translúcidas;
+- `apple-mobile-web-app-capable` e `apple-touch-icon` para a instalação na tela de início;
+- `prefers-reduced-motion` respeitado em todas as animações.
+
+---
+
+## Limitações conhecidas (assumidas de propósito)
+
+- **Não há back-end.** Login, pagamento e emissão são simulados no próprio aparelho.
+- **Nenhuma validação real de matrícula** — o comprovante enviado não é verificado.
+- **A identidade visual é uma aproximação.** As cores e o arranjo das telas foram
+  reconstruídos a partir da descrição pública do aplicativo, não copiados dele.
+- **Marcação de réplica em todas as telas**, por decisão de projeto: um documento de
+  estudante convincente e funcional seria um documento falso, então a peça é assumidamente
+  identificada como exercício acadêmico.
+
+---
+
+## Créditos e referências
+
+- Funcionalidades do aplicativo oficial levantadas nas páginas públicas da UNE, da UBES e
+  das lojas de aplicativos.
+- Meia-entrada estudantil: Lei nº 12.933/2013 e Decreto nº 8.537/2015.
+- Algoritmo do QR Code: ISO/IEC 18004.
+- Verificação do gerador: biblioteca `qrcode` e decodificador `jsQR` (usados apenas em
+  teste, fora do app publicado).
