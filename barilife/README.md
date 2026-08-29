@@ -149,10 +149,13 @@ em `localStorage`. Nada é enviado para servidores. O contador de água zera
 sozinho quando vira o dia e a foto do perfil é redimensionada para 384 px antes
 de ser guardada.
 
-**Marca e logotipos.** A marca do Barilife foi extraída das capturas do
-aplicativo e vetorizada: os contornos brancos são isolados, aproximados e
-convertidos em curvas de Bézier por interpolação Catmull–Rom, virando um único
-`<symbol>` SVG que serve tanto à interface quanto aos ícones do app. O logotipo
+**Marca e logotipos.** A marca do Barilife foi vetorizada a partir do ícone
+oficial do aplicativo: os contornos brancos são isolados, aproximados e
+convertidos em curvas de Bézier por interpolação Catmull–Rom, e a caixa
+resultante é normalizada, virando um único `<symbol>` SVG que serve tanto à
+interface quanto aos ícones do app. A cor de fundo (`#3472D0`) e as margens do
+ícone (21,2% nas laterais, 24,9% no topo, marca ocupando 57,3% da largura) foram
+medidas no ícone original. O logotipo
 da SBCBM, que é colorido, foi recortado com extração de matte — o fundo é
 estimado linha a linha e removido da mistura, o que preserva o degradê das letras
 e o amarelo da estrela sem deixar franja azul nas bordas.
