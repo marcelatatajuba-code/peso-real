@@ -65,11 +65,18 @@
     <div class="entrada-hero"><h2>Seus dados</h2><p>Usados apenas neste dispositivo para montar a carteirinha.</p></div>
     <form id="form-1" novalidate>
       <div class="campo"><label for="f-nome">Nome completo</label><input id="f-nome" required autocomplete="name" placeholder="Como aparece no seu documento"></div>
-      <div class="campo"><label for="f-email">E-mail</label><input id="f-email" type="email" required autocomplete="email" placeholder="voce@email.com"></div>
+      <div class="campo"><label for="f-email">E-mail</label><input id="f-email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@email.com"></div>
       <div class="dupla">
-        <div class="campo"><label for="f-cidade">Cidade</label><input id="f-cidade" required placeholder="São Paulo"></div>
+        <div class="campo"><label for="f-nasc">Data de nascimento</label><input id="f-nasc" type="date" required></div>
+        <div class="campo"><label for="f-sexo">Sexo</label><select id="f-sexo"></select></div>
+      </div>
+      <div class="campo"><label for="f-cpf">CPF</label><input id="f-cpf" required inputmode="numeric" maxlength="14" placeholder="000.000.000-00"><div class="ajuda">Usado pelo cirurgião para conferir seu cadastro.</div></div>
+      <div class="campo"><label for="f-tel">Telefone</label><input id="f-tel" type="tel" required inputmode="numeric" maxlength="15" placeholder="(00) 00000-0000"></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-cep">CEP</label><input id="f-cep" inputmode="numeric" maxlength="9" placeholder="00000-000"></div>
         <div class="campo"><label for="f-uf">UF</label><select id="f-uf"></select></div>
       </div>
+      <div class="campo"><label for="f-cidade">Cidade</label><input id="f-cidade" required placeholder="São Paulo"></div>
       <button class="btn cheio" type="submit">Continuar</button>
       <button class="btn cheio neutro" type="button" data-ir="1" style="margin-top:10px">Voltar</button>
     </form>
@@ -78,16 +85,21 @@
   <!-- passo 3: dados da cirurgia -->
   <div class="passo" id="passo-3">
     <div class="progresso"><i class="on"></i><i class="on"></i></div>
-    <div class="entrada-hero"><h2>Sua cirurgia</h2><p>Esses dados aparecem na frente da carteirinha.</p></div>
+    <div class="entrada-hero"><h2>Sua cirurgia</h2><p>Esses dados vão para a frente da carteirinha e são conferidos pelo seu cirurgião antes da liberação.</p></div>
     <form id="form-2" novalidate>
       <div class="campo"><label for="f-cirurgia">Tipo de cirurgia</label><select id="f-cirurgia"></select></div>
       <div class="campo"><label for="f-data">Data da cirurgia</label><input id="f-data" type="date" required></div>
+      <div class="dupla">
+        <div class="campo"><label for="f-pi">Peso antes (kg)</label><input id="f-pi" type="number" step="0.1" min="30" max="400" inputmode="decimal" placeholder="118"></div>
+        <div class="campo"><label for="f-pa">Peso atual (kg)</label><input id="f-pa" type="number" step="0.1" min="30" max="400" inputmode="decimal" placeholder="74"></div>
+      </div>
+      <div class="campo"><label for="f-alt">Altura (m)</label><input id="f-alt" type="number" step="0.01" min="1" max="2.5" inputmode="decimal" placeholder="1.65"></div>
       <div class="campo"><label for="f-cirurgiao">Cirurgião responsável</label><input id="f-cirurgiao" required placeholder="Dra. Helena Marques Vidal"></div>
       <div class="dupla">
         <div class="campo"><label for="f-crm">CRM</label><input id="f-crm" required placeholder="CRM-SP 118342"></div>
         <div class="campo"><label for="f-hospital">Hospital</label><input id="f-hospital" placeholder="Hospital Santa Vitória"></div>
       </div>
-      <button class="btn cheio" type="submit">Gerar carteirinha</button>
+      <button class="btn cheio" type="submit">Enviar para validação</button>
       <button class="btn cheio neutro" type="button" data-ir="2" style="margin-top:10px">Voltar</button>
     </form>
     <div class="aviso"><b>Réplica acadêmica.</b> Este não é o aplicativo oficial da SBCBM. Foi desenvolvido como trabalho de curso e nenhum dado é enviado para servidores — tudo fica salvo apenas neste navegador.</div>
@@ -108,6 +120,7 @@
     <section class="tela on" id="t-carteirinha">
       <div id="banner-instalar"></div>
       <div class="carteira" id="carteira"></div>
+      <div id="pendencia"></div>
       <div class="acoes-rapidas">
         <button id="a-qr"><span class="ico">⛶</span>Ampliar QR</button>
         <button id="a-compartilhar"><span class="ico">↗</span>Compartilhar</button>

@@ -15,15 +15,25 @@ desenvolvida como **trabalho de curso**.
 
 | Tela | O que faz |
 |---|---|
-| **Carteirinha** | Cartão do paciente com nome, foto, tipo de cirurgia, data, cirurgião, CRM, número de matrícula, validade e **QR Code** de validação. Métricas de jornada (dias de pós-operatório, peso eliminado, IMC), próximo compromisso e descontos em destaque. |
+| **Carteirinha** | Cartão do paciente com nome, foto, tipo de cirurgia, data, cirurgião, CRM, número de matrícula, validade e **QR Code** de validação. Tem os dois estados do app real: *aguardando validação* (QR bloqueado, compartilhamento desabilitado) e *validada*. Métricas de jornada (dias de pós-operatório, peso eliminado, IMC), próximo compromisso e descontos em destaque. |
 | **Descontos** | Rede de parceiros com busca por nome/bairro/cidade e filtro por categoria (restaurantes, academias, farmácias, suplementos, roupas, clínicas). Cada parceiro abre uma ficha com regra do benefício, instruções de uso, cupom copiável e favoritar. |
 | **Profissionais** | Cirurgiões, nutrição, endocrinologia e psicologia credenciados, com busca livre e filtro por estado. A ficha traz avaliação, local de atendimento, formas de atendimento e **solicitação de agendamento** (que gera um lembrete). |
 | **Conteúdo** | Dicas, receitas, artigos e vídeos, separados por abas, com leitor de artigo completo. |
 | **Lembretes** | Controle de hidratação do dia com anel de progresso e meta configurável, mais lembretes de vitaminas, consultas e exames (criar, ativar/desativar, remover). |
 | **Perfil** | Edição de todos os dados da carteirinha, troca de foto, favoritos, meta de água, sobre e exclusão dos dados. |
 
-Fluxo de entrada com **cadastro em duas etapas** (dados pessoais e dados da
-cirurgia) ou **perfil de demonstração** para avaliação rápida.
+Fluxo de entrada com **cadastro em duas etapas** — dados pessoais (nome,
+e-mail, data de nascimento, CPF, sexo, telefone, CEP e cidade) e dados da
+cirurgia (tipo, data, peso antes e atual, altura, cirurgião e CRM) — ou
+**perfil de demonstração** para avaliação rápida.
+
+### Validação pelo cirurgião
+
+No Barilife, o paciente se cadastra e o **cirurgião é notificado, confere os
+dados e libera a carteirinha**. A réplica reproduz esse ciclo: o cadastro nasce
+com status `pendente`, o cartão mostra *Aguardando validação*, o QR Code fica
+bloqueado e o compartilhamento sai do ar. Um botão **Simular liberação pelo
+cirurgião** representa o passo que, no app real, acontece do lado do médico.
 
 ---
 
@@ -102,6 +112,12 @@ A implementação foi validada de duas formas: comparação **módulo a módulo*
 contra a biblioteca de referência `qrcode` do Python (86 de 86 casos idênticos
 com máscara fixa) e **decodificação** dos QR gerados pelo app com o leitor do
 OpenCV, incluindo conteúdo com acentuação em UTF-8.
+
+**Validação de dados no cadastro.** CPF conferido pelos dois dígitos
+verificadores (não apenas pelo formato), telefone com 10 ou 11 dígitos, CEP com
+8, idade mínima de 16 anos e coerência entre as datas — a cirurgia não pode ser
+futura nem anterior ao nascimento. CPF, telefone e CEP têm máscara de digitação
+que preserva a posição do cursor.
 
 **Armazenamento local.** Tudo que o usuário preenche fica em `localStorage`,
 neste dispositivo. Nenhum dado é enviado para servidores. O contador de água

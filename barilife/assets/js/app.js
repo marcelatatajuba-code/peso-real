@@ -100,6 +100,61 @@
     return 'BL-' + (String(data || hoje()).slice(0, 4)) + '-' + num;
   }
 
+  /* ---- Mascaras e validacoes dos documentos do cadastro ------------------ */
+  function soDigitos(v) { return String(v || '').replace(/\D/g, ''); }
+
+  function mascaraCPF(v) {
+    var d = soDigitos(v).slice(0, 11);
+    return d.replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  }
+
+  function mascaraTelefone(v) {
+    var d = soDigitos(v).slice(0, 11);
+    if (d.length <= 10) return d.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2');
+    return d.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2');
+  }
+
+  function mascaraCEP(v) {
+    return soDigitos(v).slice(0, 8).replace(/(\d{5})(\d)/, '$1-$2');
+  }
+
+  /* Validacao real de CPF pelos dois digitos verificadores */
+  function cpfValido(v) {
+    var d = soDigitos(v);
+    if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+    for (var t = 9; t < 11; t++) {
+      var soma = 0;
+      for (var i = 0; i < t; i++) soma += parseInt(d[i], 10) * (t + 1 - i);
+      var dig = (soma * 10) % 11 % 10;
+      if (dig !== parseInt(d[t], 10)) return false;
+    }
+    return true;
+  }
+
+  function idade(iso) {
+    if (!iso) return null;
+    var n = new Date(iso + 'T00:00:00');
+    if (isNaN(n)) return null;
+    var h = new Date(), a = h.getFullYear() - n.getFullYear();
+    var m = h.getMonth() - n.getMonth();
+    if (m < 0 || (m === 0 && h.getDate() < n.getDate())) a--;
+    return a;
+  }
+
+  /* Liga a mascara a um campo, preservando a posicao do cursor no fim */
+  function ligarMascara(seletor, fn) {
+    var el = $(seletor);
+    if (!el) return;
+    el.addEventListener('input', function () {
+      var antes = el.value.length - el.selectionStart;
+      el.value = fn(el.value);
+      var pos = Math.max(0, el.value.length - antes);
+      try { el.setSelectionRange(pos, pos); } catch (e) {}
+    });
+  }
+
   function esc(s) {
     return String(s === undefined || s === null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -191,6 +246,13 @@
     $('#f-cirurgia').innerHTML = DB.tiposCirurgia.map(function (c) {
       return '<option>' + esc(c) + '</option>';
     }).join('');
+    $('#f-sexo').innerHTML = DB.sexos.map(function (x) {
+      return '<option>' + esc(x) + '</option>';
+    }).join('');
+
+    ligarMascara('#f-cpf', mascaraCPF);
+    ligarMascara('#f-tel', mascaraTelefone);
+    ligarMascara('#f-cep', mascaraCEP);
 
     $$('[data-ir]').forEach(function (b) {
       b.addEventListener('click', function () { irPasso(b.dataset.ir); });
@@ -207,11 +269,27 @@
       ev.preventDefault();
       var nome = $('#f-nome').value.trim();
       var email = $('#f-email').value.trim();
+      var nasc = $('#f-nasc').value;
+      var cpf = $('#f-cpf').value.trim();
+      var tel = $('#f-tel').value.trim();
+      var cep = $('#f-cep').value.trim();
       var cidade = $('#f-cidade').value.trim();
+
       if (nome.split(/\s+/).length < 2) return toast('Informe nome e sobrenome.');
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast('E-mail inválido.');
+      if (!nasc) return toast('Informe a data de nascimento.');
+      var anos = idade(nasc);
+      if (anos === null || anos < 0) return toast('Data de nascimento inválida.');
+      if (anos < 16) return toast('É preciso ter ao menos 16 anos.');
+      if (anos > 110) return toast('Confira a data de nascimento.');
+      if (!cpfValido(cpf)) return toast('CPF inválido — confira os números.');
+      if (soDigitos(tel).length < 10) return toast('Telefone incompleto.');
+      if (cep && soDigitos(cep).length !== 8) return toast('CEP incompleto.');
       if (!cidade) return toast('Informe a cidade.');
-      rascunho.nome = nome; rascunho.email = email;
+
+      rascunho.nome = nome; rascunho.email = email; rascunho.nascimento = nasc;
+      rascunho.sexo = $('#f-sexo').value; rascunho.cpf = mascaraCPF(cpf);
+      rascunho.telefone = mascaraTelefone(tel); rascunho.cep = cep ? mascaraCEP(cep) : '';
       rascunho.cidade = cidade; rascunho.uf = $('#f-uf').value;
       irPasso(3);
     });
@@ -220,15 +298,22 @@
       ev.preventDefault();
       var data = $('#f-data').value;
       var cirurgiao = $('#f-cirurgiao').value.trim();
+      var pi = parseFloat($('#f-pi').value) || null;
+      var pa = parseFloat($('#f-pa').value) || null;
+      var alt = parseFloat($('#f-alt').value) || null;
+
       if (!data) return toast('Informe a data da cirurgia.');
       if (data > hoje()) return toast('A data da cirurgia não pode ser futura.');
+      if (rascunho.nascimento && data < rascunho.nascimento) return toast('A cirurgia não pode ser anterior ao nascimento.');
       if (!cirurgiao) return toast('Informe o cirurgião responsável.');
+      if (alt && (alt < 1 || alt > 2.5)) return toast('Altura fora do intervalo esperado.');
 
-      var emissao = hoje();
       var val = new Date(); val.setFullYear(val.getFullYear() + 3);
 
       Store.estado.perfil = {
         nome: rascunho.nome, email: rascunho.email,
+        nascimento: rascunho.nascimento, cpf: rascunho.cpf,
+        sexo: rascunho.sexo, telefone: rascunho.telefone, cep: rascunho.cep,
         cidade: rascunho.cidade, uf: rascunho.uf,
         cirurgia: $('#f-cirurgia').value,
         dataCirurgia: data,
@@ -236,13 +321,15 @@
         crm: $('#f-crm').value.trim() || '—',
         hospital: $('#f-hospital').value.trim() || '—',
         matricula: gerarMatricula(rascunho.nome, data),
-        emissao: emissao,
+        emissao: hoje(),
         validade: val.toISOString().slice(0, 10),
-        foto: null, pesoInicial: null, pesoAtual: null, altura: null
+        // no app real o cirurgiao confere os dados antes de liberar a carteirinha
+        status: 'pendente', validadaEm: null,
+        foto: null, pesoInicial: pi, pesoAtual: pa, altura: alt
       };
       Store.salvar();
       abrirApp();
-      toast('Carteirinha gerada com sucesso.');
+      toast('Cadastro enviado para o seu cirurgião.');
     });
   }
 
@@ -268,13 +355,18 @@
     return '<div class="avatar ' + (classe || '') + '">' + esc(iniciais(p.nome)) + '</div>';
   }
 
+  function estaValidada(p) { return (p.status || 'validada') === 'validada'; }
+
   function renderCarteirinha() {
     var p = Store.estado.perfil;
+    var validada = estaValidada(p);
 
     $('#carteira').innerHTML =
       '<div class="topo">' +
         '<div class="logo"><svg viewBox="0 0 24 24"><use href="#i-selo"/></svg>Barilife</div>' +
-        '<span class="selo-val"><i></i>Validada</span>' +
+        (validada
+          ? '<span class="selo-val"><i></i>Validada</span>'
+          : '<span class="selo-val pend"><i></i>Aguardando validação</span>') +
       '</div>' +
       '<div class="id">' + avatarHTML(p) +
         '<div><div class="nome">' + esc(p.nome) + '</div>' +
@@ -288,12 +380,36 @@
       '</div>' +
       '<div class="rodape">' +
         '<div><div class="mat">Nº da carteirinha</div><div class="num">' + esc(p.matricula) + '</div>' +
-        '<div class="mat" style="margin-top:8px">Válida até ' + dataBR(p.validade) + '</div></div>' +
-        '<div class="qr">' + svgQR(p, 64) + '</div>' +
+        '<div class="mat" style="margin-top:8px">' +
+          (validada ? 'Válida até ' + dataBR(p.validade) : 'Enviada em ' + dataBR(p.emissao)) + '</div></div>' +
+        (validada
+          ? '<div class="qr">' + svgQR(p, 64) + '</div>'
+          : '<div class="qr bloq" aria-label="QR liberado após a validação">🔒</div>') +
       '</div>';
 
     function campo(rot, val) {
       return '<div><div class="rot">' + esc(rot) + '</div><div class="val">' + esc(val || '—') + '</div></div>';
+    }
+
+    // faixa de pendencia: no app real quem libera e o cirurgiao
+    var pend = $('#pendencia');
+    if (validada) {
+      pend.innerHTML = '';
+    } else {
+      pend.innerHTML =
+        '<div class="pendente">' +
+          '<div class="linha"><span class="ico">⏳</span>' +
+          '<div><div class="t">Cadastro enviado para ' + esc(p.cirurgiao) + '</div>' +
+          '<div class="s">No Barilife, o cirurgião recebe seu cadastro, confere os dados e libera a carteirinha. Até lá o QR Code fica bloqueado e os descontos não podem ser usados.</div></div></div>' +
+          '<button class="btn cheio pequeno" id="btn-liberar" style="margin-top:12px">Simular liberação pelo cirurgião</button>' +
+        '</div>';
+      $('#btn-liberar').addEventListener('click', function () {
+        p.status = 'validada';
+        p.validadaEm = hoje();
+        Store.salvar();
+        renderCarteirinha(); renderPerfil();
+        toast('Carteirinha liberada pelo cirurgião.');
+      });
     }
 
     // metricas
@@ -331,6 +447,10 @@
     var top = DB.parceiros.slice().sort(function (a, b) { return b.desconto - a.desconto; }).slice(0, 3);
     $('#destaques').innerHTML = top.map(cardParceiro).join('');
     ligarParceiros($('#destaques'));
+
+    // QR e compartilhamento so fazem sentido com a carteirinha liberada
+    $('#a-qr').disabled = !validada;
+    $('#a-compartilhar').disabled = !validada;
 
     renderBannerInstalar();
   }
@@ -701,6 +821,14 @@
     foto.innerHTML = p.foto ? '<img src="' + esc(p.foto) + '" alt="" style="width:100%;height:100%;object-fit:cover">' : esc(iniciais(p.nome));
     $('#perfil-nome').textContent = p.nome;
     $('#perfil-sub').textContent = p.cirurgia + ' · ' + tempoPos(p.dataCirurgia) + ' de pós-operatório';
+    var selo = $('#perfil-selo');
+    if (estaValidada(p)) {
+      selo.textContent = '✓ Carteirinha validada';
+      selo.classList.remove('pend');
+    } else {
+      selo.textContent = '⏳ Aguardando validação do cirurgião';
+      selo.classList.add('pend');
+    }
     $('#btn-perfil').innerHTML = p.foto
       ? '<img src="' + esc(p.foto) + '" alt="" style="width:100%;height:100%;object-fit:cover">'
       : esc(iniciais(p.nome));
@@ -711,6 +839,11 @@
     Folha.abrir(
       '<h2 style="font-size:19px;font-weight:750;margin-bottom:16px">Meus dados</h2>' +
       '<div class="campo"><label for="d-nome">Nome completo</label><input id="d-nome" value="' + esc(p.nome) + '"></div>' +
+      '<div class="dupla">' +
+        '<div class="campo"><label for="d-nasc">Nascimento</label><input id="d-nasc" type="date" value="' + esc(p.nascimento || '') + '"></div>' +
+        '<div class="campo"><label for="d-tel">Telefone</label><input id="d-tel" inputmode="numeric" maxlength="15" value="' + esc(p.telefone || '') + '"></div>' +
+      '</div>' +
+      '<div class="campo"><label for="d-cpf">CPF</label><input id="d-cpf" inputmode="numeric" maxlength="14" value="' + esc(p.cpf || '') + '"></div>' +
       '<div class="dupla">' +
         '<div class="campo"><label for="d-cidade">Cidade</label><input id="d-cidade" value="' + esc(p.cidade) + '"></div>' +
         '<div class="campo"><label for="d-uf">UF</label><select id="d-uf">' +
@@ -736,13 +869,21 @@
       '<button class="btn cheio neutro" style="margin-top:9px" data-fechar>Cancelar</button>'
     );
 
+    ligarMascara('#d-cpf', mascaraCPF);
+    ligarMascara('#d-tel', mascaraTelefone);
+
     $('#d-salvar').addEventListener('click', function () {
       var nome = $('#d-nome').value.trim();
       if (!nome) return toast('O nome não pode ficar vazio.');
+      var cpf = $('#d-cpf').value.trim();
+      if (cpf && !cpfValido(cpf)) return toast('CPF inválido — confira os números.');
       var data = $('#d-data').value || p.dataCirurgia;
       if (data > hoje()) return toast('A data da cirurgia não pode ser futura.');
 
       p.nome = nome;
+      p.nascimento = $('#d-nasc').value || p.nascimento;
+      p.telefone = $('#d-tel').value.trim();
+      p.cpf = cpf;
       p.cidade = $('#d-cidade').value.trim() || p.cidade;
       p.uf = $('#d-uf').value;
       p.cirurgia = $('#d-cirurgia').value;

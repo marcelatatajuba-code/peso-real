@@ -9,8 +9,15 @@ window.DB = {
   demoPerfil: {
     nome: 'Marcela Tatajuba',
     email: 'marcela@exemplo.com.br',
+    nascimento: '1994-07-21',
+    cpf: '123.456.789-09',
+    sexo: 'Feminino',
+    telefone: '(11) 98765-4321',
+    cep: '05422-030',
     cidade: 'São Paulo',
     uf: 'SP',
+    status: 'validada',
+    validadaEm: '2024-04-02',
     cirurgia: 'Sleeve (Gastrectomia Vertical)',
     dataCirurgia: '2024-03-12',
     cirurgiao: 'Dra. Helena Marques Vidal',
@@ -196,6 +203,8 @@ window.DB = {
     agua:     { rotulo: 'Hidratação',emoji: '💧', cor: '#2E9E7E' },
     outro:    { rotulo: 'Outro',     emoji: '🔔', cor: '#8A6D3B' }
   },
+
+  sexos: ['Feminino', 'Masculino', 'Outro', 'Prefiro não informar'],
 
   tiposCirurgia: [
     'Sleeve (Gastrectomia Vertical)',
