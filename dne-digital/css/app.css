@@ -258,15 +258,6 @@ body.sem-tabbar .tabbar { display: none; }
 
 .assinatura { font-family: "Snell Roundhand", "Segoe Script", cursive; font-size: 19px; opacity: .9; }
 
-.faixa-replica {
-  position: absolute; z-index: 3; left: -34%; top: 42%;
-  width: 168%; text-align: center;
-  transform: rotate(-24deg);
-  font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .16);
-  pointer-events: none;
-}
-
 /* verso: lista de direitos e faixa em relevo, para preencher o cartão */
 .verso-lista { margin: 12px 0 0; }
 .verso-lista li {
@@ -312,7 +303,6 @@ body.sem-tabbar .tabbar { display: none; }
 .carteira-isic .campo + .campo { margin-top: 4px; }
 .carteira-isic .carteira-rodape { padding-top: 9px; }
 .carteira-isic .qr-mini { width: 48px; height: 48px; padding: 3px; }
-.carteira-isic .faixa-replica { top: 44%; font-size: 8.5px; letter-spacing: .12em; }
 
 /* --------------------------------------------------- tela de apresentação */
 #tela-apresentar { background: #fff; color: #08101f; min-height: 100vh; min-height: 100dvh; }

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL
+  ============================================================================
+  Reprodução do aplicativo DNE Digital feita como trabalho de curso.
+  Sem qualquer vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.
+
+  O documento montado aqui NÃO é o Documento Nacional do Estudante: não
+  comprova matrícula, não dá direito a meia-entrada e não tem validade legal.
+  Os dados ficam apenas no aparelho de quem abre, no localStorage; não há
+  servidor, cadastro nem emissão de documento de verdade.
+
+  A identificação de réplica também está:
+    - nesta marcação e nas meta tags abaixo;
+    - no atributo data-replica do elemento da carteirinha;
+    - no texto legal impresso no verso do cartão;
+    - no conteúdo do QR Code, com o prefixo REPLICA-ACADEMICA-SEM-VALIDADE;
+    - na constante AVISO_REPLICA de js/app.js, registrada no console ao abrir.
+  ============================================================================
+-->
 <html lang="pt-BR" data-tema="claro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <title>DNE Digital — Réplica acadêmica</title>
 <meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
+<meta name="replica" content="academica">
+<meta name="validade-legal" content="nenhuma">
+<meta name="robots" content="noindex, nofollow">
 
 <!-- Ajustes para instalação como app no iPhone (Adicionar à Tela de Início) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -141,11 +164,12 @@
   <header class="topo"><h1>Carteirinha</h1></header>
   <div class="conteudo">
     <div class="carteira-palco">
-      <div class="carteira" id="carteira" role="img" aria-label="Documento do estudante, réplica acadêmica">
+      <div class="carteira" id="carteira" role="img"
+           aria-label="Documento do estudante — réplica acadêmica sem validade legal"
+           data-replica="academica" data-validade-legal="nenhuma">
 
         <!-- ---------------------------- frente ---------------------------- -->
         <div class="face frente">
-          <div class="faixa-replica">réplica acadêmica · sem validade legal</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div class="marca">
@@ -188,7 +212,6 @@
 
         <!-- ----------------------------- verso ---------------------------- -->
         <div class="face verso">
-          <div class="faixa-replica">réplica acadêmica · sem validade legal</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div><div class="campo-rot">Número do documento</div><div class="campo-val" id="verso-numero" style="font-size:15px;letter-spacing:.05em">—</div></div>
@@ -460,9 +483,8 @@
   </header>
   <div class="conteudo">
     <div class="carteira-palco">
-      <div class="carteira carteira-isic">
+      <div class="carteira carteira-isic" data-replica="academica" data-validade-legal="nenhuma">
         <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
-          <div class="faixa-replica">réplica acadêmica</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>

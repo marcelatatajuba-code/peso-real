@@ -15,6 +15,18 @@
 
   var CHAVE = 'dne-replica-v1';
   var ARQUIVO_UNICO = false; // trocado para true pelo construir-arquivo-unico.js
+
+  /*
+   * Identificação de réplica, mantida no código em vez de sobreposta ao cartão.
+   * Também aparece: no comentário do topo do index.html e nas meta tags; no
+   * atributo data-replica do elemento da carteirinha; no texto legal do verso;
+   * e no prefixo do conteúdo do QR Code.
+   */
+  var AVISO_REPLICA = 'RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL. '
+    + 'Reprodução do app DNE Digital feita como trabalho de curso, sem vínculo com '
+    + 'UNE, UBES, ANPG ou com o aplicativo oficial. O documento montado aqui não '
+    + 'comprova matrícula, não dá direito a meia-entrada e não tem validade legal.';
+  var PREFIXO_QR = 'REPLICA-ACADEMICA-SEM-VALIDADE';
   var DADOS = window.DADOS;
 
   /* ============================ 1. ESTADO ============================ */
@@ -437,7 +449,7 @@
   // Conteúdo do QR: propositalmente marcado como réplica sem validade.
   function cargaQr(e, tk) {
     return [
-      'REPLICA-ACADEMICA-SEM-VALIDADE',
+      PREFIXO_QR,
       'DNE', codigoDeUso(e), e.numero, e.cpf, e.nome, e.instituicao, e.validade,
       tk, hashCurto(e.numero + tk)
     ].join('|');
@@ -844,6 +856,8 @@
   }
 
   function iniciar() {
+    if (window.console && console.info) console.info(AVISO_REPLICA);
+    document.documentElement.setAttribute('data-replica', 'academica');
     carregar();
     aplicarTema();
     ligarEventos();

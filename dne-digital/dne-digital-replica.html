@@ -5,12 +5,35 @@
   altere os originais em dne-digital/ e gere de novo.
   Sem validade legal. Dados fictícios, guardados apenas no aparelho de quem abre.
 -->
+<!--
+  ============================================================================
+  RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL
+  ============================================================================
+  Reprodução do aplicativo DNE Digital feita como trabalho de curso.
+  Sem qualquer vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.
+
+  O documento montado aqui NÃO é o Documento Nacional do Estudante: não
+  comprova matrícula, não dá direito a meia-entrada e não tem validade legal.
+  Os dados ficam apenas no aparelho de quem abre, no localStorage; não há
+  servidor, cadastro nem emissão de documento de verdade.
+
+  A identificação de réplica também está:
+    - nesta marcação e nas meta tags abaixo;
+    - no atributo data-replica do elemento da carteirinha;
+    - no texto legal impresso no verso do cartão;
+    - no conteúdo do QR Code, com o prefixo REPLICA-ACADEMICA-SEM-VALIDADE;
+    - na constante AVISO_REPLICA de js/app.js, registrada no console ao abrir.
+  ============================================================================
+-->
 <html lang="pt-BR" data-tema="claro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <title>DNE Digital — Réplica acadêmica</title>
 <meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
+<meta name="replica" content="academica">
+<meta name="validade-legal" content="nenhuma">
+<meta name="robots" content="noindex, nofollow">
 
 <!-- Ajustes para instalação como app no iPhone (Adicionar à Tela de Início) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -282,15 +305,6 @@ body.sem-tabbar .tabbar { display: none; }
 
 .assinatura { font-family: "Snell Roundhand", "Segoe Script", cursive; font-size: 19px; opacity: .9; }
 
-.faixa-replica {
-  position: absolute; z-index: 3; left: -34%; top: 42%;
-  width: 168%; text-align: center;
-  transform: rotate(-24deg);
-  font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .16);
-  pointer-events: none;
-}
-
 /* verso: lista de direitos e faixa em relevo, para preencher o cartão */
 .verso-lista { margin: 12px 0 0; }
 .verso-lista li {
@@ -336,7 +350,6 @@ body.sem-tabbar .tabbar { display: none; }
 .carteira-isic .campo + .campo { margin-top: 4px; }
 .carteira-isic .carteira-rodape { padding-top: 9px; }
 .carteira-isic .qr-mini { width: 48px; height: 48px; padding: 3px; }
-.carteira-isic .faixa-replica { top: 44%; font-size: 8.5px; letter-spacing: .12em; }
 
 /* --------------------------------------------------- tela de apresentação */
 #tela-apresentar { background: #fff; color: #08101f; min-height: 100vh; min-height: 100dvh; }
@@ -708,11 +721,12 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
   <header class="topo"><h1>Carteirinha</h1></header>
   <div class="conteudo">
     <div class="carteira-palco">
-      <div class="carteira" id="carteira" role="img" aria-label="Documento do estudante, réplica acadêmica">
+      <div class="carteira" id="carteira" role="img"
+           aria-label="Documento do estudante — réplica acadêmica sem validade legal"
+           data-replica="academica" data-validade-legal="nenhuma">
 
         <!-- ---------------------------- frente ---------------------------- -->
         <div class="face frente">
-          <div class="faixa-replica">réplica acadêmica · sem validade legal</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div class="marca">
@@ -755,7 +769,6 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
 
         <!-- ----------------------------- verso ---------------------------- -->
         <div class="face verso">
-          <div class="faixa-replica">réplica acadêmica · sem validade legal</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div><div class="campo-rot">Número do documento</div><div class="campo-val" id="verso-numero" style="font-size:15px;letter-spacing:.05em">—</div></div>
@@ -1027,9 +1040,8 @@ html[data-tema="escuro"] .aviso.destaque { background: #2a2208; border-color: #4
   </header>
   <div class="conteudo">
     <div class="carteira-palco">
-      <div class="carteira carteira-isic">
+      <div class="carteira carteira-isic" data-replica="academica" data-validade-legal="nenhuma">
         <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
-          <div class="faixa-replica">réplica acadêmica</div>
           <div class="face-corpo">
             <div class="carteira-topo">
               <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>
@@ -1733,6 +1745,18 @@ window.DADOS = {
 
   var CHAVE = 'dne-replica-v1';
   var ARQUIVO_UNICO = true;  // trocado para true pelo construir-arquivo-unico.js
+
+  /*
+   * Identificação de réplica, mantida no código em vez de sobreposta ao cartão.
+   * Também aparece: no comentário do topo do index.html e nas meta tags; no
+   * atributo data-replica do elemento da carteirinha; no texto legal do verso;
+   * e no prefixo do conteúdo do QR Code.
+   */
+  var AVISO_REPLICA = 'RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL. '
+    + 'Reprodução do app DNE Digital feita como trabalho de curso, sem vínculo com '
+    + 'UNE, UBES, ANPG ou com o aplicativo oficial. O documento montado aqui não '
+    + 'comprova matrícula, não dá direito a meia-entrada e não tem validade legal.';
+  var PREFIXO_QR = 'REPLICA-ACADEMICA-SEM-VALIDADE';
   var DADOS = window.DADOS;
 
   /* ============================ 1. ESTADO ============================ */
@@ -2155,7 +2179,7 @@ window.DADOS = {
   // Conteúdo do QR: propositalmente marcado como réplica sem validade.
   function cargaQr(e, tk) {
     return [
-      'REPLICA-ACADEMICA-SEM-VALIDADE',
+      PREFIXO_QR,
       'DNE', codigoDeUso(e), e.numero, e.cpf, e.nome, e.instituicao, e.validade,
       tk, hashCurto(e.numero + tk)
     ].join('|');
@@ -2562,6 +2586,8 @@ window.DADOS = {
   }
 
   function iniciar() {
+    if (window.console && console.info) console.info(AVISO_REPLICA);
+    document.documentElement.setAttribute('data-replica', 'academica');
     carregar();
     aplicarTema();
     ligarEventos();

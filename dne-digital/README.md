@@ -205,9 +205,18 @@ em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projet
 - **A adição à Carteira do iPhone é simulada.** Um passe de verdade (`.pkpass`) precisa
   ser assinado com um certificado Apple emitido para uma organização, o que não se aplica
   a um trabalho de curso. A folha reproduz a interface e o formato do passe.
-- **Marcação de réplica em todas as telas**, por decisão de projeto: um documento de
-  estudante convincente e funcional seria um documento falso, então a peça é assumidamente
-  identificada como exercício acadêmico.
+- **A identificação de réplica ficou no código, não sobre o cartão.** A marca d'água
+  diagonal foi retirada porque atravessava a foto e os campos e atrapalhava a leitura do
+  documento. A identificação permanece em seis lugares:
+
+  | Onde | O quê |
+  |---|---|
+  | `index.html`, topo | bloco de comentário explicando o que a peça é e o que ela não é |
+  | `index.html`, `<head>` | `<meta name="replica">`, `<meta name="validade-legal">` e `noindex` |
+  | elemento da carteirinha | `data-replica="academica"`, `data-validade-legal="nenhuma"` e o `aria-label` lido por leitores de tela |
+  | verso do cartão | texto legal impresso, junto à citação da Lei nº 12.933/2013 |
+  | conteúdo do QR Code | prefixo `REPLICA-ACADEMICA-SEM-VALIDADE` antes de qualquer dado |
+  | `js/app.js` | constante `AVISO_REPLICA`, registrada no console ao abrir o app |
 
 ---
 
