@@ -1,131 +1,130 @@
 # Barilife — réplica acadêmica (PWA)
 
-Réplica do aplicativo **Barilife**, a carteirinha digital do paciente bariátrico,
-desenvolvida como **trabalho de curso**.
+Réplica do aplicativo **Barilife**, a carteirinha digital do paciente bariátrico
+da SBCBM, desenvolvida como **trabalho de curso**.
 
-> **Aviso.** Este projeto é um exercício acadêmico de estudo de interface e de
-> desenvolvimento web. Não tem vínculo com a Sociedade Brasileira de Cirurgia
-> Bariátrica e Metabólica (SBCBM), responsável pelo aplicativo original, e não
-> deve ser usado como carteirinha real. Todos os profissionais, clínicas e
-> estabelecimentos listados são fictícios.
+A interface foi reconstruída a partir de capturas do aplicativo real: paleta,
+tipografia arredondada, arquitetura de navegação e o desenho do crachá seguem o
+original. As cores foram amostradas pixel a pixel das capturas.
+
+> **Aviso.** Exercício acadêmico de estudo de interface e de desenvolvimento web.
+> Não tem vínculo com a Sociedade Brasileira de Cirurgia Bariátrica e Metabólica
+> (SBCBM), responsável pelo aplicativo original, e não deve ser usado como
+> carteirinha real. Profissionais, hospitais e estabelecimentos são fictícios,
+> assim como o CPF do perfil de demonstração.
 
 ---
 
-## O que foi replicado
+## Navegação
+
+Cinco abas, com o botão de início elevado no centro, como no aplicativo real:
+
+**Mídias · Locais · (Início) · Agenda · Menu**
+
+## Telas
 
 | Tela | O que faz |
 |---|---|
-| **Carteirinha** | Cartão do paciente com nome, foto, tipo de cirurgia, data, cirurgião, CRM, número de matrícula, validade e **QR Code** de validação. Tem os dois estados do app real: *aguardando validação* (QR bloqueado, compartilhamento desabilitado) e *validada*. Métricas de jornada (dias de pós-operatório, peso eliminado, IMC), próximo compromisso e descontos em destaque. |
-| **Descontos** | Rede de parceiros com busca por nome/bairro/cidade e filtro por categoria (restaurantes, academias, farmácias, suplementos, roupas, clínicas). Cada parceiro abre uma ficha com regra do benefício, instruções de uso, cupom copiável e favoritar. |
-| **Profissionais** | Cirurgiões, nutrição, endocrinologia e psicologia credenciados, com busca livre e filtro por estado. A ficha traz avaliação, local de atendimento, formas de atendimento e **solicitação de agendamento** (que gera um lembrete). |
-| **Conteúdo** | Dicas, receitas, artigos e vídeos, separados por abas, com leitor de artigo completo. |
-| **Lembretes** | Controle de hidratação do dia com anel de progresso e meta configurável, mais lembretes de vitaminas, consultas e exames (criar, ativar/desativar, remover). |
-| **Perfil** | Edição de todos os dados da carteirinha, troca de foto, favoritos, meta de água, sobre e exclusão dos dados. |
+| **Início** | Cabeçalho azul com a marca e o sino de notificações, cartão-resumo da carteirinha (foto, nome, CPF e *ver carteirinha completa*) sobre a faixa SBCBM, e a grade de atalhos: Meu peso, Chat, Novidades, Rede Amiga, Perto de você, Enquetes e COESAS. |
+| **Carteirinha digital** | O crachá com furo de cordão, logo, foto, nome e CPF, e o **QR Code com validade de 10 minutos** — com contagem regressiva e regeneração ao expirar. O aviso "Não imprima a carteirinha" reproduz o do original. |
+| **Mídias** | Dicas, receitas, artigos e vídeos, com abas e leitor de artigo. |
+| **Locais** | Cirurgiões, equipe multidisciplinar, hospitais e laboratórios, com busca, filtro por tipo, distância e ficha completa com agendamento. |
+| **Agenda** | Alertas de consultas, retornos e exames. Reproduz o estado vazio do original, inclusive o aviso de que os alertas de dieta ficam em outro lugar. |
+| **Menu** | Cartão do perfil e as três seções do original: Minha saúde, Minha conta e Ajuda & sobre. |
+| **Meus dados** | Foto, documentos enviados e os blocos do original — *Já fez a cirurgia bariátrica?*, Medidas, Cirurgia, Hospital, Cirurgião e Contato — em pílulas com glifos. |
+| **Meu peso** | Registro de peso com gráfico de evolução, variação entre pesagens e IMC. |
+| **Rede Amiga** | Rede de descontos com busca, filtro por categoria, ficha do parceiro, cupom copiável e favoritos. |
+| **Outras** | Chat com a equipe, Novidades, Enquetes com resultado, COESAS, Alerta de dieta (hidratação e vitaminas), Notificações e Permissões, Trocar senha, FAQ e Sobre. |
 
-Fluxo de entrada com **cadastro em duas etapas** — dados pessoais (nome,
-e-mail, data de nascimento, CPF, sexo, telefone, CEP e cidade) e dados da
-cirurgia (tipo, data, peso antes e atual, altura, cirurgião e CRM) — ou
-**perfil de demonstração** para avaliação rápida.
+### Cadastro e validação pelo cirurgião
 
-### Validação pelo cirurgião
+O cadastro segue o fluxo real: dados pessoais (nome, e-mail, nascimento, CPF,
+sexo, telefone, cidade e UF) e dados da cirurgia (tipo, mês, altura, pesos,
+cirurgião e CRM).
 
-No Barilife, o paciente se cadastra e o **cirurgião é notificado, confere os
-dados e libera a carteirinha**. A réplica reproduz esse ciclo: o cadastro nasce
-com status `pendente`, o cartão mostra *Aguardando validação*, o QR Code fica
-bloqueado e o compartilhamento sai do ar. Um botão **Simular liberação pelo
-cirurgião** representa o passo que, no app real, acontece do lado do médico.
+No Barilife, o cirurgião **recebe o cadastro, confere os dados e libera a
+carteirinha**. A réplica reproduz o ciclo: o cadastro nasce com status
+`pendente`, o crachá mostra o QR bloqueado por um cadeado, e um botão simula a
+liberação que, no app real, acontece do lado do médico.
 
 ---
 
 ## Como executar
 
-O projeto é 100% estático — não precisa instalar nada, não tem dependências
-pagas nem build.
-
-**Opção 1 — servidor local** (recomendado: o Service Worker só funciona sob
-`http://localhost` ou HTTPS):
+Projeto estático — sem dependências, sem build, sem nada para instalar.
 
 ```bash
 cd barilife
 python3 -m http.server 8000
 ```
 
-Abra <http://localhost:8000> no navegador.
+Abra <http://localhost:8000>. Também funciona abrindo `index.html` direto, mas
+sem o modo offline (o navegador bloqueia Service Worker em `file://`).
 
-**Opção 2 — abrir o arquivo direto:** dê um duplo clique em `index.html`.
-Tudo funciona, exceto o modo offline (o navegador bloqueia Service Worker em
-`file://`).
-
----
-
-## Como instalar no iPhone (iOS)
+## Como instalar no iPhone
 
 O app é uma **PWA**: instala pela tela de início, sem App Store e sem custo.
 
-1. Publique a pasta em HTTPS (veja abaixo) — o iOS exige HTTPS para instalar.
-2. Abra o endereço **no Safari** (não funciona pelo Chrome no iOS).
-3. Toque no botão **Compartilhar** (o quadrado com a seta para cima).
-4. Escolha **Adicionar à Tela de Início** e confirme.
-
-O Barilife passa a abrir em tela cheia, com ícone próprio e sem a barra do
-navegador. No Android, o próprio navegador oferece *Instalar aplicativo*.
+1. Publique a pasta em HTTPS (o iOS exige HTTPS para instalar).
+2. Abra o endereço **no Safari** — não funciona pelo Chrome no iOS.
+3. Toque em **Compartilhar** → **Adicionar à Tela de Início**.
 
 ### Publicando de graça com GitHub Pages
 
-1. No repositório, vá em **Settings → Pages**.
-2. Em *Source*, escolha **Deploy from a branch**.
-3. Selecione a branch e a pasta **/ (root)** e salve.
-4. Em alguns minutos o app fica em
-   `https://<usuário>.github.io/peso-real/barilife/`.
+Em **Settings → Pages**, escolha *Deploy from a branch*, a branch desejada e a
+pasta **/ (root)**. O app fica em
+`https://<usuário>.github.io/peso-real/barilife/`.
 
 ---
 
-## Estrutura dos arquivos
+## Estrutura
 
 ```
 barilife/
-├── index.html              estrutura das telas
-├── manifest.webmanifest    metadados da PWA (nome, ícones, cores)
+├── index.html              telas e ícones SVG
+├── manifest.webmanifest    metadados da PWA
 ├── sw.js                   Service Worker — cache para uso offline
 ├── assets/
-│   ├── css/app.css         tokens de design, componentes e telas
+│   ├── css/app.css         tokens, componentes e telas
+│   ├── img/perfil.jpg      foto do perfil de demonstração
 │   └── js/
-│       ├── qr.js           gerador de QR Code próprio (ver abaixo)
+│       ├── qr.js           gerador de QR Code próprio
 │       ├── data.js         base de dados fictícia
-│       └── app.js          estado, navegação e lógica de todas as telas
-└── icons/                  ícones do app (192, 512, maskable, apple-touch)
+│       └── app.js          store, navegação e todas as telas
+└── icons/                  ícones do app
 ```
 
 ## Decisões técnicas
 
-**HTML, CSS e JavaScript puros.** Sem framework, sem CDN e sem dependência
-externa — o app inteiro é baixado do próprio domínio, o que também é o que
-permite o funcionamento offline.
+**HTML, CSS e JavaScript puros.** Sem framework, sem CDN, sem dependência
+externa — o que também é o que permite o funcionamento offline completo.
 
-**Gerador de QR Code próprio** (`assets/js/qr.js`). Em vez de carregar uma
-biblioteca, o QR é implementado do zero seguindo a norma **ISO/IEC 18004**:
-aritmética em GF(256), correção de erro Reed–Solomon (nível M, versões 1 a 10),
-posicionamento em zigue-zague, informação de formato/versão com BCH e escolha
-da máscara pelas quatro regras de penalidade do padrão.
+**Gerador de QR Code próprio** (`assets/js/qr.js`), implementado do zero
+seguindo a **ISO/IEC 18004**: aritmética em GF(256), correção de erro
+Reed–Solomon (nível M, versões 1 a 10), posicionamento em zigue-zague,
+informação de formato e versão com BCH, e escolha da máscara pelas quatro regras
+de penalidade do padrão.
 
-A implementação foi validada de duas formas: comparação **módulo a módulo**
-contra a biblioteca de referência `qrcode` do Python (86 de 86 casos idênticos
-com máscara fixa) e **decodificação** dos QR gerados pelo app com o leitor do
-OpenCV, incluindo conteúdo com acentuação em UTF-8.
+Validado de duas formas: comparação **módulo a módulo** com a biblioteca de
+referência `qrcode` do Python (86 de 86 casos idênticos com máscara fixa) e
+**decodificação** dos QR gerados pelo app com o leitor do OpenCV, incluindo
+conteúdo acentuado em UTF-8.
 
-**Validação de dados no cadastro.** CPF conferido pelos dois dígitos
-verificadores (não apenas pelo formato), telefone com 10 ou 11 dígitos, CEP com
-8, idade mínima de 16 anos e coerência entre as datas — a cirurgia não pode ser
-futura nem anterior ao nascimento. CPF, telefone e CEP têm máscara de digitação
-que preserva a posição do cursor.
+**QR com validade de 10 minutos.** Como no original, o código carrega um token
+gerado na hora, exibe contagem regressiva e é regenerado ao expirar — é o que
+impede que a carteirinha seja impressa ou repassada.
 
-**Armazenamento local.** Tudo que o usuário preenche fica em `localStorage`,
-neste dispositivo. Nenhum dado é enviado para servidores. O contador de água
-zera sozinho quando vira o dia, e a foto de perfil é redimensionada para
-256 px antes de ser guardada, para não estourar a cota do navegador.
+**Validação de dados.** CPF conferido pelos dois dígitos verificadores (não só
+pelo formato), telefone com 10 ou 11 dígitos, idade mínima de 16 anos e
+coerência entre as datas. CPF e telefone têm máscara que preserva a posição do
+cursor.
 
-**Tema claro e escuro** automáticos, seguindo a preferência do sistema, e
-respeito às áreas seguras do iPhone (notch e barra inferior).
+**Armazenamento local.** Perfil, favoritos, agenda, pesos, votos e alertas ficam
+em `localStorage`. Nada é enviado para servidores. O contador de água zera
+sozinho quando vira o dia e a foto do perfil é redimensionada para 384 px antes
+de ser guardada.
+
+**Tema claro e escuro** automáticos e respeito às áreas seguras do iPhone.
 
 ---
 

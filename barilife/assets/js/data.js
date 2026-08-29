@@ -1,38 +1,61 @@
 /* ============================================================================
-   data.js — Base de dados ficticia da replica academica do Barilife.
-   Nenhum dado aqui e real: nomes de profissionais, clinicas e estabelecimentos
-   sao inventados para fins didaticos.
+   data.js — Base de dados da réplica acadêmica do Barilife.
+   Estrutura e nomes de seções seguem o aplicativo real; o conteúdo é fictício.
+   Profissionais, estabelecimentos, hospitais e o CPF de exemplo são inventados.
    ========================================================================== */
 window.DB = {
 
-  /* ---- Perfil de demonstracao ------------------------------------------- */
-  demoPerfil: {
-    nome: 'Marcela Tatajuba',
+  /* ---- Perfil de demonstração -------------------------------------------
+     O CPF abaixo é de exemplo (dígitos verificadores válidos, mas não
+     pertence a ninguém). Os dados de saúde também são ilustrativos —
+     preencha os seus em "Meus dados", que ficam salvos só no aparelho.     */
+  perfilDemo: {
+    nome: 'Marcela Rodrigues Tatajuba De Barros',
     email: 'marcela@exemplo.com.br',
+    cpf: '111.444.777-35',
     nascimento: '1994-07-21',
-    cpf: '123.456.789-09',
     sexo: 'Feminino',
     telefone: '(11) 98765-4321',
-    cep: '05422-030',
     cidade: 'São Paulo',
     uf: 'SP',
-    status: 'validada',
-    validadaEm: '2024-04-02',
-    cirurgia: 'Sleeve (Gastrectomia Vertical)',
-    dataCirurgia: '2024-03-12',
+    foto: 'assets/img/perfil.jpg',
+
+    jaFezCirurgia: true,
+    peso: 78,
+    altura: 158,
+    pesoInicial: 125,
+    cirurgia: 'Bypass / Gastroplastia em "Y de Roux"',
+    mesCirurgia: '11/2019',
+    hospital: 'Hospital e Maternidade Vitória',
+    hospitalCidade: 'São Paulo – SP',
     cirurgiao: 'Dra. Helena Marques Vidal',
     crm: 'CRM-SP 118342',
-    hospital: 'Hospital Santa Vitória',
-    matricula: 'BL-2024-018342',
-    emissao: '2024-04-02',
-    validade: '2027-04-02',
-    foto: 'assets/img/perfil.jpg',
-    pesoInicial: 118,
-    pesoAtual: 74,
-    altura: 1.65
+
+    status: 'validada',
+    validadaEm: '2019-12-05'
   },
 
-  /* ---- Categorias da rede de descontos ---------------------------------- */
+  tiposCirurgia: [
+    'Bypass / Gastroplastia em "Y de Roux"',
+    'Sleeve / Gastrectomia Vertical',
+    'Banda Gástrica Ajustável',
+    'Switch Duodenal',
+    'Cirurgia Revisional',
+    'Balão Intragástrico'
+  ],
+
+  sexos: ['Feminino', 'Masculino', 'Outro', 'Prefiro não informar'],
+
+  ufs: ['SP', 'RJ', 'MG', 'RS', 'PR', 'SC', 'BA', 'PE', 'CE', 'DF', 'GO', 'ES', 'PA', 'AM'],
+
+  /* ---- Documentos enviados (tela "Visualizar documentos enviados") ------ */
+  documentos: [
+    { id: 'd1', nome: 'Relatório cirúrgico', arquivo: 'relatorio-cirurgico.pdf', data: '2019-11-28', status: 'aprovado' },
+    { id: 'd2', nome: 'Documento com foto',  arquivo: 'rg-frente-verso.pdf',    data: '2019-11-28', status: 'aprovado' },
+    { id: 'd3', nome: 'Comprovante de endereço', arquivo: 'conta-luz.pdf',      data: '2019-11-30', status: 'aprovado' }
+  ],
+
+  /* ---- Rede Amiga (rede de descontos) ----------------------------------- */
   categorias: [
     { id: 'todos',       rotulo: 'Todos',        icone: '◍' },
     { id: 'restaurante', rotulo: 'Restaurantes', icone: '🍽️' },
@@ -43,7 +66,6 @@ window.DB = {
     { id: 'clinica',     rotulo: 'Clínicas',     icone: '🩺' }
   ],
 
-  /* ---- Rede de parceiros (estabelecimentos ficticios) -------------------- */
   parceiros: [
     { id: 'p1', nome: 'Cantina Nova Fase', categoria: 'restaurante', desconto: 50,
       regra: 'Meia porção pelo preço de meia — pratos à la carte e rodízio.',
@@ -65,7 +87,7 @@ window.DB = {
       regra: '30% em vitaminas e suplementos de linha bariátrica.',
       bairro: 'Perdizes', cidade: 'São Paulo', uf: 'SP', km: 4.0, nota: 4.7,
       cupom: 'BARIBV30', detalhe: 'Desconto não cumulativo com outras promoções. Válido também no site com o mesmo cupom.' },
-    { id: 'p6', nome: 'Farmácia de Manipulação Fórmula Viva', categoria: 'farmacia', desconto: 20,
+    { id: 'p6', nome: 'Farmácia Fórmula Viva', categoria: 'farmacia', desconto: 20,
       regra: '20% em fórmulas manipuladas com receita.',
       bairro: 'Santana', cidade: 'São Paulo', uf: 'SP', km: 8.3, nota: 4.5,
       cupom: 'BARIFV20', detalhe: 'Necessária prescrição do cirurgião ou nutricionista cadastrado.' },
@@ -107,46 +129,49 @@ window.DB = {
       cupom: 'BARIVL30', detalhe: 'Modalidades de baixo impacto recomendadas para os primeiros meses de pós-operatório.' }
   ],
 
-  /* ---- Profissionais e clinicas (ficticios) ----------------------------- */
-  profissionais: [
-    { id: 'm1', nome: 'Dra. Helena Marques Vidal', esp: 'Cirurgia Bariátrica e Metabólica',
-      crm: 'CRM-SP 118342', cidade: 'São Paulo', uf: 'SP', local: 'Hospital Santa Vitória',
-      nota: 4.9, avaliacoes: 312, titulo: 'Membro titular · Cirurgiã do paciente',
+  /* ---- Locais e profissionais (aba "Locais" / "Perto de você") ----------- */
+  locais: [
+    { id: 'm1', nome: 'Dra. Helena Marques Vidal', esp: 'Cirurgia Bariátrica e Metabólica', tipo: 'medico',
+      crm: 'CRM-SP 118342', cidade: 'São Paulo', uf: 'SP', local: 'Hospital e Maternidade Vitória',
+      km: 4.2, nota: 4.9, avaliacoes: 312, titulo: 'Membro titular · Sua cirurgiã',
       atende: ['Presencial', 'Telemedicina'], meu: true },
-    { id: 'm2', nome: 'Dr. Ricardo Sampaio Leão', esp: 'Cirurgia Bariátrica e Metabólica',
+    { id: 'm2', nome: 'Dr. Ricardo Sampaio Leão', esp: 'Cirurgia Bariátrica e Metabólica', tipo: 'medico',
       crm: 'CRM-SP 92004', cidade: 'São Paulo', uf: 'SP', local: 'Instituto Metabólico Paulista',
-      nota: 4.8, avaliacoes: 244, titulo: 'Membro titular', atende: ['Presencial'] },
-    { id: 'm3', nome: 'Dra. Ana Beatriz Nogueira', esp: 'Nutrição Bariátrica',
+      km: 6.9, nota: 4.8, avaliacoes: 244, titulo: 'Membro titular', atende: ['Presencial'] },
+    { id: 'm3', nome: 'Dra. Ana Beatriz Nogueira', esp: 'Nutrição Bariátrica', tipo: 'equipe',
       crm: 'CRN-3 27811', cidade: 'São Paulo', uf: 'SP', local: 'Clínica Nutrir Bariátrica',
-      nota: 5.0, avaliacoes: 189, titulo: 'Nutricionista credenciada', atende: ['Presencial', 'Telemedicina'] },
-    { id: 'm4', nome: 'Dr. Paulo Henrique Freitas', esp: 'Endocrinologia',
+      km: 3.7, nota: 5.0, avaliacoes: 189, titulo: 'Nutricionista credenciada', atende: ['Presencial', 'Telemedicina'] },
+    { id: 'm4', nome: 'Dr. Paulo Henrique Freitas', esp: 'Endocrinologia', tipo: 'equipe',
       crm: 'CRM-SP 74522', cidade: 'Campinas', uf: 'SP', local: 'Centro Endócrino Campinas',
-      nota: 4.7, avaliacoes: 156, titulo: 'Endocrinologista credenciado', atende: ['Presencial'] },
-    { id: 'm5', nome: 'Dra. Luiza Kondo Ferraz', esp: 'Psicologia Bariátrica',
+      km: 92.0, nota: 4.7, avaliacoes: 156, titulo: 'Endocrinologista credenciado', atende: ['Presencial'] },
+    { id: 'm5', nome: 'Dra. Luiza Kondo Ferraz', esp: 'Psicologia Bariátrica', tipo: 'equipe',
       crm: 'CRP-06 145322', cidade: 'São Paulo', uf: 'SP', local: 'Espaço Psico Bari',
-      nota: 4.9, avaliacoes: 203, titulo: 'Psicóloga credenciada', atende: ['Telemedicina'] },
-    { id: 'm6', nome: 'Dr. Marcelo Andrade Pinto', esp: 'Cirurgia Bariátrica e Metabólica',
+      km: 3.1, nota: 4.9, avaliacoes: 203, titulo: 'Psicóloga credenciada', atende: ['Telemedicina'] },
+    { id: 'm6', nome: 'Hospital e Maternidade Vitória', esp: 'Hospital credenciado', tipo: 'hospital',
+      crm: '', cidade: 'São Paulo', uf: 'SP', local: 'Centro cirúrgico bariátrico',
+      km: 4.2, nota: 4.6, avaliacoes: 890, titulo: 'Hospital do seu procedimento', atende: ['Presencial'] },
+    { id: 'm7', nome: 'Dr. Marcelo Andrade Pinto', esp: 'Cirurgia Bariátrica e Metabólica', tipo: 'medico',
       crm: 'CRM-RJ 52310', cidade: 'Rio de Janeiro', uf: 'RJ', local: 'Hospital Baía Azul',
-      nota: 4.8, avaliacoes: 278, titulo: 'Membro titular', atende: ['Presencial', 'Telemedicina'] },
-    { id: 'm7', nome: 'Dra. Cristina Vasques Rocha', esp: 'Cirurgia Bariátrica e Metabólica',
+      km: 0, nota: 4.8, avaliacoes: 278, titulo: 'Membro titular', atende: ['Presencial', 'Telemedicina'] },
+    { id: 'm8', nome: 'Dra. Cristina Vasques Rocha', esp: 'Cirurgia Bariátrica e Metabólica', tipo: 'medico',
       crm: 'CRM-MG 41022', cidade: 'Belo Horizonte', uf: 'MG', local: 'Clínica Vida Metabólica',
-      nota: 4.7, avaliacoes: 131, titulo: 'Membro titular', atende: ['Presencial'] },
-    { id: 'm8', nome: 'Dr. Fernando Tavares Lins', esp: 'Cirurgia Bariátrica e Metabólica',
-      crm: 'CRM-PE 18477', cidade: 'Recife', uf: 'PE', local: 'Hospital Recife Metabólico',
-      nota: 4.6, avaliacoes: 98, titulo: 'Membro titular', atende: ['Presencial', 'Telemedicina'] },
-    { id: 'm9', nome: 'Dra. Sofia Bianchi Alencar', esp: 'Nutrição Bariátrica',
+      km: 0, nota: 4.7, avaliacoes: 131, titulo: 'Membro titular', atende: ['Presencial'] },
+    { id: 'm9', nome: 'Dra. Sofia Bianchi Alencar', esp: 'Nutrição Bariátrica', tipo: 'equipe',
       crm: 'CRN-2 8921', cidade: 'Porto Alegre', uf: 'RS', local: 'Núcleo Nutri Sul',
-      nota: 4.9, avaliacoes: 142, titulo: 'Nutricionista credenciada', atende: ['Telemedicina'] },
-    { id: 'm10', nome: 'Dr. Gustavo Rezende Aguiar', esp: 'Endocrinologia',
-      crm: 'CRM-DF 22019', cidade: 'Brasília', uf: 'DF', local: 'Hospital Planalto Saúde',
-      nota: 4.5, avaliacoes: 87, titulo: 'Endocrinologista credenciado', atende: ['Presencial'] }
+      km: 0, nota: 4.9, avaliacoes: 142, titulo: 'Nutricionista credenciada', atende: ['Telemedicina'] },
+    { id: 'm10', nome: 'Laboratório Exame Certo', esp: 'Laboratório credenciado', tipo: 'hospital',
+      crm: '', cidade: 'São Paulo', uf: 'SP', local: 'Painel de exames pós-bariátricos',
+      km: 2.4, nota: 4.5, avaliacoes: 76, titulo: 'Parceiro da Rede Amiga', atende: ['Presencial'] }
   ],
 
-  /* ---- Conteudo educativo ------------------------------------------------ */
-  conteudos: [
+  /* ---- COESAS — equipe multidisciplinar do paciente --------------------- */
+  coesas: ['m1', 'm3', 'm5', 'm4'],
+
+  /* ---- Mídias (dicas, receitas, artigos, vídeos) ------------------------ */
+  midias: [
     { id: 'c1', tipo: 'dica', titulo: 'A regra dos 30 minutos para líquidos',
       resumo: 'Por que não beber água durante as refeições muda tudo no pós-operatório.',
-      tempo: '3 min', emoji: '💧', cor: '#2E9E7E',
+      tempo: '3 min', emoji: '💧', cor: '#2F80D8',
       texto: 'Depois da cirurgia, o estômago tem capacidade muito reduzida. Beber líquido junto com a comida ocupa o espaço que deveria ser da proteína e ainda acelera o esvaziamento gástrico, o que faz a fome voltar mais cedo.\n\nA orientação da maioria das equipes é simples: pare de beber 30 minutos antes de comer e só volte a beber 30 minutos depois de terminar a refeição.\n\nNo resto do dia, beba em pequenos goles e de forma constante. Tomar 200 ml de uma vez costuma causar desconforto nos primeiros meses.\n\nSinais de que você está bebendo pouco: urina escura, dor de cabeça no fim da tarde, boca seca e cansaço sem motivo.' },
     { id: 'c2', tipo: 'dica', titulo: 'Proteína primeiro, sempre',
       resumo: 'Como montar o prato para bater a meta diária com um estômago pequeno.',
@@ -186,33 +211,91 @@ window.DB = {
       texto: 'A queda costuma começar por volta do terceiro mês e se estabilizar entre o sexto e o oitavo. Ela é reflexo da perda rápida de peso e do baixo aporte de proteína, ferro e zinco — não é falha da cirurgia.\n\nO que ajuda de verdade\n• Bater a meta diária de proteína, sem exceção.\n• Manter o multivitamínico e checar ferritina e zinco nos exames.\n• Evitar dietas ainda mais restritivas por conta própria.\n\nO que não resolve sozinho: shampoo, ampola e suplemento de colágeno vendido como solução. O cabelo volta quando a nutrição estabiliza.' }
   ],
 
-  /* ---- Lembretes iniciais ------------------------------------------------ */
+  /* ---- Novidades -------------------------------------------------------- */
+  novidades: [
+    { id: 'n1', data: '2026-08-20', titulo: 'Rede Amiga chega a 1.200 estabelecimentos',
+      resumo: 'Novos parceiros em cinco capitais, com destaque para academias e farmácias.',
+      texto: 'A Rede Amiga passou de mil estabelecimentos credenciados. Nos últimos três meses entraram academias, farmácias de manipulação e lojas de suplemento em São Paulo, Rio de Janeiro, Belo Horizonte, Recife e Porto Alegre.\n\nPara usar, basta apresentar a carteirinha digital no estabelecimento. O desconto e as regras de cada parceiro aparecem na ficha dentro do aplicativo.' },
+    { id: 'n2', data: '2026-08-04', titulo: 'Campanha de exames semestrais',
+      resumo: 'Laboratórios parceiros com condição especial no painel pós-bariátrico.',
+      texto: 'Durante todo o mês, laboratórios da Rede Amiga oferecem condição especial no painel de exames recomendado para o acompanhamento pós-operatório: hemograma, ferritina, vitamina B12, vitamina D, cálcio e PTH.\n\nLeve o pedido do seu cirurgião ou nutricionista e a carteirinha digital.' },
+    { id: 'n3', data: '2026-07-15', titulo: 'Agenda agora aceita lembretes recorrentes',
+      resumo: 'Dá para programar retornos que se repetem a cada 3, 6 ou 12 meses.',
+      texto: 'A tela de Agenda passou a aceitar alertas recorrentes. Programe uma vez o retorno semestral com a sua equipe e o aplicativo avisa a cada ciclo.\n\nO sistema de alertas de dieta continua separado, no menu, porque tem uma lógica de horários própria ao longo do dia.' }
+  ],
+
+  /* ---- Enquetes --------------------------------------------------------- */
+  enquetes: [
+    { id: 'e1', pergunta: 'Quanto tempo depois da cirurgia você voltou a se exercitar?',
+      opcoes: [
+        { id: 'a', texto: 'Menos de 1 mês', votos: 412 },
+        { id: 'b', texto: 'Entre 1 e 3 meses', votos: 1876 },
+        { id: 'c', texto: 'Entre 3 e 6 meses', votos: 934 },
+        { id: 'd', texto: 'Ainda não voltei', votos: 288 }
+      ] },
+    { id: 'e2', pergunta: 'Qual é a sua maior dificuldade hoje no pós-operatório?',
+      opcoes: [
+        { id: 'a', texto: 'Bater a meta de proteína', votos: 1520 },
+        { id: 'b', texto: 'Beber água suficiente', votos: 2104 },
+        { id: 'c', texto: 'Lembrar das vitaminas', votos: 1187 },
+        { id: 'd', texto: 'Lidar com a fome emocional', votos: 1663 }
+      ] }
+  ],
+
+  /* ---- Chat com a equipe ------------------------------------------------ */
+  chat: [
+    { de: 'equipe', autor: 'Dra. Ana Beatriz · Nutrição', hora: '09:12',
+      texto: 'Bom dia, Marcela! Vi seu registro de peso da semana. Está tudo dentro do esperado.' },
+    { de: 'equipe', autor: 'Dra. Ana Beatriz · Nutrição', hora: '09:13',
+      texto: 'Só reforçando: mantenha os líquidos fora das refeições e priorize a proteína no início do prato.' },
+    { de: 'eu', autor: 'Você', hora: '09:40',
+      texto: 'Bom dia! Consegui manter, mas na sexta senti enjoo depois do almoço.' },
+    { de: 'equipe', autor: 'Dra. Ana Beatriz · Nutrição', hora: '10:02',
+      texto: 'Anote o que comeu antes do episódio e traga na próxima consulta. Se repetir mais de duas vezes na semana, me avise por aqui.' }
+  ],
+
+  /* ---- Alerta de dieta (hidratação + lembretes) ------------------------- */
   lembretesPadrao: [
     { id: 'l1', titulo: 'Multivitamínico bariátrico', tipo: 'vitamina', hora: '08:00', ativo: true, repete: 'Todos os dias' },
     { id: 'l2', titulo: 'Vitamina B12 sublingual',     tipo: 'vitamina', hora: '08:05', ativo: true, repete: 'Todos os dias' },
     { id: 'l3', titulo: 'Ferro (longe do cálcio)',     tipo: 'vitamina', hora: '15:00', ativo: true, repete: 'Todos os dias' },
     { id: 'l4', titulo: 'Cálcio citrato — 2ª dose',    tipo: 'vitamina', hora: '20:00', ativo: false, repete: 'Todos os dias' },
-    { id: 'l5', titulo: 'Consulta com a Dra. Helena',  tipo: 'consulta', hora: '14:30', ativo: true, repete: '18/09/2026' },
-    { id: 'l6', titulo: 'Coleta de exames semestrais', tipo: 'exame',    hora: '07:00', ativo: true, repete: '02/10/2026' }
+    { id: 'l5', titulo: 'Lanche proteico da tarde',    tipo: 'refeicao', hora: '16:00', ativo: true, repete: 'Dias úteis' }
+  ],
+
+  /* ---- Agenda (consultas, retornos e exames) ---------------------------- */
+  agendaPadrao: [
+    { id: 'a1', titulo: 'Retorno com a Dra. Helena', tipo: 'consulta', data: '2026-09-18', hora: '14:30' },
+    { id: 'a2', titulo: 'Coleta de exames semestrais', tipo: 'exame',  data: '2026-10-02', hora: '07:00' }
   ],
 
   tiposLembrete: {
     vitamina: { rotulo: 'Vitamina',  emoji: '💊', cor: '#6B4E9E' },
-    consulta: { rotulo: 'Consulta',  emoji: '🩺', cor: '#2E7D6B' },
-    exame:    { rotulo: 'Exame',     emoji: '🧪', cor: '#3B6EA5' },
-    agua:     { rotulo: 'Hidratação',emoji: '💧', cor: '#2E9E7E' },
+    refeicao: { rotulo: 'Refeição',  emoji: '🍽️', cor: '#C4703A' },
+    agua:     { rotulo: 'Hidratação',emoji: '💧', cor: '#2F80D8' },
     outro:    { rotulo: 'Outro',     emoji: '🔔', cor: '#8A6D3B' }
   },
 
-  sexos: ['Feminino', 'Masculino', 'Outro', 'Prefiro não informar'],
+  tiposAgenda: {
+    consulta: { rotulo: 'Consulta', emoji: '🩺', cor: '#2F80D8' },
+    retorno:  { rotulo: 'Retorno',  emoji: '🔁', cor: '#3D74C1' },
+    exame:    { rotulo: 'Exame',    emoji: '🧪', cor: '#6B4E9E' },
+    cirurgia: { rotulo: 'Cirurgia', emoji: '🏥', cor: '#B4453C' }
+  },
 
-  tiposCirurgia: [
-    'Sleeve (Gastrectomia Vertical)',
-    'Bypass Gástrico (Y de Roux)',
-    'Banda Gástrica Ajustável',
-    'Switch Duodenal',
-    'Cirurgia Revisional'
-  ],
-
-  ufs: ['SP', 'RJ', 'MG', 'RS', 'PR', 'SC', 'BA', 'PE', 'CE', 'DF', 'GO', 'ES', 'PA', 'AM']
+  /* ---- FAQ -------------------------------------------------------------- */
+  faq: [
+    { p: 'Por que o QR Code da carteirinha expira em 10 minutos?',
+      r: 'O código é gerado na hora e vale por pouco tempo justamente para não poder ser impresso, fotografado ou repassado. Quem valida precisa ler o código direto da sua tela, o que garante que a carteirinha é sua e está ativa.' },
+    { p: 'Quem libera a minha carteirinha?',
+      r: 'O cirurgião que realizou o seu procedimento. Ele recebe o seu cadastro, confere os dados e os documentos enviados e libera o acesso. Só pacientes operados por cirurgiões associados à SBCBM têm direito à carteirinha.' },
+    { p: 'Como uso os descontos da Rede Amiga?',
+      r: 'Abra a carteirinha digital no estabelecimento parceiro e apresente o QR Code antes de fechar a conta. Cada parceiro tem regras próprias, descritas na ficha dele dentro do aplicativo.' },
+    { p: 'Perdi o acesso ao meu e-mail. E agora?',
+      r: 'Use a opção Trocar senha no menu. Se o e-mail cadastrado não estiver mais acessível, é preciso pedir ao seu cirurgião que atualize o cadastro.' },
+    { p: 'O que é o COESAS?',
+      r: 'É a comissão de especialidades associadas da SBCBM: nutrição, psicologia, endocrinologia, educação física e enfermagem. No aplicativo, é onde fica a sua equipe multidisciplinar.' },
+    { p: 'A diferença entre Agenda e Alerta de dieta',
+      r: 'A Agenda guarda compromissos com data marcada — consultas, retornos e exames. O Alerta de dieta cuida da rotina do dia: água, vitaminas e refeições, com horários que se repetem.' }
+  ]
 };
