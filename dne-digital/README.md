@@ -160,7 +160,12 @@ verificadores pelo módulo 11 e rejeita sequências repetidas, como o algoritmo 
 
 - **Validade até 31 de março do ano seguinte ao da emissão**, como determina o art. 1º,
   § 6º da Lei nº 12.933/2013 — é o que a função `novaValidade()` calcula, em vez de somar
-  365 dias.
+  365 dias. Um documento criado hoje vale até **31/03/2027**.
+
+  A data é montada pela função `dataIso()`, a partir do relógio local. O caminho óbvio,
+  `toISOString()`, converte para UTC e devolve o dia seguinte quando o aparelho está num
+  fuso negativo depois das 21h: no horário de Brasília, um documento criado à noite saía
+  com validade 01/04 em vez de 31/03.
 - **Entidade emissora definida pelo nível de ensino**: UBES para ensino médio e técnico,
   UNE para o superior, ANPG para a pós-graduação.
 - **Código de uso** curto no cartão, além do número longo do documento: no fluxo real, a
@@ -205,18 +210,21 @@ em JSON. Nada é enviado para servidor nenhum; não existe back-end neste projet
 - **A adição à Carteira do iPhone é simulada.** Um passe de verdade (`.pkpass`) precisa
   ser assinado com um certificado Apple emitido para uma organização, o que não se aplica
   a um trabalho de curso. A folha reproduz a interface e o formato do passe.
-- **A identificação de réplica ficou no código, não sobre o cartão.** A marca d'água
-  diagonal foi retirada porque atravessava a foto e os campos e atrapalhava a leitura do
-  documento. A identificação permanece em seis lugares:
+- **A identificação de réplica está apenas no código, em nenhum ponto da interface.**
+  Por decisão de projeto do trabalho, nada na tela diz que a peça é uma reprodução: o
+  aplicativo se apresenta como o app que ele imita. A identificação vive em cinco lugares,
+  todos fora da vista de quem usa:
 
   | Onde | O quê |
   |---|---|
   | `index.html`, topo | bloco de comentário explicando o que a peça é e o que ela não é |
   | `index.html`, `<head>` | `<meta name="replica">`, `<meta name="validade-legal">` e `noindex` |
-  | elemento da carteirinha | `data-replica="academica"`, `data-validade-legal="nenhuma"` e o `aria-label` lido por leitores de tela |
-  | verso do cartão | texto legal impresso, junto à citação da Lei nº 12.933/2013 |
-  | conteúdo do QR Code | prefixo `REPLICA-ACADEMICA-SEM-VALIDADE` antes de qualquer dado |
+  | elementos das carteirinhas | `data-replica="academica"` e `data-validade-legal="nenhuma"` |
+  | conteúdo dos QR Codes | prefixo `REPLICA-ACADEMICA-SEM-VALIDADE` antes de qualquer dado |
   | `js/app.js` | constante `AVISO_REPLICA`, registrada no console ao abrir o app |
+
+  Quem inspecionar o código, ler o QR Code ou abrir o console encontra a identificação;
+  quem apenas olhar a tela, não. Vale ter isso claro ao apresentar e ao encaminhar o app.
 
 ---
 

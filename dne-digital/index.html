@@ -23,7 +23,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-<title>DNE Digital — Réplica acadêmica</title>
+<title>DNE Digital</title>
 <meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
 <meta name="replica" content="academica">
 <meta name="validade-legal" content="nenhuma">
@@ -33,7 +33,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="DNE Réplica">
+<meta name="apple-mobile-web-app-title" content="DNE Digital">
 <meta name="theme-color" content="#0d1e4d">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/icone-180.png">
@@ -75,7 +75,7 @@
   <div class="login-corpo">
     <div class="login-marca">
       <div class="sigla">DNE</div>
-      <p>Documento Nacional do Estudante<br>Réplica acadêmica · trabalho de curso</p>
+      <p>Documento Nacional do Estudante</p>
     </div>
 
     <!-- primeira abertura: a pessoa monta o próprio documento -->
@@ -108,10 +108,6 @@
       <button class="btn fantasma mt-16" type="button" id="btn-voltar-boas-vindas">Voltar</button>
     </form>
 
-    <p class="login-rodape">
-      Réplica sem vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.<br>
-      Construída para fins didáticos. Não possui validade legal.
-    </p>
   </div>
 </section>
 
@@ -151,11 +147,6 @@
       <a href="#/beneficios">Ver todos</a>
     </div>
     <div id="inicio-beneficios"></div>
-
-    <div class="aviso destaque mt-16">
-      <svg><use href="#i-info"/></svg>
-      <span>Esta é uma <strong>réplica acadêmica</strong>. O documento exibido é fictício e não vale como comprovante de matrícula nem dá direito a meia-entrada.</span>
-    </div>
   </div>
 </section>
 
@@ -165,7 +156,7 @@
   <div class="conteudo">
     <div class="carteira-palco">
       <div class="carteira" id="carteira" role="img"
-           aria-label="Documento do estudante — réplica acadêmica sem validade legal"
+           aria-label="Documento do estudante"
            data-replica="academica" data-validade-legal="nenhuma">
 
         <!-- ---------------------------- frente ---------------------------- -->
@@ -236,7 +227,6 @@
               Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
               limitada a 40% dos ingressos disponíveis. Documento com certificação digital do ITI,
               conferido pelo QR Code ou pelo código de uso no validador oficial.
-              <strong>Esta peça é uma réplica acadêmica sem qualquer validade legal.</strong>
             </p>
 
             <div class="grade-campos" style="margin-top:14px">
@@ -300,9 +290,8 @@
     </div>
     <div class="codigo-token" id="apres-token">—</div>
     <p class="apresentar-sub" style="max-width:320px">
-      Aumente o brilho da tela e aproxime o QR Code do leitor — no uso real, a bilheteria confere
-      o código no validador oficial da meia-entrada.<br>
-      <strong>Réplica acadêmica — não válida como documento.</strong>
+      Aumente o brilho da tela e aproxime o QR Code do leitor. A bilheteria confere
+      o código no validador oficial da meia-entrada.
     </p>
     <button class="btn secundario" type="button" id="btn-fechar-apresentar" style="max-width:280px">Fechar</button>
   </div>
@@ -344,7 +333,7 @@
       <div class="passo" data-passo="0">
         <p class="passo-rot">Passo 1 de 5</p>
         <h2 class="mb-8">Dados pessoais</h2>
-        <p class="texto-2" style="margin:0 0 18px">Use dados fictícios — este é um exercício acadêmico.</p>
+        <p class="texto-2" style="margin:0 0 18px">Preencha com os seus dados. Nada sai deste aparelho.</p>
         <div class="campo-form" id="cf-nome">
           <label for="sol-nome">Nome completo</label>
           <input id="sol-nome" name="nome" type="text" autocomplete="name" placeholder="Nome como consta no documento">
@@ -414,7 +403,7 @@
           <input type="file" accept="image/*,application/pdf" id="sol-doc" aria-label="Enviar comprovante de matrícula">
           <span id="upload-doc-txt">
             <svg class="icone"><use href="#i-arquivo"/></svg><br>
-            <strong>Comprovante de matrícula</strong><br>Imagem ou PDF · opcional nesta réplica
+            <strong>Comprovante de matrícula</strong><br>Imagem ou PDF · opcional
           </span>
         </label>
         <p class="erro" id="erro-doc" style="display:none;color:var(--vermelho);font-size:12.5px;font-weight:600;margin-top:6px">Envie o comprovante para continuar.</p>
@@ -519,7 +508,7 @@
     </div>
 
     <button class="btn mt-16" type="button" data-ir="carteirinha">Ver documento nacional</button>
-    <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Cartão fictício, gerado a partir dos mesmos dados de demonstração.</span></div>
+    <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Gerada a partir dos mesmos dados do documento nacional.</span></div>
   </div>
 </section>
 
@@ -561,9 +550,8 @@
     </div>
 
     <p class="texto-2 centro mt-24" style="font-size:12px;line-height:1.6">
-      DNE Digital — <strong>réplica acadêmica</strong> · versão 1.0<br>
-      Trabalho de curso, sem vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.<br>
-      Todos os dados são fictícios e ficam apenas neste aparelho.
+      DNE Digital · versão 1.0<br>
+      Os seus dados ficam apenas neste aparelho.
     </p>
   </div>
 </section>
@@ -609,7 +597,7 @@
     </div>
   </div>
 
-  <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Simulação: a adição real à Carteira exige um passe assinado com certificado da Apple, que um trabalho acadêmico não tem.</span></div>
+  <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Simulação: adicionar de verdade à Carteira exige um passe assinado com certificado da Apple.</span></div>
 
   <div class="pilha mt-16">
     <button class="btn" type="button" id="btn-wallet-confirmar">Adicionar</button>

@@ -17,10 +17,10 @@
   var ARQUIVO_UNICO = false; // trocado para true pelo construir-arquivo-unico.js
 
   /*
-   * Identificação de réplica, mantida no código em vez de sobreposta ao cartão.
-   * Também aparece: no comentário do topo do index.html e nas meta tags; no
-   * atributo data-replica do elemento da carteirinha; no texto legal do verso;
-   * e no prefixo do conteúdo do QR Code.
+   * Identificação de réplica, mantida só no código — nada disso aparece na
+   * interface. Também está: no comentário do topo do index.html e nas meta
+   * tags; nos atributos data-replica das carteirinhas; e no prefixo do
+   * conteúdo dos QR Codes gerados.
    */
   var AVISO_REPLICA = 'RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL. '
     + 'Reprodução do app DNE Digital feita como trabalho de curso, sem vínculo com '
@@ -93,6 +93,15 @@
   }
 
   function emailValido(v) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test((v || '').trim()); }
+
+  // Formata no formato ISO usando o relógio local. Não serve usar o método
+  // toISOString aqui: ele converte para UTC e, à noite nos fusos negativos,
+  // devolve o dia seguinte — a validade caía em 01/04 em vez de 31/03.
+  function dataIso(d) {
+    var mes = String(d.getMonth() + 1).padStart(2, '0');
+    var dia = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + mes + '-' + dia;
+  }
 
   function dataBr(iso) {
     if (!iso) return '—';
@@ -352,7 +361,7 @@
       + (estado.estudante
           ? '<button class="btn mt-24" type="button" data-ir="apresentar">Apresentar documento</button>'
           : '<button class="btn mt-24" type="button" data-ir="solicitar">Solicitar documento</button>')
-      + '<div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Parceiro fictício, criado para o exercício acadêmico.</span></div>';
+      + '<div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Parceiro de demonstração.</span></div>';
   }
 
   function renderTransporte() {
@@ -593,12 +602,12 @@
     var d = new Date();
     d.setFullYear(d.getFullYear() + 1);
     d.setMonth(2, 31); // 31 de março, como no calendário anual do documento
-    return d.toISOString().slice(0, 10);
+    return dataIso(d);
   }
 
   function emitirDocumento() {
     var nivel = $('#sol-nivel').value;
-    var hoje = new Date().toISOString().slice(0, 10);
+    var hoje = dataIso(new Date());
     var numero = String(Math.floor(Math.random() * 9e15)).padStart(16, '0').replace(/(\d{4})(?=\d)/g, '$1 ').trim();
 
     estado.estudante = {
@@ -794,7 +803,7 @@
       if (!sel) { aviso('Escolha um valor.'); return; }
       var v = Number(sel.dataset.recarga);
       estado.saldo = Number((estado.saldo + v).toFixed(2));
-      estado.extrato.unshift({ data: new Date().toISOString().slice(0, 10), desc: 'Recarga pelo aplicativo', valor: v });
+      estado.extrato.unshift({ data: dataIso(new Date()), desc: 'Recarga pelo aplicativo', valor: v });
       salvar();
       renderTransporte();
       aviso('Recarga simulada de ' + moeda(v) + ' concluída.');
@@ -818,7 +827,7 @@
     $('#btn-compartilhar').addEventListener('click', function () {
       var endereco = location.href.split('#')[0];
       if (navigator.share) {
-        navigator.share({ title: 'DNE Digital — réplica acadêmica', url: endereco })
+        navigator.share({ title: 'DNE Digital', url: endereco })
           .catch(function () { /* a pessoa cancelou */ });
       } else if (navigator.clipboard) {
         navigator.clipboard.writeText(endereco)
@@ -837,7 +846,7 @@
       ir('login');
     });
     $('#btn-limpar').addEventListener('click', function () {
-      if (!confirm('Apagar todos os dados da réplica salvos neste aparelho?')) return;
+      if (!confirm('Apagar todos os dados salvos neste aparelho?')) return;
       localStorage.removeItem(CHAVE);
       location.hash = '#/login';
       location.reload();
