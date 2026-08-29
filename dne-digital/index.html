@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  RÉPLICA ACADÊMICA — SEM VALIDADE LEGAL
+  ============================================================================
+  Reprodução do aplicativo DNE Digital feita como trabalho de curso.
+  Sem qualquer vínculo com UNE, UBES, ANPG ou com o aplicativo oficial.
+
+  O documento montado aqui NÃO é o Documento Nacional do Estudante: não
+  comprova matrícula, não dá direito a meia-entrada e não tem validade legal.
+  Os dados ficam apenas no aparelho de quem abre, no localStorage; não há
+  servidor, cadastro nem emissão de documento de verdade.
+
+  A identificação de réplica também está:
+    - nesta marcação e nas meta tags abaixo;
+    - no atributo data-replica do elemento da carteirinha;
+    - no texto legal impresso no verso do cartão;
+    - no conteúdo do QR Code, com o prefixo REPLICA-ACADEMICA-SEM-VALIDADE;
+    - na constante AVISO_REPLICA de js/app.js, registrada no console ao abrir.
+  ============================================================================
+-->
+<html lang="pt-BR" data-tema="claro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>DNE Digital</title>
+<meta name="description" content="Réplica acadêmica do aplicativo DNE Digital, feita como trabalho de curso. Não possui validade legal.">
+<meta name="replica" content="academica">
+<meta name="validade-legal" content="nenhuma">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Ajustes para instalação como app no iPhone (Adicionar à Tela de Início) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DNE Digital">
+<meta name="theme-color" content="#0d1e4d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icone-180.png">
+<link rel="icon" href="assets/icone-180.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- ===================== biblioteca de ícones (SVG) ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-inicio" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></g>
+    <g id="i-carteira" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.2"/><path d="M5.5 16.2c.6-1.5 1.7-2.2 3-2.2s2.4.7 3 2.2M14.5 9.8h4M14.5 13h4"/></g>
+    <g id="i-beneficio" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12.6 12.6 20.6a2 2 0 0 1-2.8 0l-6.4-6.4a2 2 0 0 1-.6-1.4V4.5a2 2 0 0 1 2-2h8.3a2 2 0 0 1 1.4.6l6.1 6.1a2 2 0 0 1 0 2.8Z"/><circle cx="7.8" cy="7.8" r="1.4"/></g>
+    <g id="i-perfil" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.7-3.7 3.8-5.6 7.5-5.6s6.8 1.9 7.5 5.6"/></g>
+    <g id="i-qr" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></g>
+    <g id="i-renovar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14-4.5L4 9"/><path d="M4 4v5h5"/><path d="M4 13a8 8 0 0 0 14 4.5L20 15"/><path d="M20 20v-5h-5"/></g>
+    <g id="i-onibus" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="14" rx="3"/><path d="M4 11h16M7.5 21v-3.5M16.5 21v-3.5"/><circle cx="8" cy="14.3" r="1"/><circle cx="16" cy="14.3" r="1"/></g>
+    <g id="i-globo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.8 2.5 15.2 0 18M12 3c-2.5 2.8-2.5 15.2 0 18"/></g>
+    <g id="i-busca" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g>
+    <g id="i-seta-dir" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></g>
+    <g id="i-seta-esq" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></g>
+    <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 6.5"/></g>
+    <g id="i-info" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6h.01"/></g>
+    <g id="i-camera" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2 2 0 0 1 5 6.5h2l1.3-2h7.4L17 6.5h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.8" r="3.6"/></g>
+    <g id="i-arquivo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g>
+    <g id="i-escudo" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.5 5.8v6c0 4.5 3.1 8.2 7.5 9.6 4.4-1.4 7.5-5.1 7.5-9.6v-6Z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></g>
+    <g id="i-lua" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8.4 8.4 0 0 1 9.8 4 8.5 8.5 0 1 0 20 14.2Z"/></g>
+    <g id="i-sair" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h3.5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H14"/><path d="M10 8 6 12l4 4M6 12h9"/></g>
+    <g id="i-wallet" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2.5 2.5 0 0 1 2.5 2.5v9A2.5 2.5 0 0 1 18 19H5.5A2.5 2.5 0 0 1 3 16.5Z"/><path d="M3 9.5h11a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H3"/><circle cx="12.5" cy="12" r=".9" fill="currentColor" stroke="none"/></g>
+    <g id="i-virar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h13a4.5 4.5 0 0 1 0 9h-2"/><path d="m6.5 4.5-3.5 3.5 3.5 3.5"/></g>
+  </defs>
+</svg>
+
+<div id="app">
+
+<!-- ============================== LOGIN ============================== -->
+<section class="tela" id="tela-login" aria-label="Entrar">
+  <div class="login-corpo">
+    <div class="login-marca">
+      <div class="sigla">DNE</div>
+      <p>Documento Nacional do Estudante</p>
+    </div>
+
+    <!-- primeira abertura: a pessoa monta o próprio documento -->
+    <div id="bloco-boas-vindas">
+      <p class="boas-vindas-txt">
+        Monte o seu documento de estudante: coloque a sua foto, o seu nome e os dados da
+        sua instituição. Tudo fica guardado só no seu aparelho.
+      </p>
+      <div class="pilha mt-24">
+        <button class="btn" type="button" data-ir="solicitar">Criar o meu documento</button>
+        <button class="btn secundario" type="button" id="btn-demo">Ver um exemplo pronto</button>
+        <button class="btn fantasma" type="button" id="btn-mostrar-login">Entrar com CPF e senha</button>
+      </div>
+    </div>
+
+    <!-- entrada por CPF e senha, mantida para demonstrar o fluxo do app oficial -->
+    <form id="form-login" novalidate hidden>
+      <div class="campo-form" id="cf-login-cpf">
+        <label for="login-cpf">CPF</label>
+        <input id="login-cpf" name="cpf" type="tel" inputmode="numeric" autocomplete="username"
+               placeholder="000.000.000-00" maxlength="14">
+        <p class="erro">Informe um CPF válido.</p>
+      </div>
+      <div class="campo-form" id="cf-login-senha">
+        <label for="login-senha">Senha</label>
+        <input id="login-senha" name="senha" type="password" autocomplete="current-password" placeholder="••••••">
+        <p class="erro">A senha precisa ter ao menos 4 caracteres.</p>
+      </div>
+      <button class="btn" type="submit">Entrar</button>
+      <button class="btn fantasma mt-16" type="button" id="btn-voltar-boas-vindas">Voltar</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- ============================== INÍCIO ============================== -->
+<section class="tela" id="tela-inicio" aria-label="Início">
+  <header class="topo">
+    <h1 id="saudacao-topo">Início</h1>
+    <button class="topo-acao" type="button" data-ir="perfil" aria-label="Abrir perfil">Perfil</button>
+  </header>
+  <div class="conteudo">
+    <p class="saudacao">Olá,<strong id="inicio-nome">—</strong></p>
+
+    <button class="resumo-carteira mt-16" type="button" data-ir="carteirinha" style="width:100%;text-align:left">
+      <img class="foto-mini" id="inicio-foto" alt="" src="assets/foto-exemplo.svg">
+      <span class="txt">
+        <strong id="inicio-inst">—</strong>
+        <span id="inicio-status">—</span>
+      </span>
+      <svg class="seta" width="20" height="20" style="opacity:.7"><use href="#i-seta-dir"/></svg>
+    </button>
+
+    <div class="atalhos">
+      <button class="atalho" type="button" data-ir="apresentar"><span class="bolha"><svg><use href="#i-qr"/></svg></span>Apresentar</button>
+      <button class="atalho" type="button" data-ir="solicitar"><span class="bolha"><svg><use href="#i-renovar"/></svg></span>Renovar</button>
+      <button class="atalho" type="button" data-ir="transporte"><span class="bolha"><svg><use href="#i-onibus"/></svg></span>Transporte</button>
+      <button class="atalho" type="button" data-ir="internacional"><span class="bolha"><svg><use href="#i-globo"/></svg></span>ISIC</button>
+    </div>
+
+    <div class="secao-titulo"><h2>Seu documento</h2></div>
+    <div class="card">
+      <div class="lista-dados" id="inicio-dados"></div>
+      <button class="btn mt-16" type="button" data-ir="apresentar">Apresentar documento</button>
+    </div>
+
+    <div class="secao-titulo">
+      <h2>Benefícios em destaque</h2>
+      <a href="#/beneficios">Ver todos</a>
+    </div>
+    <div id="inicio-beneficios"></div>
+  </div>
+</section>
+
+<!-- =========================== CARTEIRINHA =========================== -->
+<section class="tela" id="tela-carteirinha" aria-label="Carteirinha">
+  <header class="topo"><h1>Carteirinha</h1></header>
+  <div class="conteudo">
+    <div class="carteira-palco">
+      <div class="carteira" id="carteira" role="img"
+           aria-label="Documento do estudante"
+           data-replica="academica" data-validade-legal="nenhuma">
+
+        <!-- ---------------------------- frente ---------------------------- -->
+        <div class="face frente">
+          <div class="face-corpo">
+            <div class="carteira-topo">
+              <div class="marca">
+                <div>
+                  <div class="sigla">DNE</div>
+                  <div class="desc">Documento Nacional do Estudante</div>
+                </div>
+              </div>
+              <span class="selo-validade" id="selo-validade"><i class="ponto"></i><span>Válido</span></span>
+            </div>
+
+            <div class="carteira-identidade">
+              <img class="foto" id="cart-foto" alt="Foto do estudante" src="assets/foto-exemplo.svg">
+              <div style="min-width:0">
+                <div class="carteira-nome" id="cart-nome">—</div>
+                <div class="campo"><div class="campo-rot">CPF</div><div class="campo-val" id="cart-cpf">—</div></div>
+                <div class="campo"><div class="campo-rot">Nascimento</div><div class="campo-val" id="cart-nasc">—</div></div>
+              </div>
+            </div>
+
+            <div class="grade-campos">
+              <div class="campo largo"><div class="campo-rot">Instituição de ensino</div><div class="campo-val" id="cart-inst">—</div></div>
+              <div class="campo"><div class="campo-rot">Curso</div><div class="campo-val" id="cart-curso">—</div></div>
+              <div class="campo"><div class="campo-rot">Nível</div><div class="campo-val" id="cart-nivel">—</div></div>
+              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="cart-matricula">—</div></div>
+              <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="cart-codigo">—</div></div>
+            </div>
+
+            <div class="carteira-rodape">
+              <div>
+                <div class="campo-rot">Validade</div>
+                <div class="campo-val" id="cart-validade" style="font-size:16px">—</div>
+                <div class="campo-rot" style="margin-top:8px">Entidade emissora</div>
+                <div class="campo-val" id="cart-entidade">—</div>
+              </div>
+              <div class="qr-mini" id="cart-qr" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ----------------------------- verso ---------------------------- -->
+        <div class="face verso">
+          <div class="face-corpo">
+            <div class="carteira-topo">
+              <div><div class="campo-rot">Número do documento</div><div class="campo-val" id="verso-numero" style="font-size:15px;letter-spacing:.05em">—</div></div>
+              <div class="sigla" style="font-size:15px">DNE</div>
+            </div>
+
+            <div class="faixa-magnetica" aria-hidden="true"></div>
+
+            <div class="grade-campos">
+              <div class="campo"><div class="campo-rot">Matrícula</div><div class="campo-val" id="verso-matricula">—</div></div>
+              <div class="campo"><div class="campo-rot">Emissão</div><div class="campo-val" id="verso-emissao">—</div></div>
+              <div class="campo largo"><div class="campo-rot">E-mail cadastrado</div><div class="campo-val" id="verso-email">—</div></div>
+            </div>
+
+            <ul class="verso-lista">
+              <li>Meia-entrada em cinema, teatro, shows e eventos esportivos</li>
+              <li>Tarifa reduzida no transporte público estudantil</li>
+              <li>Descontos na rede de parceiros do documento</li>
+            </ul>
+
+            <p style="font-size:10px;line-height:1.45;opacity:.72;margin:12px 0 0">
+              Documento pessoal e intransferível. A meia-entrada é assegurada pela Lei nº 12.933/2013,
+              limitada a 40% dos ingressos disponíveis. Documento com certificação digital do ITI,
+              conferido pelo QR Code ou pelo código de uso no validador oficial.
+            </p>
+
+            <div class="grade-campos" style="margin-top:14px">
+              <div class="campo"><div class="campo-rot">Emitido por</div><div class="campo-val" id="verso-entidade">—</div></div>
+              <div class="campo"><div class="campo-rot">Atendimento ao estudante</div><div class="campo-val">0800 000 0000</div></div>
+            </div>
+
+            <div class="codigo-barras" aria-hidden="true"></div>
+
+            <div class="carteira-rodape">
+              <div>
+                <div class="campo-rot">Assinatura</div>
+                <div class="assinatura" id="verso-assinatura">—</div>
+                <div class="campo-rot" style="margin-top:8px">Verificação</div>
+                <div class="campo-val" id="verso-hash" style="font-family:ui-monospace,Menlo,monospace;font-size:12px">—</div>
+              </div>
+              <div class="qr-mini" id="verso-qr" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="carteira-acoes">
+      <button class="btn secundario" type="button" id="btn-virar">
+        <svg width="18" height="18"><use href="#i-virar"/></svg> Virar
+      </button>
+      <button class="btn" type="button" data-ir="apresentar">
+        <svg width="18" height="18"><use href="#i-qr"/></svg> Apresentar
+      </button>
+    </div>
+
+    <button class="btn secundario mt-16" type="button" id="btn-wallet">
+      <svg width="19" height="19"><use href="#i-wallet"/></svg> <span id="btn-wallet-txt">Adicionar à Carteira</span>
+    </button>
+
+    <div class="aviso mt-16">
+      <svg><use href="#i-escudo"/></svg>
+      <span>O QR Code é regerado a cada 60 segundos com um código de verificação novo — o mesmo princípio usado por documentos digitais para dificultar cópias de tela.</span>
+    </div>
+
+    <div class="secao-titulo"><h2>Dados completos</h2></div>
+    <div class="card"><div class="lista-dados" id="carteirinha-dados"></div></div>
+
+    <button class="btn secundario mt-16" type="button" data-ir="solicitar">Renovar documento</button>
+  </div>
+</section>
+
+<!-- ========================== APRESENTAR QR ========================== -->
+<section class="tela" id="tela-apresentar" aria-label="Apresentar documento">
+  <div class="apresentar-corpo">
+    <div class="qr-grande" id="qr-grande"></div>
+    <div>
+      <div class="apresentar-nome" id="apres-nome">—</div>
+      <div class="apresentar-sub" id="apres-sub">—</div>
+    </div>
+    <div class="contador">
+      <span id="contador-txt">60s</span>
+      <span class="barra"><i id="contador-barra" style="width:100%"></i></span>
+    </div>
+    <div class="codigo-token" id="apres-token">—</div>
+    <p class="apresentar-sub" style="max-width:320px">
+      Aumente o brilho da tela e aproxime o QR Code do leitor. A bilheteria confere
+      o código no validador oficial da meia-entrada.
+    </p>
+    <button class="btn secundario" type="button" id="btn-fechar-apresentar" style="max-width:280px">Fechar</button>
+  </div>
+</section>
+
+<!-- =========================== BENEFÍCIOS =========================== -->
+<section class="tela" id="tela-beneficios" aria-label="Benefícios">
+  <header class="topo"><h1>Benefícios</h1></header>
+  <div class="conteudo">
+    <div class="busca">
+      <svg><use href="#i-busca"/></svg>
+      <input id="busca-beneficios" type="search" placeholder="Buscar parceiro ou benefício" aria-label="Buscar benefício">
+    </div>
+    <div class="chips" id="chips-categorias"></div>
+    <div id="lista-beneficios"></div>
+  </div>
+</section>
+
+<!-- ====================== DETALHE DO BENEFÍCIO ====================== -->
+<section class="tela" id="tela-beneficio" aria-label="Detalhe do benefício">
+  <header class="topo">
+    <button class="voltar" type="button" data-voltar><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Benefícios</button>
+  </header>
+  <div class="conteudo" id="detalhe-beneficio"></div>
+</section>
+
+<!-- ==================== SOLICITAR / RENOVAR (wizard) ================= -->
+<section class="tela" id="tela-solicitar" aria-label="Solicitar documento">
+  <header class="topo">
+    <button class="voltar" type="button" id="btn-passo-anterior"><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Voltar</button>
+    <h1 style="font-size:17px;text-align:center" id="titulo-solicitar">Solicitar DNE</h1>
+    <span style="width:70px"></span>
+  </header>
+  <div class="conteudo">
+    <div class="passos" id="passos-barra" aria-hidden="true"></div>
+    <form id="form-solicitar" novalidate>
+
+      <!-- passo 1 -->
+      <div class="passo" data-passo="0">
+        <p class="passo-rot">Passo 1 de 5</p>
+        <h2 class="mb-8">Dados pessoais</h2>
+        <p class="texto-2" style="margin:0 0 18px">Preencha com os seus dados. Nada sai deste aparelho.</p>
+        <div class="campo-form" id="cf-nome">
+          <label for="sol-nome">Nome completo</label>
+          <input id="sol-nome" name="nome" type="text" autocomplete="name" placeholder="Nome como consta no documento">
+          <p class="erro">Informe nome e sobrenome.</p>
+        </div>
+        <div class="campo-form" id="cf-cpf">
+          <label for="sol-cpf">CPF</label>
+          <input id="sol-cpf" name="cpf" type="tel" inputmode="numeric" placeholder="000.000.000-00" maxlength="14">
+          <p class="erro">CPF inválido — confira os dígitos verificadores.</p>
+        </div>
+        <div class="campo-form" id="cf-nasc">
+          <label for="sol-nasc">Data de nascimento</label>
+          <input id="sol-nasc" name="nascimento" type="date">
+          <p class="erro">Informe uma data de nascimento válida.</p>
+        </div>
+        <div class="campo-form" id="cf-email">
+          <label for="sol-email">E-mail</label>
+          <input id="sol-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="voce@exemplo.com">
+          <p class="erro">Informe um e-mail válido.</p>
+        </div>
+      </div>
+
+      <!-- passo 2 -->
+      <div class="passo" data-passo="1" hidden>
+        <p class="passo-rot">Passo 2 de 5</p>
+        <h2 class="mb-8">Instituição e curso</h2>
+        <p class="texto-2" style="margin:0 0 18px">A entidade emissora é definida pelo nível de ensino.</p>
+        <div class="campo-form" id="cf-nivel">
+          <label for="sol-nivel">Nível de ensino</label>
+          <select id="sol-nivel" name="nivel"></select>
+          <p class="ajuda" id="ajuda-entidade">—</p>
+        </div>
+        <div class="campo-form" id="cf-inst">
+          <label for="sol-inst">Instituição de ensino</label>
+          <select id="sol-inst" name="instituicao"></select>
+          <p class="erro">Selecione a instituição.</p>
+        </div>
+        <div class="campo-form" id="cf-curso">
+          <label for="sol-curso">Curso</label>
+          <select id="sol-curso" name="curso"></select>
+          <p class="erro">Selecione o curso.</p>
+        </div>
+        <div class="campo-form" id="cf-matricula">
+          <label for="sol-matricula">Número de matrícula</label>
+          <input id="sol-matricula" name="matricula" type="tel" inputmode="numeric" placeholder="Somente números" maxlength="14">
+          <p class="erro">Informe a matrícula (mínimo 4 dígitos).</p>
+        </div>
+      </div>
+
+      <!-- passo 3 -->
+      <div class="passo" data-passo="2" hidden>
+        <p class="passo-rot">Passo 3 de 5</p>
+        <h2 class="mb-8">Foto e comprovante</h2>
+        <p class="texto-2" style="margin:0 0 18px">A foto fica salva apenas neste aparelho, no armazenamento do navegador. Nada é enviado para lugar nenhum.</p>
+
+        <label class="upload" id="upload-foto">
+          <input type="file" accept="image/*" id="sol-foto" aria-label="Enviar foto do estudante">
+          <img id="previa-foto" alt="Prévia da foto enviada" hidden>
+          <span id="upload-foto-txt">
+            <svg class="icone"><use href="#i-camera"/></svg><br>
+            <strong>Foto 3x4</strong><br>Toque para escolher ou tirar uma foto
+          </span>
+        </label>
+        <p class="erro" id="erro-foto" style="display:none;color:var(--vermelho);font-size:12.5px;font-weight:600;margin-top:6px">Envie uma foto para continuar.</p>
+
+        <label class="upload mt-16" id="upload-doc">
+          <input type="file" accept="image/*,application/pdf" id="sol-doc" aria-label="Enviar comprovante de matrícula">
+          <span id="upload-doc-txt">
+            <svg class="icone"><use href="#i-arquivo"/></svg><br>
+            <strong>Comprovante de matrícula</strong><br>Imagem ou PDF · opcional
+          </span>
+        </label>
+        <p class="erro" id="erro-doc" style="display:none;color:var(--vermelho);font-size:12.5px;font-weight:600;margin-top:6px">Envie o comprovante para continuar.</p>
+      </div>
+
+      <!-- passo 4 -->
+      <div class="passo" data-passo="3" hidden>
+        <p class="passo-rot">Passo 4 de 5</p>
+        <h2 class="mb-8">Pagamento</h2>
+        <p class="texto-2" style="margin:0 0 18px">Pagamento simulado: nenhuma cobrança real é feita.</p>
+        <div class="card">
+          <div class="lista-dados" id="resumo-pedido"></div>
+        </div>
+        <div class="card mt-16 centro">
+          <p class="texto-2 mb-8">Pague com Pix — aponte a câmera para o código</p>
+          <div id="qr-pix" style="width:190px;margin:0 auto;background:#fff;padding:10px;border-radius:12px"></div>
+          <p class="texto-2 mt-16" style="font-family:ui-monospace,Menlo,monospace;font-size:11px;word-break:break-all" id="pix-copia"></p>
+        </div>
+        <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>O código Pix acima é fictício e aponta para um destinatário inexistente.</span></div>
+      </div>
+
+      <!-- passo 5 -->
+      <div class="passo centro" data-passo="4" hidden>
+        <div class="sucesso-icone"><svg><use href="#i-check"/></svg></div>
+        <h2 class="mb-8">Documento emitido</h2>
+        <p class="texto-2">Seu documento de demonstração já está disponível na aba Carteirinha.</p>
+        <div class="card mt-24" style="text-align:left"><div class="lista-dados" id="resumo-emitido"></div></div>
+      </div>
+
+      <button class="btn mt-24" type="submit" id="btn-passo-proximo">Continuar</button>
+      <button class="btn fantasma" type="button" id="btn-cancelar-solicitacao">Cancelar</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============================ TRANSPORTE ========================== -->
+<section class="tela" id="tela-transporte" aria-label="Crédito de transporte">
+  <header class="topo">
+    <button class="voltar" type="button" data-voltar><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Início</button>
+    <h1 style="font-size:17px">Transporte</h1>
+    <span style="width:70px"></span>
+  </header>
+  <div class="conteudo">
+    <div class="resumo-carteira" style="display:block;text-align:center;padding:24px 16px">
+      <p style="margin:0;font-size:12.5px;opacity:.78;text-transform:uppercase;letter-spacing:.08em">Saldo do Bilhete Único Estudante</p>
+      <p style="margin:6px 0 0;font-size:36px;font-weight:800" id="saldo-transporte">R$ 0,00</p>
+    </div>
+
+    <div class="secao-titulo"><h2>Recarregar</h2></div>
+    <div class="chips" id="chips-recarga"></div>
+    <button class="btn" type="button" id="btn-recarregar">Recarregar</button>
+
+    <div class="secao-titulo"><h2>Últimas movimentações</h2></div>
+    <div class="card"><div class="lista-dados" id="extrato-transporte"></div></div>
+
+    <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Recarga simulada: o saldo muda apenas neste aparelho e nenhuma transação é feita.</span></div>
+  </div>
+</section>
+
+<!-- ========================== ISIC (internacional) =================== -->
+<section class="tela" id="tela-internacional" aria-label="Carteira internacional">
+  <header class="topo">
+    <button class="voltar" type="button" data-voltar><svg width="20" height="20"><use href="#i-seta-esq"/></svg> Início</button>
+    <h1 style="font-size:17px">Carteira internacional</h1>
+    <span style="width:70px"></span>
+  </header>
+  <div class="conteudo">
+    <div class="carteira-palco">
+      <div class="carteira carteira-isic" data-replica="academica" data-validade-legal="nenhuma">
+        <div class="face frente" style="background:radial-gradient(120% 90% at 0% 0%,rgba(34,211,238,.45),transparent 55%),linear-gradient(150deg,#0b4a7a,#052539)">
+          <div class="face-corpo">
+            <div class="carteira-topo">
+              <div><div class="sigla">ISIC</div><div class="desc">International Student Identity Card</div></div>
+              <span class="selo-validade"><i class="ponto"></i><span>Ativa</span></span>
+            </div>
+            <div class="carteira-identidade">
+              <img class="foto" id="isic-foto" alt="" src="assets/foto-exemplo.svg">
+              <div style="min-width:0">
+                <div class="carteira-nome" id="isic-nome">—</div>
+                <div class="campo"><div class="campo-rot">School</div><div class="campo-val" id="isic-inst">—</div></div>
+                <div class="campo"><div class="campo-rot">Date of birth</div><div class="campo-val" id="isic-nasc">—</div></div>
+              </div>
+            </div>
+            <div class="carteira-rodape">
+              <div><div class="campo-rot">Validity</div><div class="campo-val" id="isic-validade">—</div></div>
+              <div class="qr-mini" id="isic-qr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="texto-2 centro">Aceita em mais de 130 países pelos parceiros da rede ISIC.</p>
+
+    <div class="secao-titulo"><h2>O que a carteira dá acesso</h2></div>
+    <div class="card">
+      <ul>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Descontos em museus, transportes e hospedagem no exterior</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Comprovação internacional da condição de estudante</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Tarifas reduzidas em passagens e seguros de viagem</span></li>
+        <li style="display:flex;gap:10px;padding:8px 0;font-size:14px"><svg width="17" height="17" style="color:var(--verde);flex:none;margin-top:2px"><use href="#i-check"/></svg><span>Validade acompanhando a do documento nacional</span></li>
+      </ul>
+    </div>
+
+    <button class="btn mt-16" type="button" data-ir="carteirinha">Ver documento nacional</button>
+    <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Gerada a partir dos mesmos dados do documento nacional.</span></div>
+  </div>
+</section>
+
+<!-- ============================== PERFIL ============================= -->
+<section class="tela" id="tela-perfil" aria-label="Perfil">
+  <header class="topo"><h1>Perfil</h1></header>
+  <div class="conteudo">
+    <div class="card centro">
+      <img id="perfil-foto" alt="" src="assets/foto-exemplo.svg"
+           style="width:88px;height:88px;border-radius:50%;object-fit:cover;margin:4px auto 12px;border:3px solid var(--borda)">
+      <h2 id="perfil-nome" style="font-size:19px">—</h2>
+      <p class="texto-2" id="perfil-email" style="margin:4px 0 0">—</p>
+      <label class="btn secundario pequeno" style="margin:14px auto 0;position:relative;overflow:hidden">
+        Trocar foto
+        <input type="file" accept="image/*" id="perfil-troca-foto" style="position:absolute;inset:0;opacity:0">
+      </label>
+    </div>
+
+    <div class="secao-titulo"><h2>Meus dados</h2></div>
+    <div class="card"><div class="lista-dados" id="perfil-dados"></div></div>
+
+    <div class="secao-titulo"><h2>Preferências</h2></div>
+    <div class="card">
+      <label class="linha-dado" style="border:0;padding:4px 0;cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;color:var(--texto)">
+          <svg width="20" height="20" style="color:var(--azul-500)"><use href="#i-lua"/></svg> Tema escuro
+        </span>
+        <input type="checkbox" id="toggle-tema" style="width:auto;min-height:0;transform:scale(1.3)">
+      </label>
+    </div>
+
+    <div class="secao-titulo"><h2>Documento</h2></div>
+    <div class="pilha">
+      <button class="btn secundario" type="button" data-ir="solicitar">Editar dados do documento</button>
+      <button class="btn secundario" type="button" data-ir="internacional">Carteira internacional ISIC</button>
+      <button class="btn secundario" type="button" id="btn-compartilhar">Compartilhar este aplicativo</button>
+      <button class="btn perigo" type="button" id="btn-limpar">Apagar dados deste aparelho</button>
+      <button class="btn perigo" type="button" id="btn-sair"><svg width="18" height="18"><use href="#i-sair"/></svg> Sair</button>
+    </div>
+
+    <p class="texto-2 centro mt-24" style="font-size:12px;line-height:1.6">
+      DNE Digital · versão 1.0<br>
+      Os seus dados ficam apenas neste aparelho.
+    </p>
+  </div>
+</section>
+
+</div><!-- /#app -->
+
+<!-- ============================== TABBAR ============================== -->
+<nav class="tabbar" id="tabbar" aria-label="Navegação principal">
+  <button type="button" data-ir="inicio"><svg><use href="#i-inicio"/></svg>Início</button>
+  <button type="button" data-ir="carteirinha"><svg><use href="#i-carteira"/></svg>Carteirinha</button>
+  <button type="button" data-ir="beneficios"><svg><use href="#i-beneficio"/></svg>Benefícios</button>
+  <button type="button" data-ir="perfil"><svg><use href="#i-perfil"/></svg>Perfil</button>
+</nav>
+
+<div class="folha-fundo" id="folha-fundo"></div>
+<section class="folha" id="folha-wallet" role="dialog" aria-modal="true" aria-labelledby="folha-wallet-titulo" aria-hidden="true">
+  <div class="puxador"></div>
+  <h2 id="folha-wallet-titulo">Adicionar à Carteira</h2>
+  <p class="sub">O documento fica disponível no app Carteira do iPhone, sem precisar abrir este aplicativo.</p>
+
+  <div class="passe">
+    <div class="passe-topo">
+      <div>
+        <div class="sigla">DNE</div>
+        <div class="tipo">Documento do estudante</div>
+      </div>
+      <div style="text-align:right">
+        <div class="campo-rot">Validade</div>
+        <div class="campo-val" id="passe-validade">—</div>
+      </div>
+    </div>
+    <div class="passe-corpo">
+      <img id="passe-foto" alt="" src="assets/foto-exemplo.svg">
+      <div style="min-width:0">
+        <div class="campo"><div class="campo-rot">Estudante</div><div class="campo-val" id="passe-nome">—</div></div>
+        <div class="campo"><div class="campo-rot">Instituição</div><div class="campo-val" id="passe-inst">—</div></div>
+        <div class="campo"><div class="campo-rot">Código de uso</div><div class="campo-val" id="passe-codigo">—</div></div>
+      </div>
+    </div>
+    <div class="passe-rodape">
+      <div class="faixa" id="passe-qr"></div>
+      <p class="legenda">Apresente na bilheteria</p>
+    </div>
+  </div>
+
+  <div class="aviso mt-16"><svg><use href="#i-info"/></svg><span>Simulação: adicionar de verdade à Carteira exige um passe assinado com certificado da Apple.</span></div>
+
+  <div class="pilha mt-16">
+    <button class="btn" type="button" id="btn-wallet-confirmar">Adicionar</button>
+    <button class="btn fantasma" type="button" id="btn-wallet-fechar">Agora não</button>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/qr.js"></script>
+<script src="js/dados.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

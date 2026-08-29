@@ -1,0 +1,19 @@
+{
+  "name": "DNE Digital",
+  "short_name": "DNE Digital",
+  "description": "Réplica acadêmica do aplicativo DNE Digital, desenvolvida como trabalho de curso. Sem validade legal.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1e4d",
+  "theme_color": "#0d1e4d",
+  "categories": ["education", "utilities"],
+  "icons": [
+    { "src": "assets/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
